@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "test_results",
+  "info": {
+    "singularName": "test-result",
+    "pluralName": "test-results",
+    "displayName": "Test result",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "correctWords": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
+    "uncorrectedErrors": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
+    "testLength": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
+    "wordsPerMinute": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
+    "words": {
+      "type": "json",
+      "required": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

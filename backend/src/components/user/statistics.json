@@ -1,0 +1,10 @@
+{
+  "collectionName": "components_user_statistics",
+  "info": {
+    "displayName": "Statistics",
+    "icon": "chart-bar",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {}
+}

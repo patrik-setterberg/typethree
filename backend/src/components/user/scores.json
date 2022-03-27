@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_user_scores",
+  "info": {
+    "displayName": "Scores",
+    "icon": "rocket"
+  },
+  "options": {},
+  "attributes": {}
+}
