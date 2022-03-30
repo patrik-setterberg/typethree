@@ -1,15 +1,8 @@
-import styled from "styled-components"
-
-const StyledMain = styled.main`
-	height: 100%;
-	width: 100%;
-	position: fixed;
-	background-color: ${props => props.theme.backgroundPrimary};
-`
+import * as S from "./Main.styles";
 
 const Main = (props) => {
   return (
-    <StyledMain>{props.children}</StyledMain>
+    <S.Main>{props.children}</S.Main>
   );
 }
 
