@@ -3,25 +3,23 @@ import * as S from "./Modal.styles";
 
 import CloseButton from "./CloseButton";
 
-interface Props {
-  onClose: () => void;
+interface BackdropProps {
+  onClose: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const Backdrop = ({ onClose }: Props) => {
+const Backdrop = ({ onClose }: BackdropProps): JSX.Element => {
   return <S.Backdrop onClick={onClose}></S.Backdrop>;
 };
 
 /**
  * Modal component.
- * Requires an "onClose" function prop which hides the modal (sets some "modalVisible"
- * or similar state to false).
  */
-interface Props {
-  onClose: () => void;
+interface ModalProps {
+  onClose: (event: React.MouseEvent<HTMLElement>) => void;
   children?: React.ReactNode;
 }
 
-const Modal: React.FC<Props> = ({ onClose, children }) => {
+const Modal = ({ onClose, children }: ModalProps): JSX.Element => {
   const overlaysElement: HTMLElement = document.getElementById("overlays")!;
 
   return (

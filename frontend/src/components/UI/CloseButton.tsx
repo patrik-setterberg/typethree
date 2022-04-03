@@ -1,10 +1,10 @@
 import * as S from "./CloseButton.styles";
 
 interface Props {
-  clickHandler: () => void;
+  clickHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const CloseButton: React.FC<Props> = ({clickHandler}) => {
+const CloseButton = ({ clickHandler }: Props): JSX.Element => {
   return (
     <S.CloseButton onClick={clickHandler}>
       <svg viewBox="0 0 190 190" fill="none" xmlns="http://www.w3.org/2000/svg">
