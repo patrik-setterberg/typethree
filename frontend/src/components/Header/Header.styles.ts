@@ -4,11 +4,26 @@ import media from "../../globals/media-breakpoints";
 
 export const Header = styled.header`
   display: flex;
-  justify-content: space-between;
-  background-color: ${(props) => props.theme.backgroundSecondary};
-  padding: calc(var(--default-spacing) / 2) 3rem;
+  justify-content: center;
+  background-color: ${props => props.theme.backgroundSecondary};
+  padding: var(--default-spacing);
 
   & div {
-    display: inline-block; // temppppppppp
+    // temppppppppp stuff
+    display: flex;
+    align-items: center;
+    color: ${props => props.theme.primary};
+
+  }
+
+  & section {
+    // probably temp
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media ${media.atleastMedium} {
+    padding-left: 0;
+    padding-right: 0;
   }
 `;

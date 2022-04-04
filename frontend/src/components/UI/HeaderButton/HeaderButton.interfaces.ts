@@ -2,7 +2,7 @@ interface HeaderButtonProps {
   clickFunc: (event: React.MouseEvent<HTMLButtonElement>) => void;
   title: string;
   ariaLabel: string;
-  //onClick: React.MouseEventHandler<HTMLButtonElement>;
+  modalIsOpen: boolean;
   children: React.ReactNode;
 }
 

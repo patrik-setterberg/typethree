@@ -5,7 +5,8 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --font-main: 'Roboto mono', 'monospace';
 
-    --default-spacing: 1.5rem;
+    --default-spacing: 0.75rem;
+    --content-width: 100%;
   }
 
   * {
@@ -25,13 +26,15 @@ const GlobalStyle = createGlobalStyle`
 
   @media ${media.medium} {
     :root {
-      --default-spacing: 1.75rem;
+      --default-spacing: 0.875rem;
+      --content-width: 45rem;
     }
   }
 
   @media ${media.large} {
     :root {
-      --default-spacing: 2rem;
+      --default-spacing: 1rem;
+      --content-width: 75rem;
     }
   }
 `

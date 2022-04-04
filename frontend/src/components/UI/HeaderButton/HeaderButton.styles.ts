@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import media from "../../../globals/media-breakpoints";
 
 export const Wrapper = styled.div`
 	position: relative;
 `
 
-export const HeaderButton = styled.button`
+export const HeaderButton = styled.button<{modalIsOpen: boolean}>`
   background: transparent;
 	border: none;
 	cursor: pointer;
@@ -18,6 +19,12 @@ export const HeaderButton = styled.button`
     transition: fill 0.2s ease;
     fill: ${props => props.theme.highlight};
   }
+
+  ${props => props.modalIsOpen && css`
+    & svg path {
+      fill: ${props => props.theme.primary};
+    }
+  `}
 
   &:hover svg path {
     fill: ${props => props.theme.primary};
@@ -39,15 +46,17 @@ export const HeaderButtonTitle = styled.span`
   border-radius: 0.25rem;
   font-size: 0.8125rem;
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
   opacity: 0;
   transition: opacity 0.125s ease-in-out, top 0.125s ease-in-out;
   pointer-events: none;
 
-  ${HeaderButton}:hover ~ & {
-		opacity: 1;
-    top: 2.25rem;
-	}
+  @media ${media.atleastMedium} {
+    ${HeaderButton}:hover ~ & {
+      opacity: 1;
+      top: 2.25rem;
+	  }
+  }
 `
 

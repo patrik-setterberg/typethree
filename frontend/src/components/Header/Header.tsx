@@ -1,18 +1,19 @@
-import * as S from "./Header.styles";
+import * as StyledComponents from "./Header.styles";
+import {Container}  from "../UI/Container.styles";
 import SettingsButton from "./SettingsButton";
-import { SettingsContextProvider } from "../../context/settings-context";
 
 interface HeaderProps {}
 
 const Header = ({}: HeaderProps): JSX.Element => {
-  return (
-    <SettingsContextProvider>
-      <S.Header>
-        <div>type|three</div>
+  const S = {...StyledComponents, Container};
 
+  return (
+    <S.Header>
+      <S.Container>
+        <div>type|three</div>
         <SettingsButton />
-      </S.Header>
-    </SettingsContextProvider>
+      </S.Container>
+    </S.Header>
   );
 };
 

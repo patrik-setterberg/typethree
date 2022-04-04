@@ -16,7 +16,7 @@ const Backdrop = ({ onClose }: BackdropProps): JSX.Element => {
  */
 interface ModalProps {
   onClose: (event: React.MouseEvent<HTMLElement>) => void;
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const Modal = ({ onClose, children }: ModalProps): JSX.Element => {

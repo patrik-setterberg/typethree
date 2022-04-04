@@ -11,33 +11,31 @@ export const Backdrop = styled.div`
 `
 
 export const Modal = styled.div`
+  --modal-width: calc(100% - (var(--default-spacing) * 2));
   display: flex;
   flex-direction: column;
   background-color: ${props => props.theme.primary};
   position: fixed;
-  width: calc(100% - (var(--default-spacing) * 2));
-  margin: 3rem var(--default-spacing) var(--default-spacing);
+  width: var(--modal-width);
+  margin: 4.25rem var(--default-spacing) var(--default-spacing);
   z-index: 110;
-  border-radius: 1.25rem;
+  border-radius: 0.75rem;
   transition: width 0.15s ease, left 0.15s ease, margin-top 0.15s ease;
 
   @media ${media.atleastMedium} {
     margin-left: 0;
     margin-right: 0;
-    width: var(--modal-width);
     left: calc(50% - (var(--modal-width) / 2));
   }
 
   @media ${media.medium} {
     --modal-width: 45rem;
-    
     margin-top: 5rem;
   }
 
   @media ${media.large} {
-    --modal-width: 60rem;
-
-    margin-top: 6.25rem;
+    --modal-width: 65rem;
+    margin-top: 5.25rem;
   }
 `
 
