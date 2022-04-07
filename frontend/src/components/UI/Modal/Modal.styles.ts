@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import media from "../../globals/media-breakpoints";
+import media from "../../../globals/media-breakpoints";
 
 export const Backdrop = styled.div`
   position: fixed;
@@ -41,5 +41,10 @@ export const Modal = styled.div`
 
 export const ModalInner = styled.div`
   color: ${props => props.theme.backgroundPrimary};
-  margin: var(--default-spacing);
+  margin: 0 var(--default-spacing) var(--default-spacing);
+`
+
+export const ModalTitle = styled.h2`
+  text-align: center;
+  color: ${props => props.theme.backgroundTertiary};
 `

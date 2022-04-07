@@ -6,8 +6,7 @@ import themes, { defaultTheme } from "./globals/themes";
 
 import Header from "./components/Header/Header";
 import Main from "./components/UI/Main";
-import Modal from "./components/UI/Modal";
-
+import Modal from "./components/UI/Modal/Modal";
 
 const App = (): JSX.Element => {
   const settingsCtx = useContext(SettingsContext);
@@ -18,12 +17,14 @@ const App = (): JSX.Element => {
   return (
     <ThemeProvider theme={currentTheme}>
       <Header />
-      <Main>
-        hi
-      </Main>
-      {settingsCtx.settingsModalVisible && <Modal onClose={settingsCtx.closeSettings}>Modal!</Modal>}
+      <Main>hi</Main>
+      {settingsCtx.settingsModalVisible && (
+        <Modal title="Settings" onClose={settingsCtx.closeSettings}>
+          Modal!
+        </Modal>
+      )}
     </ThemeProvider>
   );
-}
+};
 
 export default App;

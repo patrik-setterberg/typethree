@@ -15,11 +15,12 @@ const Backdrop = ({ onClose }: BackdropProps): JSX.Element => {
  * Modal component.
  */
 interface ModalProps {
+  title: string;
   onClose: (event: React.MouseEvent<HTMLElement>) => void;
   children: React.ReactNode;
 }
 
-const Modal = ({ onClose, children }: ModalProps): JSX.Element => {
+const Modal = ({ title, onClose, children }: ModalProps): JSX.Element => {
   const overlaysElement: HTMLElement = document.getElementById("overlays")!;
 
   return (
@@ -30,7 +31,10 @@ const Modal = ({ onClose, children }: ModalProps): JSX.Element => {
         ReactDOM.createPortal(
           <S.Modal>
             <CloseButton clickHandler={onClose} />
-            <S.ModalInner>{children}</S.ModalInner>
+            <S.ModalInner>
+              <S.ModalTitle>{title}</S.ModalTitle>
+              {children}
+            </S.ModalInner>
           </S.Modal>,
           overlaysElement
         )}

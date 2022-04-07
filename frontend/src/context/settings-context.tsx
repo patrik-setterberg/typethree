@@ -4,6 +4,9 @@ const SettingsContext = React.createContext({
   settingsModalVisible: false,
   openSettings: (event: React.MouseEvent<HTMLButtonElement>) => {},
   closeSettings: (event: React.MouseEvent<HTMLElement>) => {},
+  // Theme
+  // Test length
+  // ??
 });
 
 interface SettingsProps {
