@@ -6,4 +6,6 @@ export const Main = styled.main`
 	position: fixed;
   z-index: 90;
 	background-color: ${props => props.theme.backgroundPrimary};
+	display: flex;
+	justify-content: center;
 `

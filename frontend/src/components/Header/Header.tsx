@@ -1,5 +1,6 @@
 import * as StyledComponents from "./Header.styles";
-import {Container}  from "../UI/Container.styles";
+import Container  from "../UI/Container.styles";
+import HeaderMessage from "./HeaderMessage/HeaderMessage";
 import SettingsButton from "./SettingsButton";
 import UserButton from "./UserButton";
 
@@ -12,6 +13,7 @@ const Header = ({}: HeaderProps): JSX.Element => {
     <S.Header>
       <S.Container>
         <div>type|three</div>
+        <HeaderMessage />
         <UserButton />
         <SettingsButton />
       </S.Container>

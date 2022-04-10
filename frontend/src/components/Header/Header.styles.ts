@@ -14,6 +14,9 @@ export const Header = styled.header`
     align-items: center;
     color: ${props => props.theme.primary};
 
+    &:first-of-type {
+      margin-right: auto;
+    }
   }
 
   & section {

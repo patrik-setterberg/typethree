@@ -3,6 +3,7 @@ import media from "../../../globals/media-breakpoints";
 
 export const Wrapper = styled.div`
   position: relative;
+  margin-left: var(--default-spacing); // temp;
 `;
 
 export const HeaderButton = styled.button<{ modalIsOpen: boolean }>`
@@ -18,7 +19,7 @@ export const HeaderButton = styled.button<{ modalIsOpen: boolean }>`
   & svg {
     & path,
     & circle {
-      transition: fill 1s ease;
+      transition: fill 0.75s ease;
       fill: ${(props) => props.theme.highlight};
     }
   }
@@ -64,7 +65,7 @@ export const HeaderButtonTitle = styled.span`
   letter-spacing: 0.2px;
   text-transform: uppercase;
   opacity: 0;
-  transition: opacity 0.125s ease-in-out, top 0.125s ease-in-out, background-position 1.25s ease-out, letter-spacing 0.3s ease;
+  transition: opacity 0.125s ease-in-out, top 0.125s ease-in-out, background-position 1s ease-out, letter-spacing 0.3s ease;
   pointer-events: none;
 
   @media ${media.atleastMedium} {

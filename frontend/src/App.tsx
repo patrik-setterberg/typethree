@@ -8,6 +8,8 @@ import Header from "./components/Header/Header";
 import Main from "./components/UI/Main";
 import Modal from "./components/UI/Modal/Modal";
 
+import TestCountdown from "./components/TestCountdown/TestCountdown";
+
 const App = (): JSX.Element => {
   const settingsCtx = useContext(SettingsContext);
 
@@ -17,7 +19,9 @@ const App = (): JSX.Element => {
   return (
     <ThemeProvider theme={currentTheme}>
       <Header />
-      <Main>hi</Main>
+      <Main>
+        <TestCountdown />
+      </Main>
       {settingsCtx.settingsModalVisible && (
         <Modal title="Settings" onClose={settingsCtx.closeSettings}>
           Modal!
