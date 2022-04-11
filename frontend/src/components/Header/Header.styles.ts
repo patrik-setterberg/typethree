@@ -8,17 +8,6 @@ export const Header = styled.header`
   background-color: ${props => props.theme.backgroundSecondary};
   padding: var(--default-spacing);
 
-  & div {
-    // temppppppppp stuff
-    display: flex;
-    align-items: center;
-    color: ${props => props.theme.primary};
-
-    &:first-of-type {
-      margin-right: auto;
-    }
-  }
-
   & section {
     // probably temp
     display: flex;

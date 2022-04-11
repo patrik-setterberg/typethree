@@ -1,9 +1,8 @@
 import styled, { css } from "styled-components";
-import media from "../../../globals/media-breakpoints";
+import media from "../../../../globals/media-breakpoints";
 
 export const Wrapper = styled.div`
   position: relative;
-  margin-left: var(--default-spacing); // temp;
 `;
 
 export const HeaderButton = styled.button<{ modalIsOpen: boolean }>`

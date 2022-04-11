@@ -1,8 +1,8 @@
 import { useContext } from "react";
 
-import SettingsContext from "../../context/settings-context";
+import SettingsContext from "../../../../context/settings-context";
 
-import HeaderButton from "../UI/HeaderButton/HeaderButton";
+import HeaderButton from "../HeaderButton/HeaderButton";
 import Gears from "./Gears";
 
 const SettingsButton = (): JSX.Element => {

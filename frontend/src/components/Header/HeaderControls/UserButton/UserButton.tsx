@@ -1,4 +1,4 @@
-import HeaderButton from "../UI/HeaderButton/HeaderButton";
+import HeaderButton from "../HeaderButton/HeaderButton";
 import UserIcon from "./UserIcon";
 
 const UserButton = (): JSX.Element => {

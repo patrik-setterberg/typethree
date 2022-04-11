@@ -3,7 +3,9 @@ import HeaderMessageProps from "./HeaderMessage.interfaces";
 
 const HeaderMessage = ({}: HeaderMessageProps): JSX.Element => {
   return (
-    <S.HeaderMessage>Message!</S.HeaderMessage>
+    <S.Wrapper>
+      <S.HeaderMessage>Message!</S.HeaderMessage>
+    </S.Wrapper>
   );
 }
 
