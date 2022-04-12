@@ -2,29 +2,27 @@ import React, { useState } from "react";
 
 const SettingsContext = React.createContext({
   settingsModalVisible: false,
-  openSettings: (event: React.MouseEvent<HTMLButtonElement>) => {},
-  closeSettings: (event: React.MouseEvent<HTMLElement>) => {},
+  openSettings: () => {},
+  closeSettings: () => {},
   // Theme
   // Test length
   // ??
 });
 
-interface SettingsProps {
+interface SettingsContextProps {
   children: React.ReactNode;
 }
 
 export const SettingsContextProvider = ({
   children,
-}: SettingsProps): JSX.Element => {
+}: SettingsContextProps): JSX.Element => {
   const [settingsModalVisible, setSettingsModalVisible] = useState(false);
 
-  const openSettings = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const openSettings = () => {
     setSettingsModalVisible(true);
   };
 
-  const closeSettings = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
+  const closeSettings = () => {
     setSettingsModalVisible(false);
   };
 

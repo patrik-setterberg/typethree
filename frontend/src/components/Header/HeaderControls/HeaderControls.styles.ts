@@ -2,8 +2,9 @@ import styled from "styled-components";
 
 export const HeaderControls = styled.div`
   display: flex;
+  align-items: center;
 
-  & div + div {
+  & * + * {
     margin-left: var(--default-spacing);
   }
 `

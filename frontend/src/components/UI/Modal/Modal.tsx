@@ -1,6 +1,7 @@
+import React, { useEffect, useCallback } from "react";
+
 import * as ReactDOM from "react-dom";
 import * as S from "./Modal.styles";
-
 import CloseButton from "./CloseButton";
 
 interface BackdropProps {
@@ -16,12 +17,25 @@ const Backdrop = ({ onClose }: BackdropProps): JSX.Element => {
  */
 interface ModalProps {
   title: string;
-  onClose: (event: React.MouseEvent<HTMLElement>) => void;
+  onClose: () => void;
   children: React.ReactNode;
 }
 
 const Modal = ({ title, onClose, children }: ModalProps): JSX.Element => {
   const overlaysElement: HTMLElement = document.getElementById("overlays")!;
+
+  const escapeHandler = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      onClose();
+    }
+  }, [onClose]);
+
+  useEffect(() => {
+    window.addEventListener("keydown", escapeHandler);
+    return () => {
+      window.removeEventListener("keydown", escapeHandler);
+    };
+  }, [escapeHandler]);
 
   return (
     <>

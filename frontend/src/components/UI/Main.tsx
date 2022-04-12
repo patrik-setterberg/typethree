@@ -16,22 +16,10 @@ const Main = ({children}: Props): JSX.Element => {
     }
   }
 
-  const blurHandler = () => {
-    console.log('Window blurred.');
-  }
-
-  const focusHandler = () => {
-    console.log('Window focused.');
-  }
-
   useEffect(() => {
     window.addEventListener("keydown", keyPressHandler);
-    window.addEventListener("focus", focusHandler);
-    window.addEventListener("blur", blurHandler);
     return () => {
       window.removeEventListener("keydown", keyPressHandler);
-      window.removeEventListener("focus", focusHandler);
-      window.removeEventListener("blur", blurHandler);
     };
   }, []);
 

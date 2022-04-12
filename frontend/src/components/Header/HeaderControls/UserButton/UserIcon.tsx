@@ -1,10 +1,10 @@
 import * as S from "./UserIcon.styles";
 
-interface IUserIconProps {
+interface UserIconProps {
   isLoggedIn: boolean;
 }
 
-const UserIcon = ({isLoggedIn}: IUserIconProps): JSX.Element => {
+const UserIcon = ({isLoggedIn}: UserIconProps): JSX.Element => {
   return (
     <S.UserIcon isLoggedIn={isLoggedIn}>
       <svg viewBox="0 0 325 325" fill="none" xmlns="http://www.w3.org/2000/svg">
