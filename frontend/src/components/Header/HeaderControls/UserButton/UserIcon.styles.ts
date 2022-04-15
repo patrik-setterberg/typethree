@@ -1,6 +1,9 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const UserIcon = styled.span<{ isLoggedIn: boolean }>`
+export const UserIcon = styled.span<{
+  isLoggedIn: boolean;
+  modalIsOpen: boolean;
+}>`
   display: flex;
   align-items: center;
 
@@ -10,8 +13,17 @@ export const UserIcon = styled.span<{ isLoggedIn: boolean }>`
 
     & .user-icon__head,
     & .user-icon__body {
-      fill: ${(props) =>
-        props.isLoggedIn ? (props) => props.theme.highlight : "none"};
+      fill: none;
+      ${(props) =>
+        props.isLoggedIn &&
+        css`
+          fill: ${(props) => props.theme.highlight};
+        `}
+      ${(props) =>
+        props.modalIsOpen && props.isLoggedIn &&
+        css`
+          fill: ${(props) => props.theme.primary};
+        `};
     }
   }
 

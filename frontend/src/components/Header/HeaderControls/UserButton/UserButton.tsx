@@ -1,21 +1,21 @@
+import { useContext } from "react";
+
+import AuthContext from "../../../../context/auth-context";
 import HeaderControlsButton from "../HeaderControlsButton/HeaderControlsButton";
 import UserIcon from "./UserIcon";
 
 const UserButton = (): JSX.Element => {
 
-  // :(
-  const isLoggedIn: boolean = false;
+  const authCtx = useContext(AuthContext);
 
   return (
     <HeaderControlsButton
-      clickFunc={() => {
-        console.log("User");
-      }}
-      title={isLoggedIn ? "User" : "Login/Register"}
+      clickFunc={authCtx.openModal}
+      title={authCtx.isLoggedIn ? "User" : "Login/Register"}
       ariaLabel="User"
-      modalIsOpen={false}
+      modalIsOpen={authCtx.userModalVisible}
     >
-      <UserIcon isLoggedIn={isLoggedIn} />
+      <UserIcon isLoggedIn={authCtx.isLoggedIn} modalIsOpen={authCtx.userModalVisible} />
     </HeaderControlsButton>
   );
 };

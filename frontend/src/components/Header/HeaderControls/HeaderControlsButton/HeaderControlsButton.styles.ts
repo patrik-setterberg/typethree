@@ -8,7 +8,7 @@ export const HeaderControlsButton = styled.button<{ modalIsOpen: boolean }>`
   ${(props) =>
     props.modalIsOpen &&
     css`
-      & svg {
+      & span svg {
         & path,
         & circle {
           fill: ${(props) => props.theme.primary};

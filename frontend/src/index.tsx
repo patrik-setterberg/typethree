@@ -4,17 +4,20 @@ import App from './App';
 
 import GlobalStyle from './globals/global-styles';
 import '../src/assets/fonts/fonts.css';
-import { SettingsContextProvider } from "./context/settings-context";
+import { AuthContextProvider } from './context/auth-context';
 import { FocusContextProvider } from "./context/focus-context";
+import { SettingsContextProvider } from "./context/settings-context";
 
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
-    <FocusContextProvider>
-      <SettingsContextProvider>
-        <App />
-      </SettingsContextProvider>
-    </FocusContextProvider>
+    <AuthContextProvider>
+      <FocusContextProvider>
+        <SettingsContextProvider>
+          <App />
+        </SettingsContextProvider>
+      </FocusContextProvider>
+    </AuthContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

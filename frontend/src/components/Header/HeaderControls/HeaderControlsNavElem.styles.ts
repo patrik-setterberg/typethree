@@ -28,7 +28,8 @@ export const Wrapper = styled.div`
     }
   }
 
-  &:hover svg {
+  & button:hover span svg,
+  & ${HeaderControlsLink}:hover svg {
     & path,
     & circle {
       fill: ${(props) => props.theme.primary};

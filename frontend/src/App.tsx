@@ -2,7 +2,8 @@ import { useState, useContext } from "react";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import SettingsContext from "./context/settings-context";
+import AuthContext from "./context/auth-context";
+// import SettingsContext from "./context/settings-context";
 import themes, { defaultTheme } from "./globals/themes";
 
 import Footer from "./components/Footer/Footer";
@@ -17,7 +18,7 @@ const Temp = ():JSX.Element => {
 }
 
 const App = (): JSX.Element => {
-  const settingsCtx = useContext(SettingsContext);
+  const authCtx = useContext(AuthContext);
 
   const [currentTheme, setCurrentTheme] = useState(themes[defaultTheme]);
   // IF LOGGED IN, USE USER'S PREFERED THEME SETTING.
@@ -33,8 +34,8 @@ const App = (): JSX.Element => {
           </Routes>
         </Main>
         <Footer />
-        {settingsCtx.settingsModalVisible && (
-          <Modal title="Settings" onClose={settingsCtx.closeSettings}>
+        {authCtx.userModalVisible && (
+          <Modal title="User!" onClose={authCtx.closeModal}>
             Modal!
           </Modal>
         )}
