@@ -1,10 +1,6 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-
-`
-
-// temp branding
+// temp branding :(
 export const Branding = styled.span`
   display: flex;
   align-items: center;
@@ -21,5 +17,11 @@ export const Branding = styled.span`
   & span:last-child {
     font-size: 0.9em;
     font-weight: 600;
+  }
+
+  & a,
+  & a:visited {
+    color: ${props => props.theme.primary};
+    text-decoration: none;
   }
 `

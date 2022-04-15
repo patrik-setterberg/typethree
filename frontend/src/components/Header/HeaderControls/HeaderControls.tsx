@@ -1,12 +1,12 @@
 import * as S from "./HeaderControls.styles";
 import UserButton from "./UserButton/UserButton";
-import SettingsButton from "./SettingsButton/SettingsButton";
+import SettingsLink from "./SettingsLink/SettingsLink";
 
 const HeaderControls = (): JSX.Element => {
   return (
     <S.HeaderControls>
       <UserButton />
-      <SettingsButton />
+      <SettingsLink />
     </S.HeaderControls>
   );
 }

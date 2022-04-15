@@ -1,18 +1,22 @@
-import HeaderButton from "../HeaderButton/HeaderButton";
+import HeaderControlsButton from "../HeaderControlsButton/HeaderControlsButton";
 import UserIcon from "./UserIcon";
 
 const UserButton = (): JSX.Element => {
+
+  // :(
+  const isLoggedIn: boolean = false;
+
   return (
-    <HeaderButton
+    <HeaderControlsButton
       clickFunc={() => {
         console.log("User");
       }}
-      title="Login&nbsp;/&nbsp;Register"
+      title={isLoggedIn ? "User" : "Login/Register"}
       ariaLabel="User"
       modalIsOpen={false}
     >
-      <UserIcon isLoggedIn={true} />
-    </HeaderButton>
+      <UserIcon isLoggedIn={isLoggedIn} />
+    </HeaderControlsButton>
   );
 };
 

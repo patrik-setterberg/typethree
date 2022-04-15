@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { ThemeProvider } from "styled-components";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import SettingsContext from "./context/settings-context";
 import themes, { defaultTheme } from "./globals/themes";
@@ -11,6 +12,10 @@ import Modal from "./components/UI/Modal/Modal";
 
 import TestCountdown from "./components/TestCountdown/TestCountdown";
 
+const Temp = ():JSX.Element => {
+  return <span>Heehehehe</span>;
+}
+
 const App = (): JSX.Element => {
   const settingsCtx = useContext(SettingsContext);
 
@@ -19,16 +24,21 @@ const App = (): JSX.Element => {
 
   return (
     <ThemeProvider theme={currentTheme}>
-      <Header />
-      <Main>
-        <TestCountdown />
-      </Main>
-      <Footer />
-      {settingsCtx.settingsModalVisible && (
-        <Modal title="Settings" onClose={settingsCtx.closeSettings}>
-          Modal!
-        </Modal>
-      )}
+      <BrowserRouter>
+        <Header />
+        <Main>
+          <Routes>
+            <Route path="/" element={<TestCountdown />} />
+            <Route path="/settings" element={<Temp />} />
+          </Routes>
+        </Main>
+        <Footer />
+        {settingsCtx.settingsModalVisible && (
+          <Modal title="Settings" onClose={settingsCtx.closeSettings}>
+            Modal!
+          </Modal>
+        )}
+      </BrowserRouter>
     </ThemeProvider>
   );
 };
