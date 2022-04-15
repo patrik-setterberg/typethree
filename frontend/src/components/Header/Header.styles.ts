@@ -1,21 +1,27 @@
 import styled from "styled-components";
 
-import media from "../../globals/media-breakpoints";
+import Container from "../UI/Container.styles";
+import { Branding } from "./Branding/Branding.styles";
+import { HeaderControls } from "./HeaderControls/HeaderControls.styles";
 
 export const Header = styled.header`
   display: flex;
   justify-content: center;
   background-color: ${props => props.theme.backgroundSecondary};
-  padding: var(--default-spacing);
+  border-bottom: 1px solid ${props => props.theme.backgroundFourthenary};
 
-  & section {
-    // probably temp
-    display: flex;
+  // Center middle element (Header message).
+  & ${Container} {
     justify-content: space-between;
-  }
 
-  @media ${media.atleastMedium} {
-    padding-left: 0;
-    padding-right: 0;
+    & ${Branding},
+    & ${HeaderControls} {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+
+    & ${HeaderControls} > *:first-child {
+      margin-left: auto;
+    }
   }
-`;
+`

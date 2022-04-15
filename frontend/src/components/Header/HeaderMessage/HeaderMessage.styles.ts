@@ -3,10 +3,11 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 var(--default-spacing);
+  justify-content: center;
 `
 
 export const HeaderMessage = styled.span`
-  text-align: center;
+  padding: 0 var(--default-spacing);
   color: ${props => props.theme.primary};
+  text-align: center;
 `

@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import SettingsContext from "./context/settings-context";
 import themes, { defaultTheme } from "./globals/themes";
 
+import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Main from "./components/UI/Main";
 import Modal from "./components/UI/Modal/Modal";
@@ -22,6 +23,7 @@ const App = (): JSX.Element => {
       <Main>
         <TestCountdown />
       </Main>
+      <Footer />
       {settingsCtx.settingsModalVisible && (
         <Modal title="Settings" onClose={settingsCtx.closeSettings}>
           Modal!

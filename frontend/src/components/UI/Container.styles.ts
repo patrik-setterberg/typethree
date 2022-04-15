@@ -1,16 +1,9 @@
 import styled from "styled-components";
-import media from "../../globals/media-breakpoints";
 
 const Container = styled.section`
+  display: flex;
   width: var(--content-width);
-
-  @media ${media.medium} {
-
-  }
-
-  @media ${media.large} {
-
-  }
+  padding: var(--default-spacing);
 `
 
 export default Container;

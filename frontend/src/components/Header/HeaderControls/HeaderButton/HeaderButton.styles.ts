@@ -3,6 +3,10 @@ import media from "../../../../globals/media-breakpoints";
 
 export const Wrapper = styled.div`
   position: relative;
+
+  & + & {
+    margin-left: var(--default-spacing);
+  }
 `;
 
 export const HeaderButton = styled.button<{ modalIsOpen: boolean }>`
@@ -43,7 +47,7 @@ export const HeaderButton = styled.button<{ modalIsOpen: boolean }>`
 `;
 
 export const HeaderButtonTitle = styled.span`
-  display: inline-block;
+  display: none;
   position: absolute;
   top: 2rem;
   left: 50%;
@@ -67,12 +71,21 @@ export const HeaderButtonTitle = styled.span`
   transition: opacity 0.125s ease-in-out, top 0.125s ease-in-out, background-position 1s ease-out, letter-spacing 0.3s ease;
   pointer-events: none;
 
-  @media ${media.atleastMedium} {
+  // Custom media query, slightly larger than medium, to prevent overflow at medium breakpoint.
+  @media only screen and (min-width: 800px) {
+    display: inline-block;
+
     ${HeaderButton}:hover ~ & {
       opacity: 1;
-      top: 2.25rem;
+      top: 2.35rem;
       background-position: 0%;
       letter-spacing: 1px;
+    }
+  }
+
+  @media ${media.large} {
+    ${HeaderButton}:hover ~ & {
+      top: 2.45rem;
     }
   }
 `;
