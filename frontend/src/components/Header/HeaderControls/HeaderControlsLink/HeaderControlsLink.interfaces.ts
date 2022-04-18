@@ -1,5 +1,7 @@
 export interface HeaderControlsLinkProps {
   linkTo: string;
-  children: React.ReactNode;
+  isLoggedIn?: boolean;
+  isUserLink?: boolean;
   title: string;
+  children: React.ReactNode;
 }

@@ -2,12 +2,11 @@ import * as S from "./UserIcon.styles";
 
 interface UserIconProps {
   isLoggedIn: boolean;
-  modalIsOpen: boolean;
 }
 
-const UserIcon = ({ isLoggedIn, modalIsOpen }: UserIconProps): JSX.Element => {
+const UserIcon = ({ isLoggedIn }: UserIconProps): JSX.Element => {
   return (
-    <S.UserIcon isLoggedIn={isLoggedIn} modalIsOpen={modalIsOpen}>
+    <S.UserIcon isLoggedIn={isLoggedIn}>
       <svg viewBox="0 0 325 325" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle
           className="user-icon__head"

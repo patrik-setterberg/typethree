@@ -8,13 +8,18 @@ import themes, { defaultTheme } from "./globals/themes";
 
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
-import Main from "./components/UI/Main";
-import Modal from "./components/UI/Modal/Modal";
+import Main from "./components/UI/Main/Main";
+//import Modal from "./components/UI/Modal/Modal";
+import SettingsPage from "./pages/SettingsPage/SettingsPage";
+import UserPage from "./pages/UserPage/UserPage";
 
 import TestCountdown from "./components/TestCountdown/TestCountdown";
 
-const Temp = ():JSX.Element => {
-  return <span>Heehehehe</span>;
+// TEMP LOGOUT ROUTE COMPONENT.
+const LogOut = (): JSX.Element => {
+  return (
+    <span>LOGOUT ROUTE</span>
+  );
 }
 
 const App = (): JSX.Element => {
@@ -30,15 +35,12 @@ const App = (): JSX.Element => {
         <Main>
           <Routes>
             <Route path="/" element={<TestCountdown />} />
-            <Route path="/settings" element={<Temp />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/user" element={<UserPage />} />
+            <Route path="/logout" element={<LogOut />} />
           </Routes>
         </Main>
         <Footer />
-        {authCtx.userModalVisible && (
-          <Modal title="User!" onClose={authCtx.closeModal}>
-            Modal!
-          </Modal>
-        )}
       </BrowserRouter>
     </ThemeProvider>
   );

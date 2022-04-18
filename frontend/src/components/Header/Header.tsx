@@ -1,5 +1,5 @@
 import * as StyledComponents from "./Header.styles";
-import Container  from "../UI/Container.styles";
+import { Container }  from "../UI/Container.styles";
 import Branding from "./Branding/Branding";
 import HeaderMessage from "./HeaderMessage/HeaderMessage";
 import HeaderControls from "./HeaderControls/HeaderControls";

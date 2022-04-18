@@ -1,17 +1,31 @@
-import * as StyledComponents from "../HeaderControlsNavElem.styles";
-import * as StyledLink from "./HeaderControlsLink.styles";
-import { HeaderControlsLinkProps } from "./HeaderControlsLink.interfaces";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
-const HeaderControlsLink = ({linkTo, title, children}: HeaderControlsLinkProps): JSX.Element => {
-  const S = {...StyledComponents, ...StyledLink};
+import AuthContext from "../../../../context/auth-context";
+
+import { HeaderControlsLinkProps } from "./HeaderControlsLink.interfaces";
+import * as S from "./HeaderControlsLink.styles";
+
+const HeaderControlsLink = ({
+  linkTo,
+  title,
+  isUserLink = false,
+  children,
+}: HeaderControlsLinkProps): JSX.Element => {
+
+  const authCtx = useContext(AuthContext);
+
   return (
     <S.Wrapper>
+      <S.HeaderControlsLinkTitle>
+        <span>{title}</span>
+        {isUserLink && authCtx.isLoggedIn && <Link to="/logout" aria-label="Log out">Log&nbsp;out</Link>}
+      </S.HeaderControlsLinkTitle>
       <S.HeaderControlsLink to={linkTo} aria-label={title}>
         {children}
       </S.HeaderControlsLink>
-      <S.HeaderControlsElemTitle>{title}</S.HeaderControlsElemTitle>
     </S.Wrapper>
   );
-}
+};
 
 export default HeaderControlsLink;

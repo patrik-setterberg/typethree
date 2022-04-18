@@ -1,8 +1,11 @@
 import styled, { css } from "styled-components";
+import {
+  Wrapper,
+  HeaderControlsLink,
+} from "../HeaderControlsLink/HeaderControlsLink.styles";
 
 export const UserIcon = styled.span<{
   isLoggedIn: boolean;
-  modalIsOpen: boolean;
 }>`
   display: flex;
   align-items: center;
@@ -19,14 +22,10 @@ export const UserIcon = styled.span<{
         css`
           fill: ${(props) => props.theme.highlight};
         `}
-      ${(props) =>
-        props.modalIsOpen && props.isLoggedIn &&
-        css`
-          fill: ${(props) => props.theme.primary};
-        `};
     }
   }
 
+  ${Wrapper}:hover & svg,
   &:hover svg {
     transform: scale(1);
 
@@ -35,5 +34,23 @@ export const UserIcon = styled.span<{
       fill: ${(props) =>
         props.isLoggedIn ? (props) => props.theme.primary : "none"};
     }
+  }
+
+  // On user page.
+  ${HeaderControlsLink}.active & svg {
+    // Not logged in.
+    & > *:not(.user-icon__head):not(.user-icon__body) {
+      fill: ${(props) => props.theme.primary};
+    }
+
+    // Logged in.
+    ${(props) =>
+      props.isLoggedIn &&
+      css`
+        & .user-icon__head,
+        & .user-icon__body {
+          fill: ${(props) => props.theme.primary};
+        }
+      `}
   }
 `;

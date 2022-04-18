@@ -1,9 +1,18 @@
-import styled from "styled-components"
+import styled from "styled-components";
+
+import {
+  Wrapper,
+  HeaderControlsLink,
+} from "../HeaderControlsLink/HeaderControlsLink.styles";
 
 export const Gears = styled.span`
-  
   & .icon-gears {
     fill: none;
+  }
+
+  // Highlight gears when settings route is active.
+  ${HeaderControlsLink}.active & .gear {
+    fill: ${(props) => props.theme.primary};
   }
 
   & .gear-1 {
@@ -18,6 +27,8 @@ export const Gears = styled.span`
     transform-origin: 152px 236px;
   }
 
+  ${Wrapper}:hover & .gear-1,
+  ${Wrapper}:hover & .gear-3,
   &:hover .gear-1,
   &:hover .gear-3 {
     animation-duration: 5.6s;
@@ -26,6 +37,7 @@ export const Gears = styled.span`
     animation-timing-function: linear;
   }
 
+  ${Wrapper}:hover & .gear-2,
   &:hover .gear-2 {
     animation-duration: 5.6s;
     animation-name: gear-spin-reverse;
@@ -33,21 +45,21 @@ export const Gears = styled.span`
     animation-timing-function: linear;
   }
 
-	@keyframes gear-spin {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
+  @keyframes gear-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 
-	@keyframes gear-spin-reverse {
-		from {
-			transform: rotate(-1deg);
-		}
-		to {
-			transform: rotate(-361deg);
-		}
-	}
-`
+  @keyframes gear-spin-reverse {
+    from {
+      transform: rotate(-1deg);
+    }
+    to {
+      transform: rotate(-361deg);
+    }
+  }
+`;
