@@ -24,6 +24,7 @@ const HeaderControlsLink = ({
       <S.HeaderControlsLink to={linkTo} aria-label={title}>
         {children}
       </S.HeaderControlsLink>
+      <S.HoverHelper />
     </S.Wrapper>
   );
 };

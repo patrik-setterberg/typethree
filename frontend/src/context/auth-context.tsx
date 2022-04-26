@@ -16,7 +16,7 @@ export const AuthContextProvider = ({
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: false,
+        isLoggedIn: true,
       }}
     >
       {children}
