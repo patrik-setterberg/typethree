@@ -1,15 +1,17 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ labelTextLen: number }>`
   position: relative;
-  margin-top: 2rem;
+  font-size: 0.8125rem;
+  margin-left: ${props => props.labelTextLen}ch;
+  padding-left: 4rem;
 `;
 
 export const Input = styled.input`
   opacity: 0;
 
   /* &:focus ~ label {
-    outline: 2px solid ${props => props.theme.highlight};
+    outline: 2px solid ${(props) => props.theme.highlight};
     outline-offset: 5px;
     outline-width: 2px;
   } */
@@ -40,7 +42,6 @@ export const Label = styled.label<{ labelTextLen: number }>`
     ${(props) => props.labelTextLen * -1}ch +
       (${(props) => props.labelTextLen} * ${LABEL_LETTER_SPACING}px * -1) - 1ch
   );
-  font-size: 0.8125rem;
   font-weight: 600;
   line-height: 1.8;
   letter-spacing: ${LABEL_LETTER_SPACING}px;
@@ -63,11 +64,12 @@ export const Label = styled.label<{ labelTextLen: number }>`
     transition: all 0.1s ease-out;
   }
 
-  &:hover {
+  /* &:hover {
     letter-spacing: ${LABEL_LETTER_SPACING_HOVER}px;
     text-indent: calc(
     ${(props) => props.labelTextLen * -1}ch +
-      (${(props) => props.labelTextLen} * ${LABEL_LETTER_SPACING_HOVER}px * -1) - 1ch
-  );
-  }
+      (${(props) =>
+    props.labelTextLen} * ${LABEL_LETTER_SPACING_HOVER}px * -1) - 1ch
+    );
+  } */
 `;
