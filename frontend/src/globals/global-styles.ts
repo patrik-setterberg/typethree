@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
   @media ${media.large} {
     :root {
       --default-spacing: 1rem;
-      --content-width: 75rem;
+      --content-width: 64rem;
     }
   }
 `

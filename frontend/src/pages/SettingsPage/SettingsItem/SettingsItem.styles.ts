@@ -5,7 +5,7 @@ export const SettingsItem = styled.li`
   justify-content: space-between;
   position: relative;
   width: auto;
-  padding: calc(var(--default-spacing) * 2) var(--default-spacing);
+  padding: var(--default-spacing) var(--default-spacing) calc(var(--default-spacing) * 2);
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
 
