@@ -9,7 +9,7 @@ const Input = ({}: InputProps): JSX.Element => {
   const focusCtx = useContext(FocusContext);
 
   const inputEl = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);

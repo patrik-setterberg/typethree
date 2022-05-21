@@ -1,6 +1,6 @@
 import * as S from "./ToggleSwitch.styles";
 import { ToggleSwitchProps } from "./ToggleSwitch.interfaces";
-import React, { ChangeEvent } from "react";
+import React from "react";
 
 const ToggleSwitch = ({
   Id,
