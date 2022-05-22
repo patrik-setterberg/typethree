@@ -1,9 +1,7 @@
-interface StringMap {[key: string]: string};
-
-export const TestWords: StringMap = {
-  'eng1k': 'words-english-1k',
+interface StringMap {
+  [key: string]: string;
 }
 
 export const defaultSettings: StringMap = {
-  TestWords: 'eng1k',
-}
+  TestWords: "swe1k",
+};

@@ -1,5 +1,5 @@
-// (Around) 1000 common words in English
-// adapted from https://www.ef.com/wwen/english-resources/english-vocabulary/top-1000-words/
+// (Around) 1000 common words in English.
+// From https://www.ef.com/wwen/english-resources/english-vocabulary/top-1000-words/
 const words: Array<string> = [
   "ability",
   "able",

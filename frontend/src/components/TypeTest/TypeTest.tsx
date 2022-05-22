@@ -1,6 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import { TypeTestProps } from "./TypeTest.interfaces";
+
+// Words.
+import eng1k from "../../assets/words/words-english-1k";
+import swe1k from "../../assets/words/words-swedish-1k";
 
 import SettingsContext from "../../context/settings-context";
 import * as settings from "./settings";
@@ -14,33 +18,51 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   const settingsCtx = useContext(SettingsContext);
 
-  const loadWords = async (list: string): Promise<string[][]> => {
-    let wordList = (await import("../../assets/words/" + list)).default;
-    let testWords = [[]];
-
-    for (let i: number = 0; i < TEST_WORD_COUNT; i++) {
-      let randomIndex = Math.floor(Math.random() * (wordList.length + 1));
-      testWords[i] = Array.from(wordList[randomIndex]);
-      wordList.splice(randomIndex, 1);
-    }
-
-    return testWords;
+  const wordArrays: { [key: string]: Array<string> } = {
+    eng1k: eng1k,
+    swe1k: swe1k,
   };
 
-  const initialString = Array.from("Loading words");
-  const [words, setWords] = useState<string[][]>([initialString]);
+  const loadWords = useCallback(
+    (arr: Array<string>, count: number): Array<string[]> => {
+      let newArr: Array<string> = arr;
+      let words: Array<string[]> = [];
 
+      for (let i: number = 0; i < count; i++) {
+        const randomIndex: number = Math.floor(
+          Math.random() * (wordArr.length + 1)
+        );
+        if (newArr[randomIndex]) {
+          words[i] = Array.from(wordArr[randomIndex]);
+        }
+        newArr.splice(randomIndex, 1);
+      }
+      setWordArr(newArr);
+
+      return words;
+    },
+    []
+  );
+
+  const [wordArr, setWordArr] = useState<string[]>(
+    wordArrays[settingsCtx.TestWordsList]
+  );
+
+  const [testWords, setTestWords] = useState<string[][]>([[]]);
+
+  // Update wordArr and testWords if setting changes (and on first render).
   useEffect(() => {
-    const promisedWords = loadWords(
-      settings.TestWords[settingsCtx.TestWordsList]
-    ).then((promisedWords) => setWords(promisedWords));
+    setWordArr(wordArrays[settingsCtx.TestWordsList]);
+    setTestWords(
+      loadWords(wordArrays[settingsCtx.TestWordsList], TEST_WORD_COUNT)
+    );
   }, [settingsCtx.TestWordsList]);
 
   return (
     <>
       <TestCountdown />
       <Input />
-      <TestText words={words} />
+      <TestText words={testWords} />
     </>
   );
 };
