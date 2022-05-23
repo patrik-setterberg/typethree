@@ -1,6 +1,7 @@
 const themes = {
 	dark: {
-		primary: '#EEEEEE',
+		primary: 'rgb(238, 238, 238)', // #EEEEEE
+		primary07: 'rgba(238, 238, 238, 0.7)',
 		highlight: '#FFD369',
 		backgroundPrimary: '#191d23',
 		backgroundSecondary: '#121519',

@@ -7,9 +7,9 @@ import eng1k from "../../assets/words/words-english-1k";
 import swe1k from "../../assets/words/words-swedish-1k";
 
 import SettingsContext from "../../context/settings-context";
-import * as settings from "./settings";
 
 import Input from "./Input/Input";
+import Keyboard from "./Keyboard/Keyboard";
 import TestCountdown from "../TestCountdown/TestCountdown";
 import TestText from "./TestText/TestText";
 
@@ -18,6 +18,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   const settingsCtx = useContext(SettingsContext);
 
+  // Hmmm...
   const wordArrays: { [key: string]: Array<string> } = {
     eng1k: eng1k,
     swe1k: swe1k,
@@ -45,24 +46,23 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   );
 
   const [wordArr, setWordArr] = useState<string[]>(
-    wordArrays[settingsCtx.TestWordsList]
+    wordArrays[settingsCtx.TestWords]
   );
 
   const [testWords, setTestWords] = useState<string[][]>([[]]);
 
   // Update wordArr and testWords if setting changes (and on first render).
   useEffect(() => {
-    setWordArr(wordArrays[settingsCtx.TestWordsList]);
-    setTestWords(
-      loadWords(wordArrays[settingsCtx.TestWordsList], TEST_WORD_COUNT)
-    );
-  }, [settingsCtx.TestWordsList]);
+    setWordArr(wordArrays[settingsCtx.TestWords]);
+    setTestWords(loadWords(wordArrays[settingsCtx.TestWords], TEST_WORD_COUNT));
+  }, [settingsCtx.TestWords]);
 
   return (
     <>
       <TestCountdown />
-      <Input />
       <TestText words={testWords} />
+      <Input />
+      {settingsCtx.ShowKeyboard && <Keyboard />}
     </>
   );
 };

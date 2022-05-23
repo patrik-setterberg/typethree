@@ -1,13 +1,23 @@
 import React from "react";
 
-import * as settings from "../components/TypeTest/settings";
+const defaultSettings: {
+  TestWords: string;
+  ShowKeyboard: boolean;
+  KeyboardLayout: string;
+} = {
+  TestWords: "eng1k",
+  ShowKeyboard: true,
+  KeyboardLayout: "QWERTY_US",
+};
 
 const SettingsContext = React.createContext({
-  TestWordsList: settings.defaultSettings.TestWords,
+  // SITE PREFERENCES //
   // Theme
+  // TYPE TEST PREFERENCES //
+  TestWords: defaultSettings.TestWords,
   // Test length
-  // Keyboard
-  // Language
+  ShowKeyboard: defaultSettings.ShowKeyboard,
+  KeyboardLayout: defaultSettings.KeyboardLayout,
   // ??
   // More!
 });
@@ -19,13 +29,14 @@ interface SettingsContextProps {
 export const SettingsContextProvider = ({
   children,
 }: SettingsContextProps): JSX.Element => {
-
   // Check if user is logged in and has preferences, if so set provider's values to them.
 
   return (
     <SettingsContext.Provider
       value={{
-        TestWordsList: settings.defaultSettings.TestWords,
+        TestWords: defaultSettings.TestWords,
+        ShowKeyboard: defaultSettings.ShowKeyboard,
+        KeyboardLayout: defaultSettings.KeyboardLayout,
       }}
     >
       {children}
