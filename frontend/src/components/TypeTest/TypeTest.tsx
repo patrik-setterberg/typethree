@@ -1,6 +1,13 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
 
-import { TypeTestProps } from "./TypeTest.interfaces";
+import { TypeTestProps, pressedKeys } from "./TypeTest.interfaces";
 
 // Words.
 import eng1k from "../../assets/words/words-english-1k";
@@ -18,11 +25,21 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   const settingsCtx = useContext(SettingsContext);
 
-  // Hmmm...
-  const wordArrays: { [key: string]: Array<string> } = {
-    eng1k: eng1k,
-    swe1k: swe1k,
+  type wordArray = {
+    [key: string]: Array<string>;
   };
+
+  // Hmmm...
+  const wordArrays: wordArray = useMemo<wordArray>(() => {
+    return {
+      eng1k: eng1k,
+      swe1k: swe1k,
+    };
+  }, []);
+
+  const [wordArr, setWordArr] = useState<string[]>(
+    wordArrays[settingsCtx.TestWords]
+  );
 
   const loadWords = useCallback(
     (arr: Array<string>, count: number): Array<string[]> => {
@@ -42,11 +59,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
       return words;
     },
-    []
-  );
-
-  const [wordArr, setWordArr] = useState<string[]>(
-    wordArrays[settingsCtx.TestWords]
+    [wordArr]
   );
 
   const [testWords, setTestWords] = useState<string[][]>([[]]);
@@ -55,13 +68,66 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   useEffect(() => {
     setWordArr(wordArrays[settingsCtx.TestWords]);
     setTestWords(loadWords(wordArrays[settingsCtx.TestWords], TEST_WORD_COUNT));
-  }, [settingsCtx.TestWords]);
+  }, [settingsCtx.TestWords, loadWords, wordArrays]);
+
+  // Hidden text-input value.
+  const [inputVal, setInputVal] = useState<string>("");
+
+  type pressedKeysStateType = {
+    pressedKeys: pressedKeys[];
+  };
+
+  type pressedKeysActionType =
+    | {
+        type: "ADD";
+        payload: {
+          symbol: string;
+          correct: boolean;
+        };
+      }
+    | {
+        type: "REMOVE";
+        payload: { symbol: string };
+      };
+
+  const initialValue: pressedKeysStateType = { pressedKeys: [] };
+
+  const pressedKeysReducer = (
+    state: pressedKeysStateType,
+    action: pressedKeysActionType
+  ) => {
+    switch (action.type) {
+      case "ADD":
+        return {
+          ...state,
+          pressedKeys: [
+            ...state.pressedKeys,
+            action.payload,
+          ],
+        };
+      case "REMOVE":
+        return {
+          ...state,
+          pressedKeys: state.pressedKeys.filter(
+            (pressedKeys) =>
+              pressedKeys.symbol !== action.payload.symbol
+          ),
+        };
+    }
+  };
+
+  const [pressedKeysState, dispatchPressedKeys] = useReducer(pressedKeysReducer, initialValue);
 
   return (
     <>
       <TestCountdown />
       <TestText words={testWords} />
-      <Input />
+      <Input
+        inputVal={inputVal}
+        setInputVal={setInputVal}
+        pressedKeys={pressedKeysState.pressedKeys}
+        setPressedKeys={dispatchPressedKeys}
+      />
       {settingsCtx.ShowKeyboard && <Keyboard />}
     </>
   );
