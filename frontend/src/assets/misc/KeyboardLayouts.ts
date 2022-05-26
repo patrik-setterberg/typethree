@@ -27,4 +27,13 @@ const Layouts: { [key: string]: Array<string[]> } = {
   ],
 };
 
+// Matching patterns for each layout, used for keyboard highlighting.
+export const MatchingPatterns: { [key: string]: RegExp } = {
+  DVORAK_US: /^[a-z|A-Z,.';\-=/ ]$/g,
+  QWERTY_US: /^[a-z|A-Z,.';[\]/ ]$/g,
+  QWERTY_SE: /^[a-z|A-ZåÅäÄöÖ<,.'\- ]$/g,
+  QWERTZ_DE: /^[a-z|A-ZüÜäÄöÖ<,.'\-#+ ]$/g,
+  AZERTY_FR: /^[a-z|A-Z^$ù*<,;:! ]$/g,
+};
+
 export default Layouts;

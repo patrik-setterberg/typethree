@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef } from "react";
 
 import { InputProps } from "./Input.interfaces";
 import * as S from "./Input.styles";
+import { MatchingPatterns } from "../../../assets/misc/KeyboardLayouts";
 
 import FocusContext from "../../../context/focus-context";
+import SettingsContext from "../../../context/settings-context";
 
 const Input = ({
   inputVal,
@@ -12,8 +14,13 @@ const Input = ({
   setPressedKeys,
 }: InputProps): JSX.Element => {
   const focusCtx = useContext(FocusContext);
+  const settingsCtx = useContext(SettingsContext);
 
   const inputEl = useRef<HTMLInputElement>(null);
+
+  const layoutCharsPattern: RegExp = useMemo(() => {
+    return MatchingPatterns[settingsCtx.KeyboardLayout];
+  }, [settingsCtx.KeyboardLayout]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputVal(e.target.value);
@@ -25,8 +32,7 @@ const Input = ({
       console.log("Woah!");
     } */
 
-    // MAYBE STORE HIGHLIGHTABLE KEYS IN SOME CONST? LAYOUT SPECIFIC?
-    if (e.key.match(/^[a-z|A-Z,.';\[\]\/ ]$/g) && e.repeat === false) {
+    if (e.key.match(layoutCharsPattern) && e.repeat === false) {
       setPressedKeys({
         type: "ADD",
         payload: { symbol: e.key, correct: true },
