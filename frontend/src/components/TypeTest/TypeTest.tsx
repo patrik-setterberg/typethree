@@ -128,7 +128,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
         pressedKeys={pressedKeysState.pressedKeys}
         setPressedKeys={dispatchPressedKeys}
       />
-      {settingsCtx.ShowKeyboard && <Keyboard />}
+      {settingsCtx.ShowKeyboard && <Keyboard pressedKeys={pressedKeysState.pressedKeys}/>}
     </>
   );
 };

@@ -6,5 +6,5 @@ export interface InputProps {
   inputVal: string;
   setInputVal: React.Dispatch<React.SetStateAction<string>>;
   pressedKeys: pressedKeys[];
-  setPressedKeys: React.Dispatch<any>;
+  setPressedKeys: React.Dispatch<any>; // PLEASE FIX
 }

@@ -25,14 +25,16 @@ const Input = ({
       console.log("Woah!");
     } */
 
-    if (e.key.match(/^[a-z|A-Z ]$/g) && e.repeat === false) {
+    // MAYBE STORE HIGHLIGHTABLE KEYS IN SOME CONST? LAYOUT SPECIFIC?
+    if (e.key.match(/^[a-z|A-Z,.';\[\]\/ ]$/g) && e.repeat === false) {
       setPressedKeys({
         type: "ADD",
         payload: { symbol: e.key, correct: true },
       });
     }
 
-    // If key is Shift, instead add its 'code'.
+    // If key is Shift, instead add its 'code' because it allows us to differentiate
+    // left from right shift keys.
     if (e.key === "Shift") {
       setPressedKeys({
         type: "ADD",
@@ -58,14 +60,6 @@ const Input = ({
       payload: { symbol: e.key.toUpperCase() },
     });
   };
-
-  useEffect(() => {
-    if (pressedKeys.length > 0) {
-      let myArr: Array<string> = [];
-      pressedKeys.forEach((pressedKey) => myArr.push(pressedKey.symbol));
-      console.log(myArr);
-    }
-  }, [pressedKeys]);
 
   const focusInput = (): void => {
     inputEl.current && inputEl.current.focus();
