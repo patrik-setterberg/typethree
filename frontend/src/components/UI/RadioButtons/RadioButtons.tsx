@@ -19,7 +19,7 @@ const RadioButtons = ({
       <S.Legend>{legend}</S.Legend>
       {items.map((item, i) => {
         return (
-          <S.Label key={i}>
+          <S.Label key={i} checked={currentValue === item.value}>
             <S.RadioButton
               type="radio"
               name={name}
