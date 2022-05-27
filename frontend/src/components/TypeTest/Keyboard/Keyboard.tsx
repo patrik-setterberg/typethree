@@ -1,5 +1,3 @@
-import { useContext, useEffect } from "react";
-
 import useSettingsContext from "../../../hooks/useSettingsContext";
 
 import Layouts from "../../../assets/misc/KeyboardLayouts";
@@ -12,11 +10,11 @@ const Keyboard = ({ pressedKeys }: KeyboardProps): JSX.Element => {
 
   return (
     <S.Keyboard>
-      {Layouts[settingsCtx.KeyboardLayout].map((row, ind) => {
+      {Layouts[settingsCtx.KeyboardLayout].layout.map((row, i) => {
         return (
           <S.Row
-            key={ind}
-            iso={ind === 2 && row.length > 12} // ANSI has 12 bottom keys.
+            key={i}
+            iso={i === 2 && row.length > 12} // ANSI has 12 bottom keys.
             LShiftPressed={pressedKeys.some(
               (pressedKey) => pressedKey.symbol === "ShiftLeft"
             )}
@@ -24,10 +22,10 @@ const Keyboard = ({ pressedKeys }: KeyboardProps): JSX.Element => {
               (pressedKey) => pressedKey.symbol === "ShiftRight"
             )}
           >
-            {row.map((keySymbol, ind) => {
+            {row.map((keySymbol, i) => {
               return (
                 <S.Key
-                  key={ind}
+                  key={i}
                   pressed={pressedKeys.some(
                     (pressedKey) =>
                       pressedKey.symbol.toLowerCase() === keySymbol

@@ -10,7 +10,6 @@ const RadioButtons = ({
   items,
   currentValue,
 }: RadioButtonsProps): JSX.Element => {
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     changeFunc(e.target.value);
   };
@@ -18,9 +17,9 @@ const RadioButtons = ({
   return (
     <S.Fieldset>
       <S.Legend>{legend}</S.Legend>
-      {items.map((item) => {
+      {items.map((item, i) => {
         return (
-          <S.Label>
+          <S.Label key={i}>
             <S.RadioButton
               type="radio"
               name={name}

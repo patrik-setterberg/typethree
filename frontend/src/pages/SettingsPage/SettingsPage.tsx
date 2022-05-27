@@ -1,7 +1,11 @@
+import { useMemo } from "react";
+
 import useSettingsContext from "../../hooks/useSettingsContext";
 
 import * as SettingsPageStyles from "./SettingsPage.styles";
 import { SettingsPageProps } from "./SettingsPage.interfaces";
+
+import Layouts from "../../assets/misc/KeyboardLayouts";
 
 import { PageContainer as Container } from "../../components/UI/Container.styles";
 import PageTitle from "../../components/UI/PageTitle.styles";
@@ -12,12 +16,19 @@ import Button from "../../components/UI/Button/Button";
 import RadioButtons from "../../components/UI/RadioButtons/RadioButtons";
 import ToggleSwitch from "../../components/UI/ToggleSwitch/ToggleSwitch";
 
-import { keyboardLayoutSettingsItems } from "../../assets/misc/KeyboardLayouts";
-
 const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
   const S = { ...SettingsPageStyles, Container, PageTitle, PageTagline };
 
   const settingsCtx = useSettingsContext();
+
+  const keyboardSettings: Array<{ value: string; label: string }> =
+    useMemo(() => {
+      let items = [];
+      for (const [key, value] of Object.entries(Layouts)) {
+        items.push({ value: key, label: value.name });
+      }
+      return items;
+    }, []);
 
   const testFunc = () => {
     console.log("togglin");
@@ -89,7 +100,7 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
             name="keyboard_layout"
             legend="Keyboard layout"
             changeFunc={settingsCtx.setKeyboardLayout}
-            items={keyboardLayoutSettingsItems}
+            items={keyboardSettings}
             currentValue={settingsCtx.KeyboardLayout}
           />
         </SettingsItem>

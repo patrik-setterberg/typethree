@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useMemo, useRef } from "react";
 
 import { InputProps } from "./Input.interfaces";
 import * as S from "./Input.styles";
-import { MatchingPatterns } from "../../../assets/misc/KeyboardLayouts";
+
+import Layouts from "../../../assets/misc/KeyboardLayouts";
 
 import FocusContext from "../../../context/focus-context";
 
@@ -20,7 +21,7 @@ const Input = ({
   const inputEl = useRef<HTMLInputElement>(null);
 
   const layoutCharsPattern: RegExp = useMemo(() => {
-    return MatchingPatterns[settingsCtx.KeyboardLayout];
+    return Layouts[settingsCtx.KeyboardLayout].matchingPattern;
   }, [settingsCtx.KeyboardLayout]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {

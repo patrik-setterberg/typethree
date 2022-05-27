@@ -1,47 +1,58 @@
+interface LayoutsValues {
+  [key: string]: {
+    name: string;
+    layout: Array<string[]>;
+    matchingPattern: RegExp; // Used for keyboard highlighting.
+  };
+}
+
 // Supported keyboard layouts.
-const Layouts: { [key: string]: Array<string[]> } = {
-  DVORAK_US: [
-    ["'", ",", ".", "p", "y", "f", "g", "c", "r", "l", "/", "="],
-    ["a", "o", "e", "u", "i", "d", "h", "t", "n", "s", "-"],
-    ["\u21e7", ";", "q", "j", "k", "x", "b", "m", "w", "v", "z", "\u21e7"],
-  ],
-  QWERTY_US: [
-    ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]"],
-    ["a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'"],
-    ["\u21e7", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "\u21e7"],
-  ],
-  QWERTY_SE: [
-    ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "å", '"'],
-    ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä", "'"],
-    ["\u21e7", "<", "z", "x", "c", "v", "b", "n", "m", ",", ".", "-", "\u21e7"],
-  ],
-  QWERTZ_DE: [
-    ["q", "w", "e", "r", "t", "z", "u", "i", "o", "p", "ü", "+"],
-    ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä", "#"],
-    ["\u21e7", "<", "y", "x", "c", "v", "b", "n", "m", ",", ".", "-", "\u21e7"],
-  ],
-  AZERTY_FR: [
-    ["a", "z", "e", "r", "t", "y", "u", "i", "o", "p", "^", "$"],
-    ["q", "s", "d", "f", "g", "h", "j", "k", "l", "m", "ù", "*"],
-    ["\u21e7", "<", "w", "x", "c", "v", "b", "n", ",", ";", ":", "!", "\u21e7"],
-  ],
+const Layouts: LayoutsValues = {
+  QWERTY_US: {
+    name: "US English (QWERTY)",
+    layout: [
+      ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]"],
+      ["a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'"],
+      ["\u21e7", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "\u21e7"],
+    ],
+    matchingPattern: /^[a-z|A-Z,.';[\]/ ]$/g,
+  },
+  DVORAK_US: {
+    name: "US English (DVORAK)",
+    layout: [
+      ["'", ",", ".", "p", "y", "f", "g", "c", "r", "l", "/", "="],
+      ["a", "o", "e", "u", "i", "d", "h", "t", "n", "s", "-"],
+      ["\u21e7", ";", "q", "j", "k", "x", "b", "m", "w", "v", "z", "\u21e7"],
+    ],
+    matchingPattern: /^[a-z|A-Z,.';\-=/ ]$/g,
+  },
+  QWERTZ_DE: {
+    name: "German (QWERTZ)",
+    layout: [
+      ["q", "w", "e", "r", "t", "z", "u", "i", "o", "p", "ü", "+"],
+      ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä", "#"],
+      ["\u21e7", "<", "y", "x", "c", "v", "b", "n", "m", ",", ".", "-", "\u21e7"],
+    ],
+    matchingPattern: /^[a-z|A-ZüÜäÄöÖ<,.'\-#+ ]$/g,
+  },
+  AZERTY_FR: {
+    name: "French (AZERTY)",
+    layout: [
+      ["a", "z", "e", "r", "t", "y", "u", "i", "o", "p", "^", "$"],
+      ["q", "s", "d", "f", "g", "h", "j", "k", "l", "m", "ù", "*"],
+      ["\u21e7", "<", "w", "x", "c", "v", "b", "n", ",", ";", ":", "!", "\u21e7"],
+    ],
+    matchingPattern: /^[a-z|A-Z^$ù*<,;:! ]$/g,
+  },
+  QWERTY_SE: {
+    name: "Swedish (QWERTY)",
+    layout: [
+      ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "å", '"'],
+      ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä", "'"],
+      ["\u21e7", "<", "z", "x", "c", "v", "b", "n", "m", ",", ".", "-", "\u21e7"],
+    ],
+    matchingPattern: /^[a-z|A-ZåÅäÄöÖ<,.'\- ]$/g,
+  },
 };
-
-// Matching patterns for each layout, used for keyboard highlighting.
-export const MatchingPatterns: { [key: string]: RegExp } = {
-  DVORAK_US: /^[a-z|A-Z,.';\-=/ ]$/g,
-  QWERTY_US: /^[a-z|A-Z,.';[\]/ ]$/g,
-  QWERTY_SE: /^[a-z|A-ZåÅäÄöÖ<,.'\- ]$/g,
-  QWERTZ_DE: /^[a-z|A-ZüÜäÄöÖ<,.'\-#+ ]$/g,
-  AZERTY_FR: /^[a-z|A-Z^$ù*<,;:! ]$/g,
-};
-
-export const keyboardLayoutSettingsItems = [
-  { label: "US English (QWERTY)", value: "QWERTY_US" },
-  { label: "US English (DVORAK)", value: "DVORAK_US" },
-  { label: "Swedish (QWERTY)", value: "QWERTY_SE" },
-  { label: "German (QWERTZ)", value: "QWERTZ_DE" },
-  { label: "French (AZERTY)", value: "AZERTY_FR" },
-];
 
 export default Layouts;
