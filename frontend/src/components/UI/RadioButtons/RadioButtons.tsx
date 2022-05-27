@@ -8,6 +8,7 @@ const RadioButtons = ({
   legend,
   changeFunc,
   items,
+  currentValue,
 }: RadioButtonsProps): JSX.Element => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +27,7 @@ const RadioButtons = ({
               aria-label={item.label}
               value={item.value}
               onChange={handleChange}
+              checked={currentValue === item.value}
             />
             {item.label}
           </S.Label>

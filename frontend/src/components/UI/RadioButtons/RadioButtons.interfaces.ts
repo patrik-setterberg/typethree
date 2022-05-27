@@ -3,4 +3,5 @@ export interface RadioButtonsProps {
   legend: string;
   changeFunc: (val: string) => void;
   items: Array<{ label: string; value: string }>;
+  currentValue: string;
 }

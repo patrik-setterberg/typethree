@@ -12,6 +12,8 @@ import Button from "../../components/UI/Button/Button";
 import RadioButtons from "../../components/UI/RadioButtons/RadioButtons";
 import ToggleSwitch from "../../components/UI/ToggleSwitch/ToggleSwitch";
 
+import { keyboardLayoutSettingsItems } from "../../assets/misc/KeyboardLayouts";
+
 const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
   const S = { ...SettingsPageStyles, Container, PageTitle, PageTagline };
 
@@ -31,7 +33,7 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
         <SettingsItem>
           <span>
             Slap the toggler to change the setting. Slap the toggler to change
-            the setting. Slap the toggler to change the setting.{" "}
+            the setting. Slap the toggler to change the setting.
           </span>
           <ToggleSwitch
             Id="toggler1"
@@ -43,7 +45,7 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
         <SettingsItem>
           <span>
             Slap the toggler to change the setting. Slap the toggler to change
-            the setting. Slap the toggler to change the setting.{" "}
+            the setting. Slap the toggler to change the setting.
           </span>
           <Button
             onClickFunc={() => console.log("hehehehe")}
@@ -61,7 +63,7 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
         <SettingsItem>
           <span>
             Slap the toggler to change the setting. Slap the toggler to change
-            the setting. Slap the toggler to change the setting.{" "}
+            the setting. Slap the toggler to change the setting.
           </span>
           <ToggleSwitch
             Id="toggler3"
@@ -83,11 +85,18 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
         </SettingsItem>
         <SettingsItem>
           <span>Keyboard layout.</span>
+          <RadioButtons
+            name="keyboard_layout"
+            legend="Keyboard layout"
+            changeFunc={settingsCtx.setKeyboardLayout}
+            items={keyboardLayoutSettingsItems}
+            currentValue={settingsCtx.KeyboardLayout}
+          />
         </SettingsItem>
         <SettingsItem>
           <span>
             Slap the toggler to change the setting. Slap the toggler to change
-            the setting. Slap the toggler to change the setting.{" "}
+            the setting. Slap the toggler to change the setting.
           </span>
           <ToggleSwitch
             Id="toggler4"
@@ -99,7 +108,7 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
         <SettingsItem>
           <span>
             Slap the toggler to change the setting. Slap the toggler to change
-            the setting. Slap the toggler to change the setting.{" "}
+            the setting. Slap the toggler to change the setting.
           </span>
           <Button
             onClickFunc={() => console.log("hehehehe")}

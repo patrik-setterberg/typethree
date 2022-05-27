@@ -36,4 +36,12 @@ export const MatchingPatterns: { [key: string]: RegExp } = {
   AZERTY_FR: /^[a-z|A-Z^$ù*<,;:! ]$/g,
 };
 
+export const keyboardLayoutSettingsItems = [
+  { label: "US English (QWERTY)", value: "QWERTY_US" },
+  { label: "US English (DVORAK)", value: "DVORAK_US" },
+  { label: "Swedish (QWERTY)", value: "QWERTY_SE" },
+  { label: "German (QWERTZ)", value: "QWERTZ_DE" },
+  { label: "French (AZERTY)", value: "AZERTY_FR" },
+];
+
 export default Layouts;
