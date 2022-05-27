@@ -7,13 +7,13 @@ import {
   useState,
 } from "react";
 
+import useSettingsContext from "../../hooks/useSettingsContext";
+
 import { TypeTestProps, pressedKeys } from "./TypeTest.interfaces";
 
 // Words.
 import eng1k from "../../assets/words/words-english-1k";
 import swe1k from "../../assets/words/words-swedish-1k";
-
-import SettingsContext from "../../context/settings-context";
 
 import Input from "./Input/Input";
 import Keyboard from "./Keyboard/Keyboard";
@@ -23,7 +23,7 @@ import TestText from "./TestText/TestText";
 const TypeTest = ({}: TypeTestProps): JSX.Element => {
   const TEST_WORD_COUNT: number = 30;
 
-  const settingsCtx = useContext(SettingsContext);
+  const settingsCtx = useSettingsContext();
 
   type wordArray = {
     [key: string]: Array<string>;

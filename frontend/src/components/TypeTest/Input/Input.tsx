@@ -5,7 +5,8 @@ import * as S from "./Input.styles";
 import { MatchingPatterns } from "../../../assets/misc/KeyboardLayouts";
 
 import FocusContext from "../../../context/focus-context";
-import SettingsContext from "../../../context/settings-context";
+
+import useSettingsContext from "../../../hooks/useSettingsContext";
 
 const Input = ({
   inputVal,
@@ -14,7 +15,7 @@ const Input = ({
   setPressedKeys,
 }: InputProps): JSX.Element => {
   const focusCtx = useContext(FocusContext);
-  const settingsCtx = useContext(SettingsContext);
+  const settingsCtx = useSettingsContext();
 
   const inputEl = useRef<HTMLInputElement>(null);
 

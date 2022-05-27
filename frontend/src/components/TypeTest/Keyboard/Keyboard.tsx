@@ -1,13 +1,14 @@
 import { useContext, useEffect } from "react";
 
-import SettingsContext from "../../../context/settings-context";
+import useSettingsContext from "../../../hooks/useSettingsContext";
+
 import Layouts from "../../../assets/misc/KeyboardLayouts";
 
 import * as S from "./Keyboard.styles";
 import { KeyboardProps } from "./Keyboard.interfaces";
 
 const Keyboard = ({ pressedKeys }: KeyboardProps): JSX.Element => {
-  const settingsCtx = useContext(SettingsContext);
+  const settingsCtx = useSettingsContext();
 
   return (
     <S.Keyboard>

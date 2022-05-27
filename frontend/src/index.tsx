@@ -6,7 +6,7 @@ import GlobalStyle from './globals/global-styles';
 import '../src/assets/fonts/fonts.css';
 import { AuthContextProvider } from './context/auth-context';
 import { FocusContextProvider } from "./context/focus-context";
-import { SettingsContextProvider } from "./context/settings-context";
+import { SettingsContextProvider } from "./context/settings-context/settings-context";
 
 ReactDOM.render(
   <React.StrictMode>

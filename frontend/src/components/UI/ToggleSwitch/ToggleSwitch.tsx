@@ -5,6 +5,7 @@ import React from "react";
 const ToggleSwitch = ({
   Id,
   labelText,
+  checked,
   onChangeFunc,
 }: ToggleSwitchProps): JSX.Element => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +15,13 @@ const ToggleSwitch = ({
 
   return (
     <S.Wrapper labelTextLen={labelText.length}>
-      <S.Input type="checkbox" id={Id} onChange={handleChange} />
+      <S.Input
+        type="checkbox"
+        id={Id}
+        onChange={handleChange}
+        aria-label={labelText}
+        checked={checked}
+      />
       <S.Label htmlFor={Id} labelTextLen={labelText.length}>
         {labelText}
       </S.Label>
