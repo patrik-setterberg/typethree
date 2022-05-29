@@ -119,6 +119,11 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   const [pressedKeysState, dispatchPressedKeys] = useReducer(pressedKeysReducer, initialValue);
 
+  // Store entered words in an array. When space is pressed (and maybe when test ends),
+  // characters in text input get pushed to the array. This array can be compared
+  // with testwords wordArr to calculate score and styling correct/incorrect words.
+  const [enteredWords, setEnteredWords] = useState<string[] | undefined>(undefined);
+
   return (
     <>
       <TestCountdown />

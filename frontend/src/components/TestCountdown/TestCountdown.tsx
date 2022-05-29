@@ -1,19 +1,22 @@
 import { useState, useEffect } from "react";
+import useSettingsContext from "../../hooks/useSettingsContext";
 
 import * as S from "./TestCountdown.styles";
 
 const TestCountdown = ({}): JSX.Element => {
-  const testLen: number = 30;
-  const [timeLeft, setTimeLeft] = useState(testLen);
+
+  const settingsCtx = useSettingsContext();
+
+  const [timeLeft, setTimeLeft] = useState<number>(settingsCtx.TestLength);
 
   // Circumference of circle. Probably not *technically* true but it works!
   const circumference: number = 1304;
 
   // Offset for dashed stroke around circle.
-  const [dashOffset, setDashOffset] = useState(0);
+  const [dashOffset, setDashOffset] = useState<number>(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const timer: number = window.setInterval(() => {
       if (timeLeft > 0) {
         setTimeLeft((timeLeft) => timeLeft - 1);
       } else {
@@ -23,7 +26,7 @@ const TestCountdown = ({}): JSX.Element => {
 
     // Set offset based on percentage of time left.
     setDashOffset(
-      Math.round((circumference - circumference * (timeLeft / testLen)) * 100) /
+      Math.round((circumference - circumference * (timeLeft / settingsCtx.TestLength)) * 100) /
         100
     );
 

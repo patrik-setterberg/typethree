@@ -14,7 +14,7 @@ export const Label = styled.label<{ checked: boolean }>`
   justify-content: flex-end;
   align-items: center;
   position: relative;
-  padding: 0.5rem 0 0.5rem 0.5rem;
+  padding: 0 0 0.5rem 0.5rem;
   color: ${(props) =>
     props.checked ? props.theme.primary : props.theme.highlight};
   font-size: 0.8125rem;
@@ -43,12 +43,13 @@ export const Label = styled.label<{ checked: boolean }>`
     letter-spacing: 0.6px;
 
     &::after {
-    transform: scale(1.1);
-  }
+      transform: scale(1.1);
+    }
   }
 
   & + & {
     margin-top: 0.125rem;
+    padding-top: 0.5rem;
   }
 `;
 

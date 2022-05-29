@@ -31,6 +31,16 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
 
   const settingsCtx = useSettingsContext();
 
+  const testLengthSettings: Array<RadioButtonsItems> = useMemo<
+    RadioButtonsItems[]
+  >(() => {
+    return [
+      { value: 15, label: "15 sec" },
+      { value: 30, label: "30 sec" },
+      { value: 60, label: "60 sec" },
+    ];
+  }, []);
+
   const testWordsSettings: Array<RadioButtonsItems> = useMemo<
     RadioButtonsItems[]
   >(() => {
@@ -100,6 +110,18 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
       </SettingsCategory>
       <SettingsCategory title="Type_test_options;">
         <SettingsItem>
+          {/* TEST LENGTH */}
+          <span>Test length.</span>
+          <RadioButtons
+            name="test_length"
+            legend="Test lengtu"
+            changeFunc={settingsCtx.setTestLength}
+            items={testLengthSettings}
+            currentValue={settingsCtx.TestLength}
+          />
+        </SettingsItem>
+        <SettingsItem>
+          {/* TEST WORDS LANGUAGE */}
           <span>Test words language.</span>
           <RadioButtons
             name="testwords_language"
@@ -110,6 +132,7 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
           />
         </SettingsItem>
         <SettingsItem>
+          {/* TOGGLE KEYBOARD */}
           <span>Show keyboard.</span>
           <ToggleSwitch
             Id="show_keyboard"
@@ -119,6 +142,7 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
           />
         </SettingsItem>
         <SettingsItem>
+          {/* KEYBOARD LAYOUT */}
           <span>Keyboard layout.</span>
           <RadioButtons
             name="keyboard_layout"
