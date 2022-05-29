@@ -4,6 +4,7 @@ export const Wrapper = styled.div<{ labelTextLen: number }>`
   position: relative;
   font-size: 0.8125rem;
   margin-left: ${props => props.labelTextLen}ch;
+  margin-bottom: 0.75rem;
   padding-left: 4rem;
 `;
 
@@ -17,8 +18,7 @@ export const Input = styled.input`
   } */
 
   &:checked + label::after {
-    left: calc(100% - 2px);
-    transform: translateX(-100%);
+    transform: translateX(calc(100%));
   }
 
   &:checked + label {
@@ -28,14 +28,14 @@ export const Input = styled.input`
   }
 `;
 
-const LABEL_LETTER_SPACING = 0.65; // px
-const LABEL_LETTER_SPACING_HOVER = 1;
+const LABEL_LETTER_SPACING = 0.5; // px
+const LABEL_LETTER_SPACING_HOVER = 0.65;
 
 export const Label = styled.label<{ labelTextLen: number }>`
   display: inline-block;
-  height: 1.5rem;
-  width: 2.75rem;
-  border-radius: 1.5rem;
+  height: 1.75rem;
+  width: 3.25rem;
+  border-radius: 1.75rem;
   cursor: pointer;
   background-color: ${(props) => props.theme.highlight};
   text-indent: calc(
@@ -43,7 +43,7 @@ export const Label = styled.label<{ labelTextLen: number }>`
       (${(props) => props.labelTextLen} * ${LABEL_LETTER_SPACING}px * -1) - 1ch
   );
   font-weight: 600;
-  line-height: 1.8;
+  line-height: 2.2;
   letter-spacing: ${LABEL_LETTER_SPACING}px;
   text-transform: uppercase;
   color: ${(props) => props.theme.highlight};
@@ -55,21 +55,21 @@ export const Label = styled.label<{ labelTextLen: number }>`
   &::after {
     content: "";
     position: absolute;
-    top: 0.1rem;
+    top: 0.125rem;
     left: 0.125rem;
-    height: 1.3rem;
-    width: 1.3rem;
+    height: 1.5rem;
+    width: 1.5rem;
     border-radius: 50%;
     background-color: ${(props) => props.theme.backgroundTertiary};
     transition: all 0.1s ease-out;
   }
 
-  /* &:hover {
+  &:hover {
     letter-spacing: ${LABEL_LETTER_SPACING_HOVER}px;
     text-indent: calc(
     ${(props) => props.labelTextLen * -1}ch +
       (${(props) =>
     props.labelTextLen} * ${LABEL_LETTER_SPACING_HOVER}px * -1) - 1ch
     );
-  } */
+  }
 `;

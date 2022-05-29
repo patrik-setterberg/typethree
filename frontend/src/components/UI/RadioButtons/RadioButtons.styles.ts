@@ -21,21 +21,34 @@ export const Label = styled.label<{ checked: boolean }>`
   font-weight: 600;
   letter-spacing: 0.5px;
   cursor: pointer;
-  transition: color 0.15s ease-out;
+  transition: all 0.15s ease-out;
 
   &::after {
     content: "";
-    width: 1rem;
-    height: 1rem;
+    width: 1.125rem;
+    height: 1.125rem;
     background-color: ${(props) =>
       props.checked ? props.theme.backgroundTertiary : props.theme.highlight};
-    border: 3px solid;
+    border: 2px solid;
     border-color: ${(props) =>
       props.checked ? props.theme.primary : props.theme.highlight};
     display: inline-block;
     margin-left: 0.5rem;
     border-radius: 50%;
     transition: all 0.15s ease-out;
+  }
+
+
+  &:hover {
+    letter-spacing: 0.6px;
+
+    &::after {
+    transform: scale(1.1);
+  }
+  }
+
+  & + & {
+    margin-top: 0.125rem;
   }
 `;
 
