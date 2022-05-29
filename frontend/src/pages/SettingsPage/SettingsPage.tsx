@@ -3,11 +3,15 @@ import { useMemo } from "react";
 import useSettingsContext from "../../hooks/useSettingsContext";
 
 import * as SettingsPageStyles from "./SettingsPage.styles";
-import { SettingsPageProps } from "./SettingsPage.interfaces";
+import {
+  SettingsPageProps,
+  RadioButtonsItems,
+} from "./SettingsPage.interfaces";
 
 import Layouts from "../../assets/misc/KeyboardLayouts";
 
 import { PageContainer as Container } from "../../components/UI/Container.styles";
+import { ButtonContainer } from "./SettingsItem/SettingsItem.styles";
 import PageTitle from "../../components/UI/PageTitle.styles";
 import PageTagline from "../../components/UI/PageTagline.styles";
 import SettingsCategory from "./SettingsCategory/SettingsCategory";
@@ -17,18 +21,32 @@ import RadioButtons from "../../components/UI/RadioButtons/RadioButtons";
 import ToggleSwitch from "../../components/UI/ToggleSwitch/ToggleSwitch";
 
 const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
-  const S = { ...SettingsPageStyles, Container, PageTitle, PageTagline };
+  const S = {
+    ...SettingsPageStyles,
+    Container,
+    PageTitle,
+    PageTagline,
+    ButtonContainer,
+  };
 
   const settingsCtx = useSettingsContext();
 
-  const keyboardSettings: Array<{ value: string; label: string }> =
-    useMemo(() => {
-      let items = [];
-      for (const [key, value] of Object.entries(Layouts)) {
-        items.push({ value: key, label: value.name });
-      }
-      return items;
-    }, []);
+  const testWordsSettings: Array<RadioButtonsItems> = useMemo<
+    RadioButtonsItems[]
+  >(() => {
+    return [
+      { value: "eng1k", label: "English" },
+      { value: "swe1k", label: "Swedish" },
+    ];
+  }, []);
+
+  const keyboardSettings: Array<RadioButtonsItems> = useMemo(() => {
+    let items = [];
+    for (const [key, value] of Object.entries(Layouts)) {
+      items.push({ value: key, label: value.name });
+    }
+    return items;
+  }, []);
 
   const testFunc = () => {
     console.log("togglin");
@@ -42,10 +60,7 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
       </S.PageTagline>
       <SettingsCategory title="Site_preferences;">
         <SettingsItem>
-          <span>
-            Slap the toggler to change the setting. Slap the toggler to change
-            the setting. Slap the toggler to change the setting.
-          </span>
+          <span>Slap the toggler to change the setting.</span>
           <ToggleSwitch
             Id="toggler1"
             labelText="Toggler 1"
@@ -56,26 +71,25 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
         <SettingsItem>
           <span>
             Slap the toggler to change the setting. Slap the toggler to change
-            the setting. Slap the toggler to change the setting.
+            the setting.
           </span>
-          <Button
-            onClickFunc={() => console.log("hehehehe")}
-            label="button"
-            ariaLabel="button"
-            isActive={true}
-          />
-          <Button
-            onClickFunc={() => console.log("hehehehe")}
-            label="button"
-            ariaLabel="button"
-            isActive={false}
-          />
+          <S.ButtonContainer>
+            <Button
+              onClickFunc={() => console.log("hehehehe")}
+              label="button"
+              ariaLabel="button"
+              isActive={true}
+            />
+            <Button
+              onClickFunc={() => console.log("hehehehe")}
+              label="button"
+              ariaLabel="button"
+              isActive={false}
+            />
+          </S.ButtonContainer>
         </SettingsItem>
         <SettingsItem>
-          <span>
-            Slap the toggler to change the setting. Slap the toggler to change
-            the setting. Slap the toggler to change the setting.
-          </span>
+          <span>Slap the toggler to change the setting.</span>
           <ToggleSwitch
             Id="toggler3"
             labelText="Toggler 3"
@@ -85,6 +99,16 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
         </SettingsItem>
       </SettingsCategory>
       <SettingsCategory title="Type_test_options;">
+        <SettingsItem>
+          <span>Test words language.</span>
+          <RadioButtons
+            name="testwords_language"
+            legend="Testwords language"
+            changeFunc={settingsCtx.setTestWords}
+            items={testWordsSettings}
+            currentValue={settingsCtx.TestWords}
+          />
+        </SettingsItem>
         <SettingsItem>
           <span>Show keyboard.</span>
           <ToggleSwitch
@@ -102,18 +126,6 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
             changeFunc={settingsCtx.setKeyboardLayout}
             items={keyboardSettings}
             currentValue={settingsCtx.KeyboardLayout}
-          />
-        </SettingsItem>
-        <SettingsItem>
-          <span>
-            Slap the toggler to change the setting. Slap the toggler to change
-            the setting. Slap the toggler to change the setting.
-          </span>
-          <ToggleSwitch
-            Id="toggler4"
-            labelText="Toggler 4"
-            onChangeFunc={testFunc}
-            checked={false}
           />
         </SettingsItem>
         <SettingsItem>

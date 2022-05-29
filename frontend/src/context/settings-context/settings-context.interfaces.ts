@@ -1,3 +1,5 @@
+import { SetStateAction } from "react";
+
 export interface DefaultSettingsValues {
   TestWords: string;
   ShowKeyboard: boolean;
@@ -10,6 +12,7 @@ export interface SettingsContextValues {
   // ..
   // TYPE TEST PREFERENCES //
   TestWords: string;
+  setTestWords: React.Dispatch<SetStateAction<string>>;
   ShowKeyboard: boolean;
   setShowKeyboard: React.Dispatch<React.SetStateAction<boolean>>,
   KeyboardLayout: string;

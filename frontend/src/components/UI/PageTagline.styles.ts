@@ -3,7 +3,7 @@ import media from "../../globals/media-breakpoints";
 
 const PageTagline = styled.span`
   color: ${props => props.theme.primary};
-  margin-bottom: var(--default-spacing);
+  margin-bottom: calc(var(--default-spacing) * 2);
 `
 
 export default PageTagline;

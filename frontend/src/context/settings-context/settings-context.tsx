@@ -23,6 +23,8 @@ export const SettingsContextProvider = ({
   // If not logged in, check if there's a cookie with preferences and use those.
   // Else use defautSettings.
 
+  const [testWords, setTestWords] = useState<string>(defaultSettings.TestWords);
+
   const [showKeyboard, setShowKeyboard] = useState<boolean>(
     defaultSettings.ShowKeyboard
   );
@@ -34,7 +36,8 @@ export const SettingsContextProvider = ({
   return (
     <SettingsContext.Provider
       value={{
-        TestWords: defaultSettings.TestWords,
+        TestWords: testWords,
+        setTestWords: setTestWords,
         ShowKeyboard: showKeyboard,
         setShowKeyboard: setShowKeyboard,
         KeyboardLayout: keyboardLayout,

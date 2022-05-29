@@ -9,7 +9,6 @@ export const Wrapper = styled.div`
   position: relative;
   width: 6rem;
   height: 6rem;
-  margin-top: var(--default-spacing);
 
   @media ${media.atleastMedium} {
     width: 8rem;

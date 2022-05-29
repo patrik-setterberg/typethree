@@ -3,9 +3,9 @@ import { ThemeProvider } from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AuthContext from "./context/auth-context";
-// import SettingsContext from "./context/settings-context";
 import themes, { defaultTheme } from "./globals/themes";
 
+import * as S from "./components/UI/App.styles";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Main from "./components/UI/Main/Main";
@@ -30,16 +30,18 @@ const App = (): JSX.Element => {
   return (
     <ThemeProvider theme={currentTheme}>
       <BrowserRouter>
-        <Header />
-        <Main>
-          <Routes>
-            <Route path="/" element={<TypeTestPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/user" element={<UserPage />} />
-            <Route path="/logout" element={<LogOut />} />
-          </Routes>
-        </Main>
-        <Footer />
+        <S.AppContainer>
+          <Header />
+          <Main>
+            <Routes>
+              <Route path="/" element={<TypeTestPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/user" element={<UserPage />} />
+              <Route path="/logout" element={<LogOut />} />
+            </Routes>
+          </Main>
+          <Footer />
+        </S.AppContainer>
       </BrowserRouter>
     </ThemeProvider>
   );

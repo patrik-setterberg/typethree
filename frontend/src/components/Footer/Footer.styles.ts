@@ -6,8 +6,6 @@ import { Container } from "../UI/Container.styles";
 export const Footer = styled.footer`
   display: flex;
   justify-content: center;
-  position: fixed;
-  bottom: 0;
   width: 100%;
   background-color: ${(props) => props.theme.backgroundFourthenary};
   color: ${(props) => props.theme.primary};

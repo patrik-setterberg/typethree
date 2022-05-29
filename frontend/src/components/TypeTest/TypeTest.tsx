@@ -1,26 +1,28 @@
 import {
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useReducer,
   useState,
 } from "react";
-
 import useSettingsContext from "../../hooks/useSettingsContext";
 
+// Interfaces.
 import { TypeTestProps, pressedKeys } from "./TypeTest.interfaces";
 
 // Words.
 import eng1k from "../../assets/words/words-english-1k";
 import swe1k from "../../assets/words/words-swedish-1k";
 
+// Components.
 import Input from "./Input/Input";
 import Keyboard from "./Keyboard/Keyboard";
 import TestCountdown from "../TestCountdown/TestCountdown";
 import TestText from "./TestText/TestText";
 
 const TypeTest = ({}: TypeTestProps): JSX.Element => {
+  // Test word count. Maybe change automatically if
+  // we have a setting for changing text font size?
   const TEST_WORD_COUNT: number = 30;
 
   const settingsCtx = useSettingsContext();
@@ -29,7 +31,6 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
     [key: string]: Array<string>;
   };
 
-  // Hmmm...
   const wordArrays: wordArray = useMemo<wordArray>(() => {
     return {
       eng1k: eng1k,

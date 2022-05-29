@@ -9,5 +9,5 @@ export const Container = styled.section`
 export const PageContainer = styled(Container)`
   flex-direction: column;
   align-items: center;
-  padding-top: calc(var(--default-spacing) * 1.5);
+  padding: calc(var(--default-spacing) * 2) var(--default-spacing);
 `

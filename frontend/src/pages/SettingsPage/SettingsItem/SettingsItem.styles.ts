@@ -4,14 +4,19 @@ export const SettingsItem = styled.li`
   display: flex;
   justify-content: space-between;
   position: relative;
-  width: auto;
-  padding: calc(var(--default-spacing) * 2) var(--default-spacing) var(--default-spacing);
-  border-right: 1px solid transparent;
+  padding: calc(var(--default-spacing) * 1.5) var(--default-spacing);
   border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  border-right: 1px solid ${(props) => props.theme.primary005};
+  z-index: 0;
+
+  &:hover {
+    border-top: 1px solid ${(props) => props.theme.primary01};
+  }
 
   /* TEMP */
   & span {
-    color: ${props => props.theme.primary};
+    color: ${(props) => props.theme.primary};
     font-size: 0.875rem;
     display: inline-block;
   }
@@ -25,17 +30,20 @@ export const SettingsItem = styled.li`
     width: 100%;
     z-index: -1;
     background: linear-gradient(
-      170deg,
-      transparent 30%,
-      ${(props) => props.theme.backgroundTertiary}
+      120deg,
+      ${(props) => props.theme.primary04},
+      transparent
     );
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid ${(props) => props.theme.primary005};
     opacity: 0;
     transition: opacity 0.3s ease-out;
   }
 
   &:hover::after {
-    opacity: 0.75;
+    opacity: 0.1;
   }
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
 `;
