@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import useSettingsContext from "../../hooks/useSettingsContext";
 
 // Interfaces.
@@ -101,40 +95,46 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
       case "ADD":
         return {
           ...state,
-          pressedKeys: [
-            ...state.pressedKeys,
-            action.payload,
-          ],
+          pressedKeys: [...state.pressedKeys, action.payload],
         };
       case "REMOVE":
         return {
           ...state,
           pressedKeys: state.pressedKeys.filter(
-            (pressedKeys) =>
-              pressedKeys.symbol !== action.payload.symbol
+            (pressedKeys) => pressedKeys.symbol !== action.payload.symbol
           ),
         };
     }
   };
 
-  const [pressedKeysState, dispatchPressedKeys] = useReducer(pressedKeysReducer, initialValue);
+  const [pressedKeysState, dispatchPressedKeys] = useReducer(
+    pressedKeysReducer,
+    initialValue
+  );
 
   // Store entered words in an array. When space is pressed (and maybe when test ends),
   // characters in text input get pushed to the array. This array can be compared
   // with testwords wordArr to calculate score and styling correct/incorrect words.
-  const [enteredWords, setEnteredWords] = useState<string[] | undefined>(undefined);
+  const [enteredWords, setEnteredWords] = useState<string[] | undefined>(
+    undefined
+  );
 
   return (
     <>
       <TestCountdown />
-      <TestText words={testWords} />
+      <TestText
+        words={testWords}
+        animate={pressedKeysState.pressedKeys.length === 0}
+      />
       <Input
         inputVal={inputVal}
         setInputVal={setInputVal}
         pressedKeys={pressedKeysState.pressedKeys}
         setPressedKeys={dispatchPressedKeys}
       />
-      {settingsCtx.ShowKeyboard && <Keyboard pressedKeys={pressedKeysState.pressedKeys}/>}
+      {settingsCtx.ShowKeyboard && (
+        <Keyboard pressedKeys={pressedKeysState.pressedKeys} />
+      )}
     </>
   );
 };
