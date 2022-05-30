@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import useSettingsContext from "../../hooks/useSettingsContext";
 
@@ -58,6 +58,14 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
     return items;
   }, []);
 
+  const resetToDefaults = useCallback((): void => {
+    settingsCtx.setTestLength(settingsCtx.defaultSettings.TestLength);
+    settingsCtx.setTestWords(settingsCtx.defaultSettings.TestWords);
+    settingsCtx.setShowKeyboard(settingsCtx.defaultSettings.ShowKeyboard);
+    settingsCtx.setKeyboardLayout(settingsCtx.defaultSettings.KeyboardLayout);
+  }, [settingsCtx]);
+
+  /// TEMP
   const testFunc = () => {
     console.log("togglin");
   };
@@ -153,22 +161,34 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
           />
         </SettingsItem>
         <SettingsItem>
-          <span>
-            Slap the toggler to change the setting. Slap the toggler to change
-            the setting. Slap the toggler to change the setting.
-          </span>
-          <Button
-            onClickFunc={() => console.log("hehehehe")}
-            label="button"
-            ariaLabel="button"
-            isActive={true}
-          />
-          <Button
-            onClickFunc={() => console.log("hehehehe")}
-            label="button"
-            ariaLabel="button"
-            isActive={false}
-          />
+          <span>Slap the toggler to change the setting.</span>
+          <ButtonContainer>
+            <Button
+              onClickFunc={() => console.log("hehehehe")}
+              label="button"
+              ariaLabel="button"
+              isActive={true}
+            />
+            <Button
+              onClickFunc={() => console.log("hehehehe")}
+              label="button"
+              ariaLabel="button"
+              isActive={false}
+            />
+          </ButtonContainer>
+        </SettingsItem>
+      </SettingsCategory>
+      <SettingsCategory title="Reset_to_defaults;">
+        <SettingsItem>
+          <span>Reset all settings to default values.</span>
+          <S.ButtonContainer>
+            <Button
+              onClickFunc={resetToDefaults}
+              label="Reset"
+              ariaLabel="Reset settings to defaults"
+              isActive={false}
+            />
+          </S.ButtonContainer>
         </SettingsItem>
       </SettingsCategory>
     </S.Container>

@@ -12,8 +12,9 @@ export interface SettingsContextValues {
   // Theme
   // ..
   // TYPE TEST PREFERENCES //
+  defaultSettings: DefaultSettingsValues;
   TestLength: number;
-  setTestLength: (len: string) => void;
+  setTestLength: (len: string | number) => void;
   TestWords: string;
   setTestWords: React.Dispatch<SetStateAction<string>>;
   ShowKeyboard: boolean;

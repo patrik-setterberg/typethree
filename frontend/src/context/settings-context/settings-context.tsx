@@ -1,15 +1,8 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useMemo, useState } from "react";
 import {
   DefaultSettingsValues,
   SettingsContextValues,
 } from "./settings-context.interfaces";
-
-const defaultSettings: DefaultSettingsValues = {
-  TestLength: 30,
-  TestWords: "eng1k",
-  ShowKeyboard: true,
-  KeyboardLayout: "QWERTY_US",
-};
 
 const SettingsContext = createContext<SettingsContextValues | undefined>(
   undefined
@@ -24,11 +17,26 @@ export const SettingsContextProvider = ({
   // If not logged in, check if there's a cookie with preferences and use those.
   // Else use defautSettings.
 
+  const defaultSettings: DefaultSettingsValues = useMemo(() => {
+    return {
+      TestLength: 30,
+      TestWords: "eng1k",
+      ShowKeyboard: true,
+      KeyboardLayout: "QWERTY_US",
+    }
+  }, []);
+
   const [testLength, setTestLength] = useState<number>(
     defaultSettings.TestLength
   );
   // Extra setter function because we get strings from radio buttons' values.
-  const setLen = (len: string) => setTestLength(parseInt(len));
+  const setTestLen = (len: string | number) => {
+    if (typeof len === "string") {
+      setTestLength(parseInt(len));
+    } else {
+      setTestLength(len);
+    }
+  };
 
   const [testWords, setTestWords] = useState<string>(defaultSettings.TestWords);
 
@@ -43,8 +51,9 @@ export const SettingsContextProvider = ({
   return (
     <SettingsContext.Provider
       value={{
+        defaultSettings: defaultSettings,
         TestLength: testLength,
-        setTestLength: setLen,
+        setTestLength: setTestLen,
         TestWords: testWords,
         setTestWords: setTestWords,
         ShowKeyboard: showKeyboard,
