@@ -4,7 +4,8 @@ import { pressedKeys } from "../TypeTest.interfaces";
 
 export interface InputProps {
   inputVal: string;
-  setInputVal: React.Dispatch<React.SetStateAction<string>>;
   pressedKeys: pressedKeys[];
-  setPressedKeys: React.Dispatch<any>; // PLEASE FIX
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleKeyDown:  (e: React.KeyboardEvent) => void;
+  handleKeyUp: (e: React.KeyboardEvent) => void;
 }

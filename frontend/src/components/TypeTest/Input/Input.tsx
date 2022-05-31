@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useMemo, useRef } from "react";
+import { useCallback, useContext, useEffect, useRef } from "react";
 
 import { InputProps } from "./Input.interfaces";
 import * as S from "./Input.styles";
-
-import Layouts from "../../../assets/misc/KeyboardLayouts";
 
 import FocusContext from "../../../context/focus-context";
 
@@ -11,72 +9,26 @@ import useSettingsContext from "../../../hooks/useSettingsContext";
 
 const Input = ({
   inputVal,
-  setInputVal,
   pressedKeys,
-  setPressedKeys,
+  handleChange,
+  handleKeyDown,
+  handleKeyUp,
 }: InputProps): JSX.Element => {
   const focusCtx = useContext(FocusContext);
   const settingsCtx = useSettingsContext();
 
   const inputEl = useRef<HTMLInputElement>(null);
 
-  const layoutCharsPattern: RegExp = useMemo(() => {
-    return Layouts[settingsCtx.KeyboardLayout].matchingPattern;
-  }, [settingsCtx.KeyboardLayout]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInputVal(e.target.value);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent): void => {
-    // Easter egg for cool people.
-    /* if (e.key === "Hyper") {
-      console.log("Woah!");
-    } */
-
-    if (e.key.match(layoutCharsPattern) && e.repeat === false) {
-      setPressedKeys({
-        type: "ADD",
-        payload: { symbol: e.key, correct: true },
-      });
-    }
-
-    // If key is Shift, instead add its 'code' because it allows us to differentiate
-    // left from right shift keys.
-    if (e.key === "Shift") {
-      setPressedKeys({
-        type: "ADD",
-        payload: { symbol: e.code, correct: true },
-      });
-    }
-
-    // Check correct key: 'correct: e.key === expected' eller nått.
-  };
-
-  const handleKeyUp = (e: React.KeyboardEvent): void => {
-    if (e.key === "Shift") {
-      setPressedKeys({ type: "REMOVE", payload: { symbol: e.code } });
-    }
-    // Remove both a key's uppercase and lowercase symbols to definitely remove it.
-    // Useful in case user pressed or released shift while pressing the letter key.
-    setPressedKeys({
-      type: "REMOVE",
-      payload: { symbol: e.key.toLowerCase() },
-    });
-    setPressedKeys({
-      type: "REMOVE",
-      payload: { symbol: e.key.toUpperCase() },
-    });
-  };
-
-  const focusInput = (): void => {
+  const focusInput = useCallback((): void => {
     inputEl.current && inputEl.current.focus();
-  };
+  }, []);
 
-  const handleBlur = (): void => {
+  // Focus input on blur (input loses focus).
+  const handleBlur = useCallback((): void => {
     focusInput();
-  };
+  }, []);
 
+  // Also focus input when window regains focus.
   useEffect(() => {
     focusCtx.windowIsFocused && focusInput();
   }, [focusCtx.windowIsFocused]);
@@ -91,6 +43,7 @@ const Input = ({
       onKeyDown={handleKeyDown}
       onKeyUp={handleKeyUp}
       onChange={handleChange}
+      autoFocus
     />
   );
 };

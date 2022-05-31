@@ -4,6 +4,8 @@ import useSettingsContext from "../../hooks/useSettingsContext";
 // Interfaces.
 import { TypeTestProps, pressedKeys } from "./TypeTest.interfaces";
 
+import Layouts from "../../assets/misc/KeyboardLayouts";
+
 // Words.
 import eng1k from "../../assets/words/words-english-1k";
 import swe1k from "../../assets/words/words-swedish-1k";
@@ -68,9 +70,9 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   // Hidden text-input value.
   const [inputVal, setInputVal] = useState<string>("");
 
-  type pressedKeysStateType = {
+  interface pressedKeysStateI {
     pressedKeys: pressedKeys[];
-  };
+  }
 
   type pressedKeysActionType =
     | {
@@ -85,10 +87,10 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
         payload: { symbol: string };
       };
 
-  const initialValue: pressedKeysStateType = { pressedKeys: [] };
+  const initialValue: pressedKeysStateI = { pressedKeys: [] };
 
   const pressedKeysReducer = (
-    state: pressedKeysStateType,
+    state: pressedKeysStateI,
     action: pressedKeysActionType
   ) => {
     switch (action.type) {
@@ -112,12 +114,74 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
     initialValue
   );
 
+  const layoutCharsPattern: RegExp = useMemo(() => {
+    return Layouts[settingsCtx.KeyboardLayout].matchingPattern;
+  }, [settingsCtx.KeyboardLayout]);
+
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      setInputVal(e.target.value);
+      //console.log(e.target.value.slice(-1) === " ");
+      console.log("heheheheheh in the middle of the night");
+    },
+    []
+  );
+
+  const handleInputKeyDown = useCallback(
+    (e: React.KeyboardEvent): void => {
+      // Easter egg for cool people.
+      /* if (e.key === "Hyper") {
+      console.log("Woah!");
+    } */
+
+      // Prevent repeat input while holding key pressed. BAD?
+      e.repeat && e.preventDefault();
+
+      if (e.key.match(layoutCharsPattern) && e.repeat === false) {
+        dispatchPressedKeys({
+          type: "ADD",
+          payload: { symbol: e.key, correct: true },
+        });
+      }
+
+      // If key is Shift, instead add its 'code' because it allows us to differentiate
+      // left from right shift keys.
+      if (e.key === "Shift") {
+        dispatchPressedKeys({
+          type: "ADD",
+          payload: { symbol: e.code, correct: true },
+        });
+      }
+
+      // Check correct key: 'correct: e.key === expected' eller nått.
+    },
+    [layoutCharsPattern]
+  );
+
+  // NOTE: THIS FUNCTION HAS A PROBLEM! Doesn't remove special chars which
+  // require shift key if shift key is released before the char's key.
+  const handleInputKeyUp = useCallback((e: React.KeyboardEvent): void => {
+    if (e.key === "Shift") {
+      dispatchPressedKeys({ type: "REMOVE", payload: { symbol: e.code } });
+    }
+    // Remove both a key's uppercase and lowercase symbols to definitely remove it.
+    // Useful in case user pressed or released shift while pressing the letter key.
+    dispatchPressedKeys({
+      type: "REMOVE",
+      payload: { symbol: e.key.toLowerCase() },
+    });
+    dispatchPressedKeys({
+      type: "REMOVE",
+      payload: { symbol: e.key.toUpperCase() },
+    });
+  }, []);
+
   // Store entered words in an array. When space is pressed (and maybe when test ends),
   // characters in text input get pushed to the array. This array can be compared
   // with testwords wordArr to calculate score and styling correct/incorrect words.
-  const [enteredWords, setEnteredWords] = useState<string[] | undefined>(
+  /* const [enteredWords, setEnteredWords] = useState<string[] | undefined>(
     undefined
-  );
+  ); */
 
   return (
     <>
@@ -128,9 +192,10 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
       />
       <Input
         inputVal={inputVal}
-        setInputVal={setInputVal}
         pressedKeys={pressedKeysState.pressedKeys}
-        setPressedKeys={dispatchPressedKeys}
+        handleChange={handleInputChange}
+        handleKeyDown={handleInputKeyDown}
+        handleKeyUp={handleInputKeyUp}
       />
       {settingsCtx.ShowKeyboard && (
         <Keyboard pressedKeys={pressedKeysState.pressedKeys} />
