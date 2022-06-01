@@ -70,9 +70,9 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   // Hidden text-input value.
   const [inputVal, setInputVal] = useState<string>("");
 
-  interface pressedKeysStateI {
+  type pressedKeysStateType = {
     pressedKeys: pressedKeys[];
-  }
+  };
 
   type pressedKeysActionType =
     | {
@@ -87,10 +87,10 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
         payload: { symbol: string };
       };
 
-  const initialValue: pressedKeysStateI = { pressedKeys: [] };
+  const initialValue: pressedKeysStateType = { pressedKeys: [] };
 
   const pressedKeysReducer = (
-    state: pressedKeysStateI,
+    state: pressedKeysStateType,
     action: pressedKeysActionType
   ) => {
     switch (action.type) {
@@ -121,8 +121,10 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
       setInputVal(e.target.value);
-      //console.log(e.target.value.slice(-1) === " ");
-      console.log("heheheheheh in the middle of the night");
+
+      if (e.target.value.slice(-1) === " ") {
+        console.log("handle space");
+      }
     },
     []
   );

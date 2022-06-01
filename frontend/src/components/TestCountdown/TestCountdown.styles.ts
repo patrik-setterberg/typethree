@@ -14,9 +14,12 @@ export const Wrapper = styled.div`
     width: 8rem;
     height: 8rem;
   }
-`
+`;
 
-export const CountdownCircle = styled.span<{circumference: number, dashOffset: number}>`
+export const CountdownCircle = styled.span<{
+  circumference: number;
+  dashOffset: number;
+}>`
   display: inline-block;
   width: 100%;
   height: auto;
@@ -40,26 +43,26 @@ export const CountdownCircle = styled.span<{circumference: number, dashOffset: n
     }
 
     & .circle--background {
-      stroke: ${props => props.theme.backgroundFourthenary};
+      stroke: ${(props) => props.theme.backgroundFourthenary};
     }
 
     & .circle--countdown {
-      stroke: ${props => props.theme.highlight};
-      stroke-dasharray: ${props => props.circumference}px;
-      stroke-dashoffset: ${props => props.dashOffset}px;
+      stroke: ${(props) => props.theme.highlight};
+      stroke-dasharray: ${(props) => props.circumference}px;
+      stroke-dashoffset: ${(props) => props.dashOffset}px;
     }
   }
-`
+`;
 
 export const Counter = styled.span`
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
   font-size: 2rem;
   font-weight: 600;
   line-height: 1;
-  color: ${props => props.theme.primary};
+  color: ${(props) => props.theme.primary};
   position: absolute;
 
   @media ${media.atleastMedium} {
     font-size: 2.5rem;
   }
-`
+`;

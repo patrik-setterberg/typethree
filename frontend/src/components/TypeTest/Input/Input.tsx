@@ -5,8 +5,6 @@ import * as S from "./Input.styles";
 
 import FocusContext from "../../../context/focus-context";
 
-import useSettingsContext from "../../../hooks/useSettingsContext";
-
 const Input = ({
   inputVal,
   pressedKeys,
@@ -15,7 +13,6 @@ const Input = ({
   handleKeyUp,
 }: InputProps): JSX.Element => {
   const focusCtx = useContext(FocusContext);
-  const settingsCtx = useSettingsContext();
 
   const inputEl = useRef<HTMLInputElement>(null);
 
@@ -26,12 +23,12 @@ const Input = ({
   // Focus input on blur (input loses focus).
   const handleBlur = useCallback((): void => {
     focusInput();
-  }, []);
+  }, [focusInput]);
 
   // Also focus input when window regains focus.
   useEffect(() => {
     focusCtx.windowIsFocused && focusInput();
-  }, [focusCtx.windowIsFocused]);
+  }, [focusCtx.windowIsFocused, focusInput]);
 
   return (
     <S.Input

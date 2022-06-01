@@ -20,7 +20,15 @@ export const Word = styled.span`
   }
 `;
 
-export const Letter = styled.span``;
+export const Letter = styled.span<{ focused: boolean }>`
+  transition: color 0.15s linear, text-shadow 0.1s linear;
+  ${(props) =>
+    !props.focused &&
+    css`
+      color: transparent;
+      text-shadow: 0 0 0.5rem ${(props) => props.theme.primary};
+    `}
+`;
 
 const CaretBlink = keyframes`
   from {
@@ -42,7 +50,7 @@ const CaretBlink = keyframes`
 
 const CARET_FONT_SIZE = 1.25;
 
-export const Caret = styled.span<{ animate: boolean }>`
+export const Caret = styled.span<{ animate: boolean; focused: boolean }>`
   display: inline-block;
   height: calc(${TEXT_LINE_HEIGHT} * ${CARET_FONT_SIZE - 0.3}rem);
   font-size: ${CARET_FONT_SIZE}rem;
@@ -50,12 +58,14 @@ export const Caret = styled.span<{ animate: boolean }>`
   width: 0.125rem; // Option for hefty boye variant? Something like 1ch.
   background-color: ${(props) => props.theme.highlight};
   opacity: 0.9;
+  visibility: ${(props) => (props.focused ? "visible" : "hidden")};
   position: absolute;
   left: 0;
   top: 0;
   transition: opacity 0.2s ease;
   ${(props) =>
     props.animate &&
+    props.focused &&
     css`
       animation: 1s cubic-bezier(0.78, 0.2, 0.05, 1) 0s infinite forwards
         ${CaretBlink};

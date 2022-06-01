@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import useSettingsContext from "../../hooks/useSettingsContext";
+import FocusContext from "../../context/focus-context";
 
 import * as S from "./TestCountdown.styles";
+import PauseIcon from "../UI/PauseIcon/PauseIcon";
 
 const TestCountdown = ({}): JSX.Element => {
 
   const settingsCtx = useSettingsContext();
+  const focusCtx = useContext(FocusContext);
 
   const [timeLeft, setTimeLeft] = useState<number>(settingsCtx.TestLength);
 
@@ -33,7 +36,7 @@ const TestCountdown = ({}): JSX.Element => {
     return () => {
       clearInterval(timer);
     };
-  }, [timeLeft]);
+  }, [timeLeft, settingsCtx.TestLength]);
 
   return (
     <S.Wrapper>
@@ -53,7 +56,9 @@ const TestCountdown = ({}): JSX.Element => {
           />
         </svg>
       </S.CountdownCircle>
-      <S.Counter>{timeLeft}</S.Counter>
+      <S.Counter>
+        {focusCtx.windowIsFocused ? timeLeft : <PauseIcon />}
+      </S.Counter>
     </S.Wrapper>
   );
 };
