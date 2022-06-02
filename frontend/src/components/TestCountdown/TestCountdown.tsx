@@ -6,7 +6,6 @@ import * as S from "./TestCountdown.styles";
 import PauseIcon from "../UI/PauseIcon/PauseIcon";
 
 const TestCountdown = ({}): JSX.Element => {
-
   const settingsCtx = useSettingsContext();
   const focusCtx = useContext(FocusContext);
 
@@ -29,8 +28,10 @@ const TestCountdown = ({}): JSX.Element => {
 
     // Set offset based on percentage of time left.
     setDashOffset(
-      Math.round((circumference - circumference * (timeLeft / settingsCtx.TestLength)) * 100) /
-        100
+      Math.round(
+        (circumference - circumference * (timeLeft / settingsCtx.TestLength)) *
+          100
+      ) / 100
     );
 
     return () => {
@@ -40,7 +41,11 @@ const TestCountdown = ({}): JSX.Element => {
 
   return (
     <S.Wrapper>
-      <S.CountdownCircle circumference={circumference} dashOffset={dashOffset}>
+      <S.CountdownCircle
+        circumference={circumference}
+        dashOffset={dashOffset}
+        focused={focusCtx.windowIsFocused}
+      >
         <svg viewBox="0 0 567 567" xmlns="http://www.w3.org/2000/svg">
           <circle
             className="circle--background"

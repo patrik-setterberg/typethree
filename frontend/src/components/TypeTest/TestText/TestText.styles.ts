@@ -1,5 +1,7 @@
 import styled, { css, keyframes } from "styled-components";
 
+import media from '../../../globals/media-breakpoints';
+
 export const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -12,11 +14,19 @@ const TEXT_LINE_HEIGHT = 1.6;
 
 export const Word = styled.span`
   color: ${(props) => props.theme.primary};
-  font-size: 20px;
+  font-size: 1rem;
   line-height: ${TEXT_LINE_HEIGHT};
 
   &:not(:last-of-type) {
     margin-right: 1ch;
+  }
+
+  @media ${media.medium} {
+    font-size: 1.125rem;
+  }
+
+  @media ${media.large} {
+    font-size: 1.25rem;
   }
 `;
 
@@ -26,7 +36,7 @@ export const Letter = styled.span<{ focused: boolean }>`
     !props.focused &&
     css`
       color: transparent;
-      text-shadow: 0 0 0.5rem ${(props) => props.theme.primary};
+      text-shadow: 0 0 0.625rem ${(props) => props.theme.primary04};
     `}
 `;
 
@@ -70,4 +80,29 @@ export const Caret = styled.span<{ animate: boolean; focused: boolean }>`
       animation: 1s cubic-bezier(0.78, 0.2, 0.05, 1) 0s infinite forwards
         ${CaretBlink};
     `}
+`;
+
+export const FocusLostMessage = styled.span<{ focused: boolean }>`
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  width: fit-content;
+  transform: translateX(-50%);
+  margin-top: calc(var(--default-spacing) * 3);
+  padding: 0 var(--default-spacing);
+  text-align: center;
+  color: ${(props) => props.theme.primary};
+  text-shadow: 0 0 0.625rem ${(props) => props.theme.backgroundPrimary};
+  font-size: 1rem;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  opacity: ${(props) => (props.focused ? "0" : "1")};
+
+  @media ${media.atleastMedium} {
+    margin-top: calc(var(--default-spacing) * 2);
+  }
+
+  @media ${media.large} {
+    font-size: 1.125rem;
+  }
 `;

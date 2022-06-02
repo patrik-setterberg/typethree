@@ -4,6 +4,7 @@ const themes = {
 		primary07: 'rgba(238, 238, 238, 0.7)',
 		primary05: 'rgba(238, 238, 238, 0.5)',
 		primary04: 'rgba(238, 238, 238, 0.4)',
+		primary02: 'rgba(238, 238, 238, 0.2)',
 		primary01: 'rgba(238, 238, 238, 0.1)',
 		primary005: 'rgba(238, 238, 238, 0.03)',
 		highlight: '#FFD369',

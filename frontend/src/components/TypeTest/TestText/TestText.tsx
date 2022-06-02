@@ -19,6 +19,9 @@ const TestText = ({ words, animate }: TestTextProps): JSX.Element => {
         );
       })}
       <S.Caret animate={animate} focused={focusCtx.windowIsFocused}/>
+      <S.FocusLostMessage focused={focusCtx.windowIsFocused}>
+        Focus lost. Click anywhere to focus!
+      </S.FocusLostMessage>
     </S.Wrapper>
   );
 };

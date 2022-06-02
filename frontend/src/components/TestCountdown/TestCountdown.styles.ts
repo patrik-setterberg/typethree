@@ -19,6 +19,7 @@ export const Wrapper = styled.div`
 export const CountdownCircle = styled.span<{
   circumference: number;
   dashOffset: number;
+  focused: boolean;
 }>`
   display: inline-block;
   width: 100%;
@@ -47,7 +48,8 @@ export const CountdownCircle = styled.span<{
     }
 
     & .circle--countdown {
-      stroke: ${(props) => props.theme.highlight};
+      stroke: ${(props) =>
+        props.focused ? props.theme.highlight : props.theme.primary};
       stroke-dasharray: ${(props) => props.circumference}px;
       stroke-dashoffset: ${(props) => props.dashOffset}px;
     }
