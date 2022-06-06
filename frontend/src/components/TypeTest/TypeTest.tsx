@@ -125,9 +125,11 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   const handleSpace = useCallback((): void => {
     if (inputVal.length > 0) {
-      setEnteredWords([...enteredWords, inputVal]);
-    } else {
-      setEnteredWords([inputVal]);
+      if (enteredWords.length > 0) {
+        setEnteredWords([...enteredWords, inputVal]);
+      } else {
+        setEnteredWords([inputVal]);
+      }
     }
 
     setInputVal("");
@@ -199,6 +201,8 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
       <TestText
         words={testWords}
         animate={pressedKeysState.pressedKeys.length === 0}
+        inputVal={inputVal}
+        enteredWords={enteredWords}
       />
       <Input
         inputVal={inputVal}

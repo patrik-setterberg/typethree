@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from "styled-components";
 
-import media from '../../../globals/media-breakpoints';
+import media from "../../../globals/media-breakpoints";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -60,7 +60,22 @@ const CaretBlink = keyframes`
 
 const CARET_FONT_SIZE = 1.25;
 
-export const Caret = styled.span<{ animate: boolean; focused: boolean }>`
+export const Caret = styled.span.attrs<{
+  currentWordPos: { x: number; y: number };
+  offsetX: number;
+}>(({ currentWordPos, offsetX }) => ({
+  style: {
+    transform: `translateX(${offsetX}ch)`,
+    top: `${currentWordPos.y}px`,
+    left: `${currentWordPos.x}px`,
+  },
+}))<{
+  animate: boolean;
+  focused: boolean;
+  currentWordPos: { x: number; y: number };
+  transitionTransform: boolean;
+  offsetX: number;
+}>`
   display: inline-block;
   height: calc(${TEXT_LINE_HEIGHT} * ${CARET_FONT_SIZE - 0.3}rem);
   font-size: ${CARET_FONT_SIZE}rem;
@@ -70,9 +85,8 @@ export const Caret = styled.span<{ animate: boolean; focused: boolean }>`
   opacity: 0.9;
   visibility: ${(props) => (props.focused ? "visible" : "hidden")};
   position: absolute;
-  left: 0;
-  top: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease
+    ${(props) => (props.transitionTransform ? ", transform 0.08s linear" : "")};
   ${(props) =>
     props.animate &&
     props.focused &&
