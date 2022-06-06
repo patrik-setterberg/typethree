@@ -36,7 +36,8 @@ export const CountdownCircle = styled.span<{
     & circle {
       stroke-width: 1.5rem;
       stroke-linejoin: miter;
-      transition: stroke-dashoffset 0.5s ease-out, stroke-width 0.15s ease;
+      transition: stroke-dashoffset 0.5s ease-out, stroke-width 0.15s ease,
+        stroke 0.15s ease;
 
       ${Wrapper}:hover & {
         stroke-width: 2rem;

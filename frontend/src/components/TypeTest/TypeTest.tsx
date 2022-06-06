@@ -118,15 +118,30 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
     return Layouts[settingsCtx.KeyboardLayout].matchingPattern;
   }, [settingsCtx.KeyboardLayout]);
 
+  // Store entered words in an array. When space is pressed (and maybe when test ends),
+  // characters in text input get pushed to the array. This array can be compared
+  // with testwords wordArr to calculate score and styling correct/incorrect words.
+  const [enteredWords, setEnteredWords] = useState<string[]>([]);
+
+  const handleSpace = useCallback((): void => {
+    if (inputVal.length > 0) {
+      setEnteredWords([...enteredWords, inputVal]);
+    } else {
+      setEnteredWords([inputVal]);
+    }
+
+    setInputVal("");
+  }, [enteredWords, inputVal]);
+
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
       setInputVal(e.target.value);
 
       if (e.target.value.slice(-1) === " ") {
-        console.log("handle space");
+        handleSpace();
       }
     },
-    []
+    [handleSpace]
   );
 
   const handleInputKeyDown = useCallback(
@@ -134,7 +149,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
       // Easter egg for cool people.
       /* if (e.key === "Hyper") {
       console.log("Woah!");
-    } */
+      } */
 
       // Prevent repeat input while holding key pressed. BAD?
       e.repeat && e.preventDefault();
@@ -177,13 +192,6 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
       payload: { symbol: e.key.toUpperCase() },
     });
   }, []);
-
-  // Store entered words in an array. When space is pressed (and maybe when test ends),
-  // characters in text input get pushed to the array. This array can be compared
-  // with testwords wordArr to calculate score and styling correct/incorrect words.
-  /* const [enteredWords, setEnteredWords] = useState<string[] | undefined>(
-    undefined
-  ); */
 
   return (
     <>
