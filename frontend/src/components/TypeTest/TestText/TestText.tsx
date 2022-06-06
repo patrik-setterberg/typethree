@@ -30,7 +30,7 @@ const TestText = ({
         y: currentWord.current.offsetTop,
       });
     }
-  }, [currentWord, inputVal]);
+  }, [currentWord, inputVal, focusCtx.windowWidth]);
 
   return (
     <S.Wrapper>

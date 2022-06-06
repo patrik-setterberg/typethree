@@ -3,6 +3,19 @@ import styled, { css, keyframes } from "styled-components";
 import media from "../../../globals/media-breakpoints";
 
 export const Wrapper = styled.div`
+  --font-size: 1rem;
+  --caret-height-offset: 0.25rem;
+  --line-height: 1.6;
+
+  @media ${media.medium} {
+    --font-size: 1.125rem;
+  }
+
+  @media ${media.large} {
+    --font-size: 1.25rem;
+    --caret-height-offset: 0.2rem;
+  }
+
   display: flex;
   flex-wrap: wrap;
   position: relative;
@@ -10,23 +23,13 @@ export const Wrapper = styled.div`
   margin-top: calc(var(--default-spacing) * 1.5);
 `;
 
-const TEXT_LINE_HEIGHT = 1.6;
-
 export const Word = styled.span`
   color: ${(props) => props.theme.primary};
-  font-size: 1rem;
-  line-height: ${TEXT_LINE_HEIGHT};
+  font-size: var(--font-size);
+  line-height: var(--line-height);
 
   &:not(:last-of-type) {
     margin-right: 1ch;
-  }
-
-  @media ${media.medium} {
-    font-size: 1.125rem;
-  }
-
-  @media ${media.large} {
-    font-size: 1.25rem;
   }
 `;
 
@@ -58,8 +61,6 @@ const CaretBlink = keyframes`
   }
 `;
 
-const CARET_FONT_SIZE = 1.25;
-
 export const Caret = styled.span.attrs<{
   currentWordPos: { x: number; y: number };
   offsetX: number;
@@ -77,8 +78,8 @@ export const Caret = styled.span.attrs<{
   offsetX: number;
 }>`
   display: inline-block;
-  height: calc(${TEXT_LINE_HEIGHT} * ${CARET_FONT_SIZE - 0.3}rem);
-  font-size: ${CARET_FONT_SIZE}rem;
+  height: calc(var(--line-height) * calc(var(--font-size) - var(--caret-height-offset)));
+  font-size: var(--font-size);
   margin-top: 0.1875rem;
   width: 0.125rem; // Option for hefty boye variant? Something like 1ch.
   background-color: ${(props) => props.theme.highlight};
