@@ -2,18 +2,18 @@ import React, { useState, useEffect, useCallback } from "react";
 
 import debounce from "../util/debounce";
 
-const FocusContext = React.createContext({
+const WindowContext = React.createContext({
   windowIsFocused: true,
   windowWidth: window.innerWidth,
 });
 
-interface FocusContextProps {
+interface WindowContextProps {
   children: React.ReactNode;
 }
 
-export const FocusContextProvider = ({
+export const WindowContextProvider = ({
   children,
-}: FocusContextProps): JSX.Element => {
+}: WindowContextProps): JSX.Element => {
   const [windowIsFocused, setWindowIsFocused] = useState(true);
 
   const blurHandler = useCallback(() => {
@@ -47,15 +47,15 @@ export const FocusContextProvider = ({
   }, []);
 
   return (
-    <FocusContext.Provider
+    <WindowContext.Provider
       value={{
         windowIsFocused: windowIsFocused,
         windowWidth: windowWidth,
       }}
     >
       {children}
-    </FocusContext.Provider>
+    </WindowContext.Provider>
   );
 };
 
-export default FocusContext;
+export default WindowContext;

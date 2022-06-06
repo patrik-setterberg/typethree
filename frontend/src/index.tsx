@@ -5,18 +5,18 @@ import App from './App';
 import GlobalStyle from './globals/global-styles';
 import '../src/assets/fonts/fonts.css';
 import { AuthContextProvider } from './context/auth-context';
-import { FocusContextProvider } from "./context/focus-context";
+import { WindowContextProvider } from "./context/window-context";
 import { SettingsContextProvider } from "./context/settings-context/settings-context";
 
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
     <AuthContextProvider>
-      <FocusContextProvider>
+      <WindowContextProvider>
         <SettingsContextProvider>
           <App />
         </SettingsContextProvider>
-      </FocusContextProvider>
+      </WindowContextProvider>
     </AuthContextProvider>
   </React.StrictMode>,
   document.getElementById('root')

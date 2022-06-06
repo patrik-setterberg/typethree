@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import * as S from "./TestText.styles";
 import { TestTextProps } from "./TestText.interfaces";
 
-import FocusContext from "../../../context/focus-context";
+import WindowContext from "../../../context/window-context";
 
 const TestText = ({
   words,
@@ -11,7 +11,7 @@ const TestText = ({
   enteredWords,
   inputVal,
 }: TestTextProps): JSX.Element => {
-  const focusCtx = useContext(FocusContext);
+  const windowCtx = useContext(WindowContext);
 
   let currentWord = useRef<HTMLElement>(null);
 
@@ -30,7 +30,7 @@ const TestText = ({
         y: currentWord.current.offsetTop,
       });
     }
-  }, [currentWord, inputVal, focusCtx.windowWidth]);
+  }, [currentWord, inputVal, windowCtx.windowWidth]);
 
   return (
     <S.Wrapper>
@@ -43,7 +43,7 @@ const TestText = ({
           >
             {word.map((letter, letterInd) => {
               return (
-                <S.Letter key={letterInd} focused={focusCtx.windowIsFocused}>
+                <S.Letter key={letterInd} focused={windowCtx.windowIsFocused}>
                   {letter}
                 </S.Letter>
               );
@@ -52,13 +52,13 @@ const TestText = ({
         );
       })}
       <S.Caret
-        focused={focusCtx.windowIsFocused}
+        focused={windowCtx.windowIsFocused}
         currentWordPos={currentWordPos}
         transitionTransform={inputVal.length !== 0}
         animate={animate}
         offsetX={inputVal.length}
       />
-      <S.FocusLostMessage focused={focusCtx.windowIsFocused}>
+      <S.FocusLostMessage focused={windowCtx.windowIsFocused}>
         Focus lost. Click anywhere to focus!
       </S.FocusLostMessage>
     </S.Wrapper>

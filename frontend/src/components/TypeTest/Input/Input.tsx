@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect, useRef } from "react";
 import { InputProps } from "./Input.interfaces";
 import * as S from "./Input.styles";
 
-import FocusContext from "../../../context/focus-context";
+import WindowContext from "../../../context/window-context";
 
 const Input = ({
   inputVal,
@@ -12,7 +12,7 @@ const Input = ({
   handleKeyDown,
   handleKeyUp,
 }: InputProps): JSX.Element => {
-  const focusCtx = useContext(FocusContext);
+  const windowCtx = useContext(WindowContext);
 
   const inputEl = useRef<HTMLInputElement>(null);
 
@@ -27,8 +27,8 @@ const Input = ({
 
   // Also focus input when window regains focus.
   useEffect(() => {
-    focusCtx.windowIsFocused && focusInput();
-  }, [focusCtx.windowIsFocused, focusInput]);
+    windowCtx.windowIsFocused && focusInput();
+  }, [windowCtx.windowIsFocused, focusInput]);
 
   return (
     <S.Input

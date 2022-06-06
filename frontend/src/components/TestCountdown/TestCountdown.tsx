@@ -1,13 +1,13 @@
 import { useContext, useState, useEffect } from "react";
 import useSettingsContext from "../../hooks/useSettingsContext";
-import FocusContext from "../../context/focus-context";
+import WindowContext from "../../context/window-context";
 
 import * as S from "./TestCountdown.styles";
 import PauseIcon from "../UI/PauseIcon/PauseIcon";
 
 const TestCountdown = ({}): JSX.Element => {
   const settingsCtx = useSettingsContext();
-  const focusCtx = useContext(FocusContext);
+  const wndowCtx = useContext(WindowContext);
 
   const [timeLeft, setTimeLeft] = useState<number>(settingsCtx.TestLength);
 
@@ -44,7 +44,7 @@ const TestCountdown = ({}): JSX.Element => {
       <S.CountdownCircle
         circumference={circumference}
         dashOffset={dashOffset}
-        focused={focusCtx.windowIsFocused}
+        focused={wndowCtx.windowIsFocused}
       >
         <svg viewBox="0 0 567 567" xmlns="http://www.w3.org/2000/svg">
           <circle
@@ -62,7 +62,7 @@ const TestCountdown = ({}): JSX.Element => {
         </svg>
       </S.CountdownCircle>
       <S.Counter>
-        {focusCtx.windowIsFocused ? timeLeft : <PauseIcon />}
+        {wndowCtx.windowIsFocused ? timeLeft : <PauseIcon />}
       </S.Counter>
     </S.Wrapper>
   );
