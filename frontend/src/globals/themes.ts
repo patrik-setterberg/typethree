@@ -2,6 +2,7 @@ const themes = {
 	dark: {
 		primary: 'rgb(238, 238, 238)', // #EEEEEE
 		primary07: 'rgba(238, 238, 238, 0.7)',
+		primary06: 'rgba(238, 238, 238, 0.6)',
 		primary05: 'rgba(238, 238, 238, 0.5)',
 		primary04: 'rgba(238, 238, 238, 0.4)',
 		primary02: 'rgba(238, 238, 238, 0.2)',

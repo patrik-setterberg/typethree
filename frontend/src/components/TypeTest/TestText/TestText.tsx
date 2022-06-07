@@ -40,10 +40,36 @@ const TestText = ({
             key={wordInd}
             data-word={word.join("")}
             ref={wordInd === enteredWords.length ? currentWord : null}
+            focused={windowCtx.windowIsFocused}
+            incorrect={
+              enteredWords[wordInd] !== undefined &&
+              enteredWords[wordInd].join("") !== words[wordInd].join("")
+            }
           >
             {word.map((letter, letterInd) => {
               return (
-                <S.Letter key={letterInd} focused={windowCtx.windowIsFocused}>
+                <S.Letter
+                  key={letterInd}
+                  focused={windowCtx.windowIsFocused}
+                  entered={
+                    (wordInd < enteredWords.length &&
+                      enteredWords[wordInd][letterInd] !== undefined) ||
+                    (wordInd === enteredWords.length &&
+                      letterInd < inputVal.length)
+                  }
+                  missed={
+                    wordInd < enteredWords.length &&
+                    enteredWords[wordInd][letterInd] === undefined
+                  }
+                  incorrect={
+                    (enteredWords[wordInd] !== undefined &&
+                      enteredWords[wordInd][letterInd] !== letter &&
+                      letterInd < enteredWords[wordInd].length) ||
+                    (wordInd === enteredWords.length &&
+                      inputVal.length > letterInd &&
+                      inputVal[letterInd] !== letter)
+                  }
+                >
                   {letter}
                 </S.Letter>
               );

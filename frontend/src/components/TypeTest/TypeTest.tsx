@@ -121,14 +121,14 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   // Store entered words in an array. When space is pressed (and maybe when test ends),
   // characters in text input get pushed to the array. This array can be compared
   // with testwords wordArr to calculate score and styling correct/incorrect words.
-  const [enteredWords, setEnteredWords] = useState<string[]>([]);
+  const [enteredWords, setEnteredWords] = useState<string[][] | []>([]);
 
   const handleSpace = useCallback((): void => {
     if (inputVal.length > 0) {
       if (enteredWords.length > 0) {
-        setEnteredWords([...enteredWords, inputVal]);
+        setEnteredWords([...enteredWords, inputVal.split("")]);
       } else {
-        setEnteredWords([inputVal]);
+        setEnteredWords([inputVal.split("")]);
       }
     }
 

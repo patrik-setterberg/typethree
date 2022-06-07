@@ -23,7 +23,8 @@ export const Wrapper = styled.div`
   margin-top: calc(var(--default-spacing) * 1.5);
 `;
 
-export const Word = styled.span`
+export const Word = styled.span<{ focused: boolean; incorrect: boolean }>`
+  position: relative;
   color: ${(props) => props.theme.primary};
   font-size: var(--font-size);
   line-height: var(--line-height);
@@ -31,15 +32,72 @@ export const Word = styled.span`
   &:not(:last-of-type) {
     margin-right: 1ch;
   }
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    left: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 1px;
+    bottom: 2px;
+    transition: border-bottom-color 0.1s linear;
+  }
+
+  ${(props) =>
+    props.focused &&
+    props.incorrect &&
+    css`
+      &::after {
+        border-bottom-color: darkred;
+      }
+    `}
 `;
 
-export const Letter = styled.span<{ focused: boolean }>`
-  transition: color 0.15s linear, text-shadow 0.1s linear;
+export const Letter = styled.span<{
+  focused: boolean;
+  entered: boolean;
+  missed: boolean;
+  incorrect: boolean;
+}>`
+  transition: color 0.1s linear, text-shadow 0.1s linear;
   ${(props) =>
     !props.focused &&
     css`
-      color: transparent;
+      color: transparent !important;
       text-shadow: 0 0 0.625rem ${(props) => props.theme.primary04};
+    `}
+
+  ${(props) =>
+    props.entered &&
+    css`
+      color: ${(props) => props.theme.highlight};
+    `}
+
+  ${(props) =>
+    !props.focused &&
+    props.entered &&
+    css`
+      text-shadow: 0 0 0.625rem ${(props) => props.theme.highlight};
+    `}
+
+    ${(props) =>
+    props.missed &&
+    css`
+      color: ${(props) => props.theme.primary06};
+    `}
+
+  ${(props) =>
+    props.incorrect &&
+    css`
+      color: firebrick;
+    `}
+
+  ${(props) =>
+    !props.focused &&
+    props.incorrect &&
+    css`
+      text-shadow: 0 0 0.625rem firebrick;
     `}
 `;
 
@@ -78,7 +136,9 @@ export const Caret = styled.span.attrs<{
   offsetX: number;
 }>`
   display: inline-block;
-  height: calc(var(--line-height) * calc(var(--font-size) - var(--caret-height-offset)));
+  height: calc(
+    var(--line-height) * calc(var(--font-size) - var(--caret-height-offset))
+  );
   font-size: var(--font-size);
   margin-top: 0.1875rem;
   width: 0.125rem; // Option for hefty boye variant? Something like 1ch.
