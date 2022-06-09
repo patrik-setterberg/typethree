@@ -123,7 +123,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   // with testwords wordArr to calculate score and styling correct/incorrect words.
   const [enteredWords, setEnteredWords] = useState<string[][] | []>([]);
 
-  const handleSpace = useCallback((): void => {
+  const handleSpace = (): void => {
     if (inputVal.length > 0) {
       if (enteredWords.length > 0) {
         setEnteredWords([...enteredWords, inputVal.split("")]);
@@ -133,67 +133,94 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
     }
 
     setInputVal("");
-  }, [enteredWords, inputVal]);
+  };
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>): void => {
-      setInputVal(e.target.value);
+  const checkWordCorrect = (): boolean => {
+    return testWords[enteredWords.length].join("") === inputVal;
+  };
 
-      if (e.target.value.slice(-1) === " ") {
-        handleSpace();
-      }
-    },
-    [handleSpace]
-  );
+  const checkLetterCorrect = (key: string): boolean => {
+    return key === testWords[enteredWords.length][inputVal.length];
+  };
 
-  const handleInputKeyDown = useCallback(
-    (e: React.KeyboardEvent): void => {
-      // Easter egg for cool people.
-      /* if (e.key === "Hyper") {
+  const checkBackspacePressed = (): boolean => {
+    return pressedKeysState.pressedKeys.some(
+      (pressedKey) => pressedKey.symbol === "Backspace"
+    );
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent): void => {
+    // Easter egg for cool people.
+    /* if (e.key === "Hyper") {
       console.log("Woah!");
       } */
 
-      // Prevent repeat input while holding key pressed. BAD?
-      e.repeat && e.preventDefault();
+    // Prevent repeat input while holding key pressed. BAD?
+    e.repeat && e.preventDefault();
 
-      if (e.key.match(layoutCharsPattern) && e.repeat === false) {
-        dispatchPressedKeys({
-          type: "ADD",
-          payload: { symbol: e.key, correct: true },
-        });
-      }
+    if (
+      (e.key.match(layoutCharsPattern) || e.key === "Backspace") &&
+      e.repeat === false
+    ) {
+      dispatchPressedKeys({
+        type: "ADD",
+        payload: {
+          symbol: e.key,
+          correct:
+            e.key === " " ? checkWordCorrect() : checkLetterCorrect(e.key),
+        },
+      });
+    }
 
-      // If key is Shift, instead add its 'code' because it allows us to differentiate
-      // left from right shift keys.
-      if (e.key === "Shift") {
-        dispatchPressedKeys({
-          type: "ADD",
-          payload: { symbol: e.code, correct: true },
-        });
-      }
-
-      // Check correct key: 'correct: e.key === expected' eller nått.
-    },
-    [layoutCharsPattern]
-  );
+    // If key is Shift, instead add its 'code' because it allows us to differentiate
+    // left from right shift keys.
+    if (e.key === "Shift") {
+      dispatchPressedKeys({
+        type: "ADD",
+        payload: { symbol: e.code, correct: true },
+      });
+    }
+  };
 
   // NOTE: THIS FUNCTION HAS A PROBLEM! Doesn't remove special chars which
   // require shift key if shift key is released before the char's key.
   const handleInputKeyUp = useCallback((e: React.KeyboardEvent): void => {
     if (e.key === "Shift") {
       dispatchPressedKeys({ type: "REMOVE", payload: { symbol: e.code } });
+    } else {
+      // Remove both a key's uppercase and lowercase symbols to definitely remove it.
+      // Useful in case user pressed or released shift while pressing the letter key.
+      dispatchPressedKeys({
+        type: "REMOVE",
+        payload: {
+          symbol: e.key === "Backspace" ? e.key : e.key.toLowerCase(),
+        },
+      });
+      dispatchPressedKeys({
+        type: "REMOVE",
+        payload: { symbol: e.key.toUpperCase() },
+      });
     }
-    // Remove both a key's uppercase and lowercase symbols to definitely remove it.
-    // Useful in case user pressed or released shift while pressing the letter key.
-    dispatchPressedKeys({
-      type: "REMOVE",
-      payload: { symbol: e.key.toLowerCase() },
-    });
-    dispatchPressedKeys({
-      type: "REMOVE",
-      payload: { symbol: e.key.toUpperCase() },
-    });
   }, []);
+
+  const updateInputValue = useCallback(
+    (inputValLen: number, val: string) => {
+      if (
+        inputValLen < testWords[enteredWords.length].length ||
+        val.length < inputValLen
+      ) {
+        setInputVal(val);
+      }
+    },
+    [testWords, enteredWords.length]
+  );
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    updateInputValue(inputVal.length, e.target.value);
+    if (e.target.value.slice(-1) === " ") {
+      handleSpace();
+    }
+  };
 
   return (
     <>
@@ -203,6 +230,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
         animate={pressedKeysState.pressedKeys.length === 0}
         inputVal={inputVal}
         enteredWords={enteredWords}
+        backspacePressed={checkBackspacePressed()}
       />
       <Input
         inputVal={inputVal}

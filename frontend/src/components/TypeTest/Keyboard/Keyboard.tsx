@@ -8,6 +8,19 @@ import { KeyboardProps } from "./Keyboard.interfaces";
 const Keyboard = ({ pressedKeys }: KeyboardProps): JSX.Element => {
   const settingsCtx = useSettingsContext();
 
+  const checkIsPressed = (key: string): boolean => {
+    return pressedKeys.some(
+      (pressedKey) => pressedKey.symbol.toLowerCase() === key
+    );
+  };
+
+  const checkIsIncorrect = (key: string): boolean => {
+    return pressedKeys.some(
+      (pressedKey) =>
+        pressedKey.symbol.toLowerCase() === key && !pressedKey.correct
+    );
+  };
+
   return (
     <S.Keyboard>
       {Layouts[settingsCtx.KeyboardLayout].layout.map((row, i) => {
@@ -26,10 +39,8 @@ const Keyboard = ({ pressedKeys }: KeyboardProps): JSX.Element => {
               return (
                 <S.Key
                   key={i}
-                  pressed={pressedKeys.some(
-                    (pressedKey) =>
-                      pressedKey.symbol.toLowerCase() === keySymbol
-                  )}
+                  pressed={checkIsPressed(keySymbol)}
+                  incorrect={checkIsIncorrect(keySymbol)}
                 >
                   {keySymbol.toUpperCase()}
                 </S.Key>
@@ -39,9 +50,9 @@ const Keyboard = ({ pressedKeys }: KeyboardProps): JSX.Element => {
         );
       })}
       <S.Row>
-        <S.Key
-          pressed={pressedKeys.some((pressedKey) => pressedKey.symbol === " ")}
-        >{`\u2007` /* Spacebar key */}</S.Key>
+        <S.Key pressed={checkIsPressed(" ")} incorrect={checkIsIncorrect(" ")}>{
+          `\u2007` /* Spacebar key */
+        }</S.Key>
       </S.Row>
     </S.Keyboard>
   );

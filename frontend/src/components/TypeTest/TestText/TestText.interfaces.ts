@@ -3,4 +3,5 @@ export interface TestTextProps {
   enteredWords: Array<string[]>;
   inputVal: string;
   animate: boolean; // Animate caret (blinking).
+  backspacePressed: boolean;
 }

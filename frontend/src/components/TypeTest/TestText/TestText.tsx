@@ -10,6 +10,7 @@ const TestText = ({
   animate,
   enteredWords,
   inputVal,
+  backspacePressed,
 }: TestTextProps): JSX.Element => {
   const windowCtx = useContext(WindowContext);
 
@@ -41,6 +42,7 @@ const TestText = ({
             data-word={word.join("")}
             ref={wordInd === enteredWords.length ? currentWord : null}
             focused={windowCtx.windowIsFocused}
+            // Highlight incorrect and incomplete words.
             incorrect={
               enteredWords[wordInd] !== undefined &&
               enteredWords[wordInd].join("") !== words[wordInd].join("")
@@ -51,16 +53,19 @@ const TestText = ({
                 <S.Letter
                   key={letterInd}
                   focused={windowCtx.windowIsFocused}
+                  // Highlight correctly entered letters.
                   entered={
                     (wordInd < enteredWords.length &&
                       enteredWords[wordInd][letterInd] !== undefined) ||
                     (wordInd === enteredWords.length &&
                       letterInd < inputVal.length)
                   }
+                  // Highlight letters in a past word which were not entered.
                   missed={
                     wordInd < enteredWords.length &&
                     enteredWords[wordInd][letterInd] === undefined
                   }
+                  // Highlight letters which were entered but incorrect.
                   incorrect={
                     (enteredWords[wordInd] !== undefined &&
                       enteredWords[wordInd][letterInd] !== letter &&
@@ -80,7 +85,7 @@ const TestText = ({
       <S.Caret
         focused={windowCtx.windowIsFocused}
         currentWordPos={currentWordPos}
-        transitionTransform={inputVal.length !== 0}
+        transitionTransform={inputVal.length !== 0 || backspacePressed}
         animate={animate}
         offsetX={inputVal.length}
       />

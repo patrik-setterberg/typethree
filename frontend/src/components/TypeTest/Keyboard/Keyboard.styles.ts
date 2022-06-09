@@ -16,6 +16,7 @@ export const Keyboard = styled.div`
 
 export const Key = styled.span<{
   pressed: boolean;
+  incorrect: boolean;
 }>`
   display: inline-flex;
   border: 1px solid #777;
@@ -41,6 +42,16 @@ export const Key = styled.span<{
       box-shadow: inset 0px 0px 0.75rem ${(props) => props.theme.primary05};
       background-color: ${(props) => props.theme.primary04};
     `};
+
+  ${(props) =>
+    props.pressed &&
+    props.incorrect &&
+    css`
+      color: firebrick;
+      border-color: firebrick;
+      box-shadow: inset 0px 0px 0.75rem rgba(255, 0, 0, 0.1);
+      background-color: rgba(255, 0, 0, 0.1);
+    `};
 `;
 
 export const Row = styled.div<{
@@ -51,13 +62,6 @@ export const Row = styled.div<{
   // TOP ROW
   &:nth-child(1) {
     margin-left: 7ch;
-
-    // TEMP PREVIEW PRESSED INCORRECT
-    /* & > span:nth-child(8) {
-      border-color: rgba(255, 0, 0, 0.75);
-      box-shadow: inset 0px 0px 0.75rem rgba(255, 0, 0, 0.6);
-      color: rgba(255, 0, 0, 0.75);
-    } */
   }
 
   // HOME ROW
