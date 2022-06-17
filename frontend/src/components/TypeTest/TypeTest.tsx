@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import useSettingsContext from "../../hooks/useSettingsContext";
+import useTypeTestContext from "../../hooks/useTypeTestContext";
 
 // Interfaces.
 import { TypeTestProps, pressedKeys } from "./TypeTest.interfaces";
@@ -22,6 +23,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   const TEST_WORD_COUNT: number = 30;
 
   const settingsCtx = useSettingsContext();
+  const typeTestCtx = useTypeTestContext();
 
   type wordArray = {
     [key: string]: Array<string>;
@@ -216,6 +218,8 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    if (!typeTestCtx.playing) typeTestCtx.setPlaying(true);
+
     updateInputValue(inputVal.length, e.target.value);
     if (e.target.value.slice(-1) === " ") {
       handleSpace();

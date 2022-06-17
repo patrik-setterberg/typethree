@@ -14,7 +14,7 @@ interface WindowContextProps {
 export const WindowContextProvider = ({
   children,
 }: WindowContextProps): JSX.Element => {
-  const [windowIsFocused, setWindowIsFocused] = useState(true);
+  const [windowIsFocused, setWindowIsFocused] = useState(document.hasFocus());
 
   const blurHandler = useCallback(() => {
     setWindowIsFocused(false);
