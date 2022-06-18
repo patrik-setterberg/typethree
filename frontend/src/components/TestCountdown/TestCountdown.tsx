@@ -1,5 +1,7 @@
 import { useContext, useState, useEffect } from "react";
+
 import useSettingsContext from "../../hooks/useSettingsContext";
+import useTypeTestContext from "../../hooks/useTypeTestContext";
 import WindowContext from "../../context/window-context";
 
 import * as S from "./TestCountdown.styles";
@@ -7,9 +9,8 @@ import PauseIcon from "../UI/PauseIcon/PauseIcon";
 
 const TestCountdown = ({}): JSX.Element => {
   const settingsCtx = useSettingsContext();
+  const typeTestCtx = useTypeTestContext();
   const wndowCtx = useContext(WindowContext);
-
-  const [timeLeft, setTimeLeft] = useState<number>(settingsCtx.TestLength);
 
   // Circumference of circle. Probably not *technically* true but it works!
   const circumference: number = 1304;
@@ -18,26 +19,14 @@ const TestCountdown = ({}): JSX.Element => {
   const [dashOffset, setDashOffset] = useState<number>(0);
 
   useEffect(() => {
-    const timer: number = window.setInterval(() => {
-      if (timeLeft > 0) {
-        setTimeLeft((timeLeft) => timeLeft - 1);
-      } else {
-        clearInterval(timer);
-      }
-    }, 1000);
-
     // Set offset based on percentage of time left.
     setDashOffset(
       Math.round(
-        (circumference - circumference * (timeLeft / settingsCtx.TestLength)) *
+        (circumference - circumference * (typeTestCtx.timeLeft / settingsCtx.TestLength)) *
           100
       ) / 100
     );
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, [timeLeft, settingsCtx.TestLength]);
+  }, [typeTestCtx.timeLeft, settingsCtx.TestLength]);
 
   return (
     <S.Wrapper>
@@ -62,7 +51,7 @@ const TestCountdown = ({}): JSX.Element => {
         </svg>
       </S.CountdownCircle>
       <S.Counter>
-        {wndowCtx.windowIsFocused ? timeLeft : <PauseIcon />}
+        {wndowCtx.windowIsFocused ? typeTestCtx.timeLeft : <PauseIcon />}
       </S.Counter>
     </S.Wrapper>
   );

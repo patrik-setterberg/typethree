@@ -63,14 +63,31 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   const [testWords, setTestWords] = useState<string[][]>([[]]);
 
+  // Hidden text-input value.
+  const [inputVal, setInputVal] = useState<string>("");
+
+  const startTest = (): void => {
+    console.log("Starting test!");
+    typeTestCtx.setPlaying(true);
+  };
+
+  const resetTest = (): void => {
+    setTestWords(loadWords(wordArrays[settingsCtx.TestWords], TEST_WORD_COUNT));
+    typeTestCtx.setTimeLeft(settingsCtx.TestLength);
+    setEnteredWords([]);
+    setInputVal("");
+  };
+
+  const endTest = (): void => {
+    console.log("Ending test...");
+    typeTestCtx.setPlaying(false);
+  };
+
   // Update wordArr and testWords if setting changes (and on first render).
   useEffect(() => {
     setWordArr(wordArrays[settingsCtx.TestWords]);
     setTestWords(loadWords(wordArrays[settingsCtx.TestWords], TEST_WORD_COUNT));
   }, [settingsCtx.TestWords, loadWords, wordArrays]);
-
-  // Hidden text-input value.
-  const [inputVal, setInputVal] = useState<string>("");
 
   type pressedKeysStateType = {
     pressedKeys: pressedKeys[];
@@ -172,15 +189,16 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
             e.key === " " ? checkWordCorrect() : checkLetterCorrect(e.key),
         },
       });
-    }
-
-    // If key is Shift, instead add its 'code' because it allows us to differentiate
-    // left from right shift keys.
-    if (e.key === "Shift") {
+    } else if (e.key === "Shift") {
+      // If key is Shift, instead add its 'code' because it allows us to differentiate
+      // left from right shift keys.
       dispatchPressedKeys({
         type: "ADD",
         payload: { symbol: e.code, correct: true },
       });
+    } else if (e.key === "Escape") {
+      endTest();
+      resetTest();
     }
   };
 
@@ -218,7 +236,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (!typeTestCtx.playing) typeTestCtx.setPlaying(true);
+    if (!typeTestCtx.playing) startTest();
 
     updateInputValue(inputVal.length, e.target.value);
     if (e.target.value.slice(-1) === " ") {

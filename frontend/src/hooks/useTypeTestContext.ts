@@ -10,6 +10,6 @@ const useTypeTestContext = () => {
     throw new Error(`Context: ${context} not found.`);
   }
   return context;
-}
+};
 
 export default useTypeTestContext;
