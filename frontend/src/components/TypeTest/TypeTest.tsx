@@ -1,6 +1,14 @@
-import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
 import useSettingsContext from "../../hooks/useSettingsContext";
 import useTypeTestContext from "../../hooks/useTypeTestContext";
+import WindowContext from "../../context/window-context";
 
 // Interfaces.
 import { TypeTestProps, pressedKeys } from "./TypeTest.interfaces";
@@ -14,7 +22,7 @@ import swe1k from "../../assets/words/words-swedish-1k";
 // Components.
 import Input from "./Input/Input";
 import Keyboard from "./Keyboard/Keyboard";
-import TestCountdown from "../TestCountdown/TestCountdown";
+import TestCountdown from "./TestCountdown/TestCountdown";
 import TestText from "./TestText/TestText";
 
 const TypeTest = ({}: TypeTestProps): JSX.Element => {
@@ -24,6 +32,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   const settingsCtx = useSettingsContext();
   const typeTestCtx = useTypeTestContext();
+  const windowCtx = useContext(WindowContext);
 
   type wordArray = {
     [key: string]: Array<string>;
@@ -68,19 +77,30 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   const startTest = (): void => {
     console.log("Starting test!");
-    typeTestCtx.setPlaying(true);
-  };
-
-  const resetTest = (): void => {
-    setTestWords(loadWords(wordArrays[settingsCtx.TestWords], TEST_WORD_COUNT));
-    typeTestCtx.setTimeLeft(settingsCtx.TestLength);
-    setEnteredWords([]);
-    setInputVal("");
+    typeTestCtx.setTestInProgress(true);
   };
 
   const endTest = (): void => {
     console.log("Ending test...");
-    typeTestCtx.setPlaying(false);
+    typeTestCtx.setTestInProgress(false);
+  };
+
+  const concludeTest = (): void => {
+    console.log("test concluded heheh");
+    // Calculate score
+    // WPM
+    // Words typed? correct?
+    // Chars input? correct?
+    // ??
+    // Build an array of incorrect words maybe
+    typeTestCtx.setTestConcluded(true);
+  };
+
+  const resetTest = (): void => {
+    setTestWords(loadWords(wordArrays[settingsCtx.TestWords], TEST_WORD_COUNT));
+    setTimeLeft(settingsCtx.TestLength);
+    setEnteredWords([]);
+    setInputVal("");
   };
 
   // Update wordArr and testWords if setting changes (and on first render).
@@ -236,7 +256,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (!typeTestCtx.playing) startTest();
+    if (!typeTestCtx.testInProgress) startTest();
 
     updateInputValue(inputVal.length, e.target.value);
     if (e.target.value.slice(-1) === " ") {
@@ -244,9 +264,42 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
     }
   };
 
+  const [timeLeft, setTimeLeft] = useState<number>(settingsCtx.TestLength);
+
+  // Timer for test duration countdown.
+  useEffect(() => {
+    let timerInterval: ReturnType<typeof setInterval>;
+
+    if (typeTestCtx.testInProgress && windowCtx.windowIsFocused) {
+      /**
+       * Runs a clock which decreases timeLeft by 1 every second.
+       * Timer clears if document loses focus. Restarts when focus is regained.
+       * BAD SOLUTION:
+       * Drifts - These "seconds" are slightly longer than normal seconds, about ~1s over 30s
+       * Inaccurate / bad because it gives a < 1s leeway when regaining focus.
+       *
+       * FIX A BETTER TIMER AND TIME HANDLING STRATEGY?
+       *
+       * AT LEAST TRY A PRODUCTION BUILD!
+       */
+      timerInterval = setInterval((): void => {
+        setTimeLeft((timeLeft) => timeLeft - 1);
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(timerInterval);
+    };
+  }, [typeTestCtx.testInProgress, windowCtx.windowIsFocused, timeLeft]);
+
+  // End test when timer reaches zero.
+  useEffect((): void => {
+    if (timeLeft <= 0) typeTestCtx.setTestInProgress(false);
+  }, [timeLeft]);
+
   return (
     <>
-      <TestCountdown />
+      <TestCountdown timeLeft={timeLeft} />
       <TestText
         words={testWords}
         animate={pressedKeysState.pressedKeys.length === 0}

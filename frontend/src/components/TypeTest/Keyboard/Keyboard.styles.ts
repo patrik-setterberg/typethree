@@ -6,7 +6,7 @@ export const Keyboard = styled.div`
   opacity: 0;
   width: fit-content;
   font-size: 18px;
-  margin: 2rem auto 1rem;
+  margin: 3rem auto 1rem;
   transition: opacity 0.2s ease-out;
 
   @media ${media.large} {
@@ -59,6 +59,9 @@ export const Row = styled.div<{
   LShiftPressed?: boolean;
   RShiftPressed?: boolean;
 }>`
+  display: flex;
+  flex-wrap: nowrap;
+
   // TOP ROW
   &:nth-child(1) {
     margin-left: 7ch;

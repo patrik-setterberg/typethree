@@ -1,13 +1,15 @@
 import { useContext, useState, useEffect } from "react";
 
-import useSettingsContext from "../../hooks/useSettingsContext";
-import useTypeTestContext from "../../hooks/useTypeTestContext";
-import WindowContext from "../../context/window-context";
+import useSettingsContext from "../../../hooks/useSettingsContext";
+import useTypeTestContext from "../../../hooks/useTypeTestContext";
+import WindowContext from "../../../context/window-context";
+
+import { TestCountdownProps } from "./TestCountdown.interfaces";
 
 import * as S from "./TestCountdown.styles";
-import PauseIcon from "../UI/PauseIcon/PauseIcon";
+import PauseIcon from "../../UI/PauseIcon/PauseIcon";
 
-const TestCountdown = ({}): JSX.Element => {
+const TestCountdown = ({ timeLeft }: TestCountdownProps): JSX.Element => {
   const settingsCtx = useSettingsContext();
   const typeTestCtx = useTypeTestContext();
   const wndowCtx = useContext(WindowContext);
@@ -22,11 +24,11 @@ const TestCountdown = ({}): JSX.Element => {
     // Set offset based on percentage of time left.
     setDashOffset(
       Math.round(
-        (circumference - circumference * (typeTestCtx.timeLeft / settingsCtx.TestLength)) *
+        (circumference - circumference * (timeLeft / settingsCtx.TestLength)) *
           100
       ) / 100
     );
-  }, [typeTestCtx.timeLeft, settingsCtx.TestLength]);
+  }, [timeLeft, settingsCtx.TestLength]);
 
   return (
     <S.Wrapper>
@@ -51,7 +53,7 @@ const TestCountdown = ({}): JSX.Element => {
         </svg>
       </S.CountdownCircle>
       <S.Counter>
-        {wndowCtx.windowIsFocused ? typeTestCtx.timeLeft : <PauseIcon />}
+        {wndowCtx.windowIsFocused ? timeLeft : <PauseIcon />}
       </S.Counter>
     </S.Wrapper>
   );

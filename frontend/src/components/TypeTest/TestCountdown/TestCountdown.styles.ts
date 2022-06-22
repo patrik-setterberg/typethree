@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import media from "../../globals/media-breakpoints";
+import media from "../../../globals/media-breakpoints";
 
 export const Wrapper = styled.div`
   display: flex;

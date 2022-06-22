@@ -1,6 +1,6 @@
 export interface TypeTestContextValues {
-  playing: boolean;
-  setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
-  timeLeft: number;
-  setTimeLeft: React.Dispatch<React.SetStateAction<number>>;
+  testInProgress: boolean;
+  setTestInProgress: React.Dispatch<React.SetStateAction<boolean>>;
+  testConcluded: boolean;
+  setTestConcluded: React.Dispatch<React.SetStateAction<boolean>>;
 }
