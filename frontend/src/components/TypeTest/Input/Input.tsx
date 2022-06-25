@@ -7,7 +7,6 @@ import WindowContext from "../../../context/window-context";
 
 const Input = ({
   inputVal,
-  pressedKeys,
   handleChange,
   handleKeyDown,
   handleKeyUp,

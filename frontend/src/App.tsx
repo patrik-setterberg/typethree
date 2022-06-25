@@ -3,6 +3,7 @@ import { ThemeProvider } from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AuthContext from "./context/auth-context";
+
 import themes, { defaultTheme } from "./globals/themes";
 
 import * as S from "./components/UI/App.styles";
@@ -16,10 +17,8 @@ import UserPage from "./pages/UserPage/UserPage";
 
 // TEMP LOGOUT ROUTE COMPONENT.
 const LogOut = (): JSX.Element => {
-  return (
-    <span>LOGOUT ROUTE</span>
-  );
-}
+  return <span>LOGOUT ROUTE</span>;
+};
 
 const App = (): JSX.Element => {
   const authCtx = useContext(AuthContext);

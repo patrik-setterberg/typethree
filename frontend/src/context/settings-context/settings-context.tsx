@@ -19,7 +19,7 @@ export const SettingsContextProvider = ({
 
   const defaultSettings: DefaultSettingsValues = useMemo(() => {
     return {
-      TestLength: 30,
+      TestLength: 15,
       TestWords: "eng1k",
       ShowKeyboard: true,
       KeyboardLayout: "QWERTY_US",

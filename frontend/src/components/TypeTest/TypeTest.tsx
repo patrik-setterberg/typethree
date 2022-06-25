@@ -12,6 +12,7 @@ import WindowContext from "../../context/window-context";
 
 // Interfaces.
 import { TypeTestProps, pressedKeys } from "./TypeTest.interfaces";
+import { SortedEnteredWordsValues } from "../../context/type-test-context/type-test-context.interfaces";
 
 import Layouts from "../../assets/misc/KeyboardLayouts";
 
@@ -75,33 +76,59 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   // Hidden text-input value.
   const [inputVal, setInputVal] = useState<string>("");
 
+  // Store entered words in an array. When space is pressed (and maybe when test ends),
+  // characters in text input get pushed to the array. This array can be compared
+  // with testwords wordArr to calculate score and styling correct/incorrect words.
+  const [enteredWords, setEnteredWords] = useState<string[][] | []>([]);
+
+  // Sort entered words into correct & incorrect arrays.
+  const sortEnteredWords = useCallback((): SortedEnteredWordsValues => {
+    let sorted: SortedEnteredWordsValues = {
+      correct: [],
+      incorrectEntered: [],
+      incorrectExpected: [],
+    };
+
+    enteredWords &&
+      testWords &&
+      enteredWords.forEach((enteredWord, i) => {
+        let word = enteredWord.join("");
+        if (word === testWords[i].join("")) {
+          sorted.correct.push(word);
+        } else {
+          sorted.incorrectEntered.push(word);
+          sorted.incorrectExpected.push(testWords[i].join(""));
+        }
+      });
+
+    // Also include not-yet completed word (inputVal).
+    if (inputVal === testWords[enteredWords.length].join("")) {
+      sorted.correct.push(inputVal);
+    } else {
+      sorted.incorrectEntered.push(inputVal);
+      sorted.incorrectExpected.push(testWords[enteredWords.length].join(""));
+    }
+
+    return sorted;
+  }, [inputVal, enteredWords, testWords]);
+
   const startTest = (): void => {
-    console.log("Starting test!");
     typeTestCtx.setTestInProgress(true);
   };
 
   const endTest = (): void => {
-    console.log("Ending test...");
     typeTestCtx.setTestInProgress(false);
-  };
-
-  const concludeTest = (): void => {
-    console.log("test concluded heheh");
-    // Calculate score
-    // WPM
-    // Words typed? correct?
-    // Chars input? correct?
-    // ??
-    // Build an array of incorrect words maybe
-    typeTestCtx.setTestConcluded(true);
-  };
-
-  const resetTest = (): void => {
     setTestWords(loadWords(wordArrays[settingsCtx.TestWords], TEST_WORD_COUNT));
     setTimeLeft(settingsCtx.TestLength);
     setEnteredWords([]);
     setInputVal("");
   };
+
+  const concludeTest = useCallback((): void => {
+    typeTestCtx.setTestInProgress(false);
+    typeTestCtx.setTestConcluded(true);
+    typeTestCtx.setSortedEnteredWords(sortEnteredWords());
+  }, [typeTestCtx, sortEnteredWords]);
 
   // Update wordArr and testWords if setting changes (and on first render).
   useEffect(() => {
@@ -156,11 +183,6 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   const layoutCharsPattern: RegExp = useMemo(() => {
     return Layouts[settingsCtx.KeyboardLayout].matchingPattern;
   }, [settingsCtx.KeyboardLayout]);
-
-  // Store entered words in an array. When space is pressed (and maybe when test ends),
-  // characters in text input get pushed to the array. This array can be compared
-  // with testwords wordArr to calculate score and styling correct/incorrect words.
-  const [enteredWords, setEnteredWords] = useState<string[][] | []>([]);
 
   const handleSpace = (): void => {
     if (inputVal.length > 0) {
@@ -218,7 +240,6 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
       });
     } else if (e.key === "Escape") {
       endTest();
-      resetTest();
     }
   };
 
@@ -294,8 +315,10 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   // End test when timer reaches zero.
   useEffect((): void => {
-    if (timeLeft <= 0) typeTestCtx.setTestInProgress(false);
-  }, [timeLeft]);
+    if (timeLeft <= 0) {
+      concludeTest();
+    }
+  }, [timeLeft, concludeTest]);
 
   return (
     <>
@@ -309,7 +332,6 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
       />
       <Input
         inputVal={inputVal}
-        pressedKeys={pressedKeysState.pressedKeys}
         handleChange={handleInputChange}
         handleKeyDown={handleInputKeyDown}
         handleKeyUp={handleInputKeyUp}

@@ -1,10 +1,10 @@
 import * as S from "./Main.styles";
 
-interface Props {
+interface MainProps {
   children: React.ReactNode;
 }
 
-const Main = ({ children }: Props): JSX.Element => {
+const Main = ({ children }: MainProps): JSX.Element => {
   return <S.Main>{children}</S.Main>;
 };
 
