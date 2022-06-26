@@ -18,6 +18,8 @@ export const TypeTestContextProvider = ({
 }): JSX.Element => {
   const settingsCtx = useSettingsContext();
 
+  const testWordsVisibleCount: number = 32;
+
   const [testInProgress, setTestInProgress] = useState<boolean>(false);
   const [testConcluded, setTestConcluded] = useState<boolean>(false);
   const [sortedEnteredWords, setSortedEnteredWords] =
@@ -34,13 +36,13 @@ export const TypeTestContextProvider = ({
   const [incorrectWordsCount, setIncorrectWordsCount] = useState<number>(0);
   const [incorrectWords, setIncorrectWords] = useState<string>("");
 
-  const countCharsInArrayOfWords = (arr: string[]): number => {
+  const countCharsInArrayOfWords = useCallback((arr: string[]): number => {
     let enteredChars: number = 0;
     arr.forEach((word: string) => {
       enteredChars += word.length;
     });
     return enteredChars;
-  };
+  }, []);
 
   const calculateTestResults = useCallback((): void => {
     // Calculate total entered chars.
@@ -104,6 +106,7 @@ export const TypeTestContextProvider = ({
     setIncorrectWordsCount(incorrWordsCount);
     setIncorrectWords(incorrWords);
   }, [
+    countCharsInArrayOfWords,
     settingsCtx.TestLength,
     sortedEnteredWords.correct,
     sortedEnteredWords.incorrectEntered,
@@ -113,14 +116,16 @@ export const TypeTestContextProvider = ({
   useEffect(() => {
     if (testConcluded) {
       calculateTestResults();
-    } else {
-      console.log("not concluded");
     }
   }, [testConcluded, sortedEnteredWords, calculateTestResults]);
+
+  const [hiddenWordsCount, setHiddenWordsCount] = useState<number>(0);
+  const [newWordsCount, setNewWordsCount] = useState<number>(0);
 
   return (
     <TypeTestContext.Provider
       value={{
+        testWordsVisibleCount: testWordsVisibleCount,
         testInProgress: testInProgress,
         setTestInProgress: setTestInProgress,
         testConcluded: testConcluded,
@@ -134,6 +139,10 @@ export const TypeTestContextProvider = ({
         wpm: wpm,
         incorrectWordsCount: incorrectWordsCount,
         incorrectWords: incorrectWords,
+        hiddenWordsCount: hiddenWordsCount,
+        setHiddenWordsCount: setHiddenWordsCount,
+        newWordsCount: newWordsCount,
+        setNewWordsCount: setNewWordsCount,
       }}
     >
       {children}

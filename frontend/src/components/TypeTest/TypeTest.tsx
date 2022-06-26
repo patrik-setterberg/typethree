@@ -27,10 +27,6 @@ import TestCountdown from "./TestCountdown/TestCountdown";
 import TestText from "./TestText/TestText";
 
 const TypeTest = ({}: TypeTestProps): JSX.Element => {
-  // Test word count. Maybe change automatically if
-  // we have a setting for changing text font size?
-  const TEST_WORD_COUNT: number = 30;
-
   const settingsCtx = useSettingsContext();
   const typeTestCtx = useTypeTestContext();
   const windowCtx = useContext(WindowContext);
@@ -73,6 +69,18 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   const [testWords, setTestWords] = useState<string[][]>([[]]);
 
+  const addWords = useCallback(
+    (count: number): void => {
+      const newWords = loadWords(wordArrays[settingsCtx.TestWords], count);
+      setTestWords((testWords) => [...testWords.concat(newWords)]);
+    },
+    [loadWords, settingsCtx.TestWords, wordArrays]
+  );
+
+  useEffect(() => {
+    addWords(typeTestCtx.newWordsCount);
+  }, [addWords, typeTestCtx.hiddenWordsCount, typeTestCtx.newWordsCount]);
+
   // Hidden text-input value.
   const [inputVal, setInputVal] = useState<string>("");
 
@@ -92,7 +100,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
     enteredWords &&
       testWords &&
       enteredWords.forEach((enteredWord, i) => {
-        let word = enteredWord.join("");
+        let word: string = enteredWord.join("");
         if (word === testWords[i].join("")) {
           sorted.correct.push(word);
         } else {
@@ -118,7 +126,12 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   const endTest = (): void => {
     typeTestCtx.setTestInProgress(false);
-    setTestWords(loadWords(wordArrays[settingsCtx.TestWords], TEST_WORD_COUNT));
+    setTestWords(
+      loadWords(
+        wordArrays[settingsCtx.TestWords],
+        typeTestCtx.testWordsVisibleCount
+      )
+    );
     setTimeLeft(settingsCtx.TestLength);
     setEnteredWords([]);
     setInputVal("");
@@ -133,8 +146,18 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   // Update wordArr and testWords if setting changes (and on first render).
   useEffect(() => {
     setWordArr(wordArrays[settingsCtx.TestWords]);
-    setTestWords(loadWords(wordArrays[settingsCtx.TestWords], TEST_WORD_COUNT));
-  }, [settingsCtx.TestWords, loadWords, wordArrays]);
+    setTestWords(
+      loadWords(
+        wordArrays[settingsCtx.TestWords],
+        typeTestCtx.testWordsVisibleCount
+      )
+    );
+  }, [
+    settingsCtx.TestWords,
+    loadWords,
+    wordArrays,
+    typeTestCtx.testWordsVisibleCount,
+  ]);
 
   type pressedKeysStateType = {
     pressedKeys: pressedKeys[];

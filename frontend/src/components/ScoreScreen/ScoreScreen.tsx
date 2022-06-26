@@ -11,11 +11,9 @@ const ScoreScreen = ({}: ScoreScreenProps): JSX.Element => {
 
   useEffect(() => {
     const handleKeypress = (e: KeyboardEvent): void => {
-      {
-        if (e.key === "Enter" || e.key === "Escape") {
-          e.preventDefault();
-          typeTestCtx.setTestConcluded(false);
-        }
+      if (e.key === "Enter" || e.key === "Escape") {
+        e.preventDefault();
+        typeTestCtx.setTestConcluded(false);
       }
     };
     window.addEventListener("keydown", handleKeypress);

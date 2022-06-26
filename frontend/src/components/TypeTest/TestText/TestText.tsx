@@ -4,6 +4,7 @@ import * as S from "./TestText.styles";
 import { TestTextProps } from "./TestText.interfaces";
 
 import WindowContext from "../../../context/window-context";
+import useTypeTestContext from "../../../hooks/useTypeTestContext";
 
 const TestText = ({
   words,
@@ -13,6 +14,7 @@ const TestText = ({
   backspacePressed,
 }: TestTextProps): JSX.Element => {
   const windowCtx = useContext(WindowContext);
+  const typeTestCtx = useTypeTestContext();
 
   let currentWord = useRef<HTMLElement>(null);
 
@@ -31,12 +33,46 @@ const TestText = ({
         y: currentWord.current.offsetTop,
       });
     }
-  }, [currentWord, inputVal, enteredWords, windowCtx.windowWidth]);
+  }, [
+    inputVal,
+    enteredWords,
+    windowCtx.windowWidth,
+    typeTestCtx.hiddenWordsCount,
+  ]);
+
+  useEffect(() => {
+    if (currentWord.current) {
+      let prevWord = currentWord.current
+        .previousElementSibling as HTMLElement | null;
+      if (
+        prevWord !== null &&
+        currentWord.current.offsetTop > prevWord.offsetTop &&
+        prevWord.offsetTop > 0
+      ) {
+
+        // We are on (at least) third row!
+        const smallestOffsetTop: number = prevWord.offsetTop;
+        let wordsToHide: number = 0;
+        while (prevWord !== null) {
+          if (
+            prevWord.offsetTop < smallestOffsetTop
+          ) {
+            wordsToHide += 1;
+          }
+          prevWord = prevWord.previousElementSibling as HTMLElement | null;
+        }
+        typeTestCtx.setHiddenWordsCount(
+          (hiddenWordsCount) => hiddenWordsCount + wordsToHide
+        );
+        typeTestCtx.setNewWordsCount(wordsToHide);
+      }
+    }
+  }, [currentWordPos, typeTestCtx, typeTestCtx.setHiddenWordsCount]);
 
   return (
     <S.Wrapper>
       {words.map((word, wordInd) => {
-        return (
+        return typeTestCtx.hiddenWordsCount <= wordInd ? (
           <S.Word
             key={wordInd}
             data-word={word.join("")}
@@ -80,7 +116,7 @@ const TestText = ({
               );
             })}
           </S.Word>
-        );
+        ) : '';
       })}
       <S.Caret
         focused={windowCtx.windowIsFocused}

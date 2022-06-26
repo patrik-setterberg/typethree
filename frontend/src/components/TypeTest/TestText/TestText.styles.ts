@@ -23,7 +23,10 @@ export const Wrapper = styled.div`
   margin-top: calc(var(--default-spacing) * 1.5);
 `;
 
-export const Word = styled.span<{ focused: boolean; incorrect: boolean }>`
+export const Word = styled.span<{
+  focused: boolean;
+  incorrect: boolean;
+}>`
   position: relative;
   color: ${(props) => props.theme.primary};
   font-size: var(--font-size);
@@ -136,11 +139,9 @@ export const Caret = styled.span.attrs<{
   offsetX: number;
 }>`
   display: inline-block;
-  height: calc(
-    var(--line-height) * calc(var(--font-size) - var(--caret-height-offset))
-  );
+  height: calc(var(--font-size) + 1px);
   font-size: var(--font-size);
-  margin-top: 0.1875rem;
+  margin-top: 0.25rem;
   width: 0.125rem; // Option for hefty boye variant? Something like 1ch.
   background-color: ${(props) => props.theme.highlight};
   opacity: 0.9;

@@ -5,6 +5,7 @@ export interface SortedEnteredWordsValues {
 }
 
 export interface TypeTestContextValues {
+  testWordsVisibleCount: number;
   testInProgress: boolean;
   setTestInProgress: React.Dispatch<React.SetStateAction<boolean>>;
   testConcluded: boolean;
@@ -20,4 +21,8 @@ export interface TypeTestContextValues {
   wpm: number;
   incorrectWordsCount: number;
   incorrectWords: string;
+  hiddenWordsCount: number;
+  setHiddenWordsCount: React.Dispatch<React.SetStateAction<number>>;
+  newWordsCount: number;
+  setNewWordsCount: React.Dispatch<React.SetStateAction<number>>;
 }
