@@ -8,13 +8,13 @@ export const Backdrop = styled.div`
   width: 100%;
   height: 100vh;
   z-index: 100;
-`
+`;
 
 export const Modal = styled.div`
   --modal-width: calc(100% - (var(--default-spacing) * 2));
   display: flex;
   flex-direction: column;
-  background-color: ${props => props.theme.primary};
+  background-color: ${(props) => props.theme.primary};
   position: fixed;
   width: var(--modal-width);
   margin: 4.25rem var(--default-spacing) var(--default-spacing);
@@ -37,14 +37,14 @@ export const Modal = styled.div`
     --modal-width: 65rem;
     margin-top: 5.25rem;
   }
-`
+`;
 
 export const ModalInner = styled.div`
-  color: ${props => props.theme.backgroundPrimary};
+  color: ${(props) => props.theme.backgroundPrimary};
   margin: 0 var(--default-spacing) var(--default-spacing);
-`
+`;
 
 export const ModalTitle = styled.h2`
   text-align: center;
-  color: ${props => props.theme.backgroundTertiary};
-`
+  color: ${(props) => props.theme.backgroundTertiary};
+`;

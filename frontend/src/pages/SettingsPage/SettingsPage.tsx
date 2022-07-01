@@ -51,7 +51,7 @@ const SettingsPage = ({}: SettingsPageProps): JSX.Element => {
   }, []);
 
   const keyboardSettings: Array<RadioButtonsItems> = useMemo(() => {
-    let items = [];
+    let items: Array<RadioButtonsItems> = [];
     for (const [key, value] of Object.entries(Layouts)) {
       items.push({ value: key, label: value.name });
     }

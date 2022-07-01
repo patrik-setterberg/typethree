@@ -6,6 +6,8 @@ import {
   useReducer,
   useState,
 } from "react";
+
+// Contexts.
 import useSettingsContext from "../../hooks/useSettingsContext";
 import useTypeTestContext from "../../hooks/useTypeTestContext";
 import WindowContext from "../../context/window-context";
@@ -78,15 +80,17 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
   );
 
   useEffect(() => {
-    addWords(typeTestCtx.newWordsCount);
+    if (typeTestCtx.hiddenWordsCount > 0) addWords(typeTestCtx.newWordsCount);
   }, [addWords, typeTestCtx.hiddenWordsCount, typeTestCtx.newWordsCount]);
 
   // Hidden text-input value.
   const [inputVal, setInputVal] = useState<string>("");
 
-  // Store entered words in an array. When space is pressed (and maybe when test ends),
-  // characters in text input get pushed to the array. This array can be compared
-  // with testwords wordArr to calculate score and styling correct/incorrect words.
+  /**
+   * Store entered words in an array. When space is pressed characters in text input
+   * get pushed to the array. This array can be compared with testwords wordArr to
+   * calculate score and styling correct/incorrect words.
+   */
   const [enteredWords, setEnteredWords] = useState<string[][] | []>([]);
 
   // Sort entered words into correct & incorrect arrays.
@@ -99,7 +103,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
     enteredWords &&
       testWords &&
-      enteredWords.forEach((enteredWord, i) => {
+      enteredWords.forEach((enteredWord: string[], i) => {
         let word: string = enteredWord.join("");
         if (word === testWords[i].join("")) {
           sorted.correct.push(word);
@@ -109,12 +113,24 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
         }
       });
 
-    // Also include not-yet completed word (inputVal).
-    if (inputVal === testWords[enteredWords.length].join("")) {
-      sorted.correct.push(inputVal);
-    } else {
-      sorted.incorrectEntered.push(inputVal);
-      sorted.incorrectExpected.push(testWords[enteredWords.length].join(""));
+    /**
+     * Also include not-yet completed word (inputVal).
+     * Instead of comparing against full word we check each letter to make sure
+     * no-yet-complete but still so-far-correctly-input words count as correct.
+     */
+    if (inputVal.length > 0) {
+      let lastWordCorrect: boolean = true;
+      Array.from(inputVal).forEach((letter: string, i) => {
+        if (letter !== testWords[enteredWords.length][i]) {
+          lastWordCorrect = false;
+        }
+      });
+      if (lastWordCorrect === true) {
+        sorted.correct.push(inputVal);
+      } else {
+        sorted.incorrectEntered.push(inputVal);
+        sorted.incorrectExpected.push(testWords[enteredWords.length].join(""));
+      }
     }
 
     return sorted;
@@ -143,20 +159,27 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
     typeTestCtx.setSortedEnteredWords(sortEnteredWords());
   }, [typeTestCtx, sortEnteredWords]);
 
-  // Update wordArr and testWords if setting changes (and on first render).
+  // Reset when testConcluded becomes false.
   useEffect(() => {
-    setWordArr(wordArrays[settingsCtx.TestWords]);
-    setTestWords(
-      loadWords(
-        wordArrays[settingsCtx.TestWords],
-        typeTestCtx.testWordsVisibleCount
-      )
-    );
+    if (!typeTestCtx.testConcluded) {
+      setWordArr(wordArrays[settingsCtx.TestWords]);
+      setTestWords(
+        loadWords(
+          wordArrays[settingsCtx.TestWords],
+          typeTestCtx.testWordsVisibleCount
+        )
+      );
+      setTimeLeft(settingsCtx.TestLength);
+      setEnteredWords([]);
+      setInputVal("");
+    }
   }, [
     settingsCtx.TestWords,
     loadWords,
     wordArrays,
     typeTestCtx.testWordsVisibleCount,
+    typeTestCtx.testConcluded,
+    settingsCtx.TestLength,
   ]);
 
   type pressedKeysStateType = {
@@ -176,7 +199,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
         payload: { symbol: string };
       };
 
-  const initialValue: pressedKeysStateType = { pressedKeys: [] };
+  const initialPressedKeysValue: pressedKeysStateType = { pressedKeys: [] };
 
   const pressedKeysReducer = (
     state: pressedKeysStateType,
@@ -200,7 +223,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
 
   const [pressedKeysState, dispatchPressedKeys] = useReducer(
     pressedKeysReducer,
-    initialValue
+    initialPressedKeysValue
   );
 
   const layoutCharsPattern: RegExp = useMemo(() => {

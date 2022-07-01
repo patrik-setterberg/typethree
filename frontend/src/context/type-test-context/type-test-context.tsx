@@ -119,6 +119,25 @@ export const TypeTestContextProvider = ({
     }
   }, [testConcluded, sortedEnteredWords, calculateTestResults]);
 
+  // Reset scores when testConcluded becomes false.
+  useEffect(() => {
+    if (!testConcluded) {
+      setTotalEnteredChars(0);
+      setCharacterAccuracy(0);
+      setTotalWordsAttempted(0);
+      setWordAccuracy(0);
+      setWpm(0);
+      setIncorrectWordsCount(0);
+      setIncorrectWords("");
+      setHiddenWordsCount(0);
+      setSortedEnteredWords({
+        correct: [],
+        incorrectEntered: [],
+        incorrectExpected: [],
+      });
+    }
+  }, [testConcluded]);
+
   const [hiddenWordsCount, setHiddenWordsCount] = useState<number>(0);
   const [newWordsCount, setNewWordsCount] = useState<number>(0);
 

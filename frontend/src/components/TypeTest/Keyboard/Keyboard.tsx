@@ -23,7 +23,7 @@ const Keyboard = ({ pressedKeys }: KeyboardProps): JSX.Element => {
 
   return (
     <S.Keyboard>
-      {Layouts[settingsCtx.KeyboardLayout].layout.map((row, i) => {
+      {Layouts[settingsCtx.KeyboardLayout].layout.map((row: string[], i) => {
         return (
           <S.Row
             key={i}

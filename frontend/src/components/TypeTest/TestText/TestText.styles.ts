@@ -139,7 +139,7 @@ export const Caret = styled.span.attrs<{
   offsetX: number;
 }>`
   display: inline-block;
-  height: calc(var(--font-size) + 1px);
+  height: calc(calc(var(--font-size) / 1.5) * var(--line-height));
   font-size: var(--font-size);
   margin-top: 0.25rem;
   width: 0.125rem; // Option for hefty boye variant? Something like 1ch.
@@ -156,6 +156,10 @@ export const Caret = styled.span.attrs<{
       animation: 1s cubic-bezier(0.78, 0.2, 0.05, 1) 0s infinite forwards
         ${CaretBlink};
     `}
+
+  @media ${media.large} {
+    margin-top: 0.3125rem;
+  }
 `;
 
 export const FocusLostMessage = styled.span<{ focused: boolean }>`
