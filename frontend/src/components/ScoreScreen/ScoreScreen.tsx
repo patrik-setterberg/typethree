@@ -29,12 +29,16 @@ const ScoreScreen = ({}: ScoreScreenProps): JSX.Element => {
       <br />
       wpm: {typeTestCtx.wpm}
       <br />
+      High score: {typeTestCtx.highScore}
+      <br />
       total entered chars: {typeTestCtx.totalEnteredChars}
       <br />
-      char accuracy: {typeTestCtx.characterAccuracy}%<br />
+      char accuracy: {typeTestCtx.characterAccuracy}%
+      <br />
       words attempted: {typeTestCtx.totalWordsAttempted}
       <br />
-      word accuracy: {typeTestCtx.wordAccuracy}%<br />
+      word accuracy: {typeTestCtx.wordAccuracy}%
+      <br />
       {typeTestCtx.incorrectWordsCount > 0 &&
         `${typeTestCtx.incorrectWordsCount} incorrect words: ${typeTestCtx.incorrectWords}`}
     </>

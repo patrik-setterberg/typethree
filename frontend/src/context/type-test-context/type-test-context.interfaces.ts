@@ -19,6 +19,7 @@ export interface TypeTestContextValues {
   totalWordsAttempted: number;
   wordAccuracy: number;
   wpm: number;
+  highScore: number;
   incorrectWordsCount: number;
   incorrectWords: string;
   hiddenWordsCount: number;

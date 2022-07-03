@@ -18,7 +18,35 @@ export const TypeTestContextProvider = ({
 }): JSX.Element => {
   const settingsCtx = useSettingsContext();
 
-  const testWordsVisibleCount: number = 32;
+  const TESTWORDS_VISIBLE_COUNT: number = 32;
+
+  // Cookie things.
+  const SCORE_COOKIE_NAME: string = "highscore";
+  const TIMESTAMP_COOKIE_NAME: string = "timestamp";
+  const COOKIE_MAX_AGE: number = 2592000; // 60*60*24*30 = 30 days.
+
+  /**
+   * Check if there's a cookie with a stored high score.
+   * If there is, return it. Else return 0.
+   * Used to set initial value for highScore state var.
+   */
+  const checkHighScoreCookie = (): number => {
+    let score: number = 0;
+    if (
+      document.cookie
+        .split(";")
+        .some((item) => item.trim().startsWith(SCORE_COOKIE_NAME))
+    ) {
+      const scoreCookie: string | undefined = document.cookie
+        .split(";")
+        .find((row) => row.startsWith(SCORE_COOKIE_NAME));
+
+      if (scoreCookie) {
+        score = Number(scoreCookie.split("=")[1]);
+      }
+    }
+    return !isNaN(score) ? score : 0;
+  };
 
   const [testInProgress, setTestInProgress] = useState<boolean>(false);
   const [testConcluded, setTestConcluded] = useState<boolean>(false);
@@ -35,6 +63,9 @@ export const TypeTestContextProvider = ({
   const [wpm, setWpm] = useState<number>(0);
   const [incorrectWordsCount, setIncorrectWordsCount] = useState<number>(0);
   const [incorrectWords, setIncorrectWords] = useState<string>("");
+  const [highScore, setHighScore] = useState<number>(checkHighScoreCookie());
+  const [hiddenWordsCount, setHiddenWordsCount] = useState<number>(0);
+  const [newWordsCount, setNewWordsCount] = useState<number>(0);
 
   const countCharsInArrayOfWords = useCallback((arr: string[]): number => {
     let enteredChars: number = 0;
@@ -138,13 +169,23 @@ export const TypeTestContextProvider = ({
     }
   }, [testConcluded]);
 
-  const [hiddenWordsCount, setHiddenWordsCount] = useState<number>(0);
-  const [newWordsCount, setNewWordsCount] = useState<number>(0);
+  useEffect(() => {
+    if (wpm > highScore) {
+      setHighScore(wpm);
+    }
+  }, [wpm]);
+
+  useEffect(() => {
+    if (highScore > 0) {
+      document.cookie = `${SCORE_COOKIE_NAME}=${highScore};max-age=${COOKIE_MAX_AGE}`;
+      document.cookie = `${TIMESTAMP_COOKIE_NAME}=${Date.now()};max-age=${COOKIE_MAX_AGE}`;
+    }
+  }, [highScore]);
 
   return (
     <TypeTestContext.Provider
       value={{
-        testWordsVisibleCount: testWordsVisibleCount,
+        testWordsVisibleCount: TESTWORDS_VISIBLE_COUNT,
         testInProgress: testInProgress,
         setTestInProgress: setTestInProgress,
         testConcluded: testConcluded,
@@ -156,6 +197,7 @@ export const TypeTestContextProvider = ({
         totalWordsAttempted: totalWordsAttempted,
         wordAccuracy: wordAccuracy,
         wpm: wpm,
+        highScore: highScore,
         incorrectWordsCount: incorrectWordsCount,
         incorrectWords: incorrectWords,
         hiddenWordsCount: hiddenWordsCount,
