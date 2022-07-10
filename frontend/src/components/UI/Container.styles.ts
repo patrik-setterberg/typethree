@@ -10,4 +10,5 @@ export const PageContainer = styled(Container)`
   flex-direction: column;
   align-items: center;
   padding: calc(var(--default-spacing) * 2) var(--default-spacing);
+  color: ${props => props.theme.primary};
 `

@@ -3,6 +3,10 @@ export interface SortedEnteredWordsValues {
   incorrectEntered: string[];
   incorrectExpected: string[];
 }
+export interface HighScoreCookieValues {
+  score: number;
+  datestamp: string;
+}
 
 export interface TypeTestContextValues {
   testWordsVisibleCount: number;
@@ -19,7 +23,7 @@ export interface TypeTestContextValues {
   totalWordsAttempted: number;
   wordAccuracy: number;
   wpm: number;
-  highScore: number;
+  highScore: HighScoreCookieValues;
   incorrectWordsCount: number;
   incorrectWords: string;
   hiddenWordsCount: number;

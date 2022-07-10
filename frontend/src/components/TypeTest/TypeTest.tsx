@@ -221,6 +221,7 @@ const TypeTest = ({}: TypeTestProps): JSX.Element => {
     }
   };
 
+  // Keep track of keys currently pressed for onscreen keyboard highlighting.
   const [pressedKeysState, dispatchPressedKeys] = useReducer(
     pressedKeysReducer,
     initialPressedKeysValue

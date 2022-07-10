@@ -29,7 +29,8 @@ const ScoreScreen = ({}: ScoreScreenProps): JSX.Element => {
       <br />
       wpm: {typeTestCtx.wpm}
       <br />
-      High score: {typeTestCtx.highScore}
+      High score: {typeTestCtx.highScore.score}
+      {typeTestCtx.highScore.datestamp && ` (set on ${typeTestCtx.highScore.datestamp})`}
       <br />
       total entered chars: {typeTestCtx.totalEnteredChars}
       <br />

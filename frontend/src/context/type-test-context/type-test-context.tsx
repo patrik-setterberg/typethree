@@ -2,10 +2,53 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import {
   TypeTestContextValues,
+  HighScoreCookieValues,
   SortedEnteredWordsValues,
 } from "./type-test-context.interfaces";
 
 import useSettingsContext from "../../hooks/useSettingsContext";
+
+import { formatDate } from "../../util/formatDate";
+
+// Cookie things.
+const SCORE_COOKIE_NAME: string = "HIGHSCORE";
+const DATESTAMP_COOKIE_NAME: string = "DATESTAMP";
+const COOKIE_MAX_AGE: number = 2592000; // 60*60*24*30 = 30 days.
+
+const checkCookie = (cookieName: string): boolean => {
+  return document.cookie
+    .split(";")
+    .some((item) => item.trim().startsWith(cookieName));
+};
+
+const checkHighScoreCookie = (cookieName: string): number => {
+  let score: number = 0;
+  if (checkCookie(cookieName)) {
+    const scoreCookie: string | undefined = document.cookie
+      .split(";")
+      .find((row) => row.trim().startsWith(cookieName));
+
+    if (scoreCookie && !isNaN(Number(scoreCookie.split("=")[1]))) {
+      score = Number(scoreCookie.split("=")[1]);
+    }
+  }
+
+  return score;
+};
+
+const checkDatestampCookie = (cookieName: string): string => {
+  let datestamp: string = "";
+  if (checkCookie(cookieName)) {
+    const datestampCookie: string | undefined = document.cookie
+      .split(";")
+      .find((row) => row.trim().startsWith(cookieName));
+
+    if (datestampCookie) {
+      datestamp = datestampCookie.split("=")[1];
+    }
+  }
+  return datestamp;
+};
 
 const TypeTestContext = React.createContext<TypeTestContextValues | undefined>(
   undefined
@@ -19,34 +62,6 @@ export const TypeTestContextProvider = ({
   const settingsCtx = useSettingsContext();
 
   const TESTWORDS_VISIBLE_COUNT: number = 32;
-
-  // Cookie things.
-  const SCORE_COOKIE_NAME: string = "highscore";
-  const TIMESTAMP_COOKIE_NAME: string = "timestamp";
-  const COOKIE_MAX_AGE: number = 2592000; // 60*60*24*30 = 30 days.
-
-  /**
-   * Check if there's a cookie with a stored high score.
-   * If there is, return it. Else return 0.
-   * Used to set initial value for highScore state var.
-   */
-  const checkHighScoreCookie = (): number => {
-    let score: number = 0;
-    if (
-      document.cookie
-        .split(";")
-        .some((item) => item.trim().startsWith(SCORE_COOKIE_NAME))
-    ) {
-      const scoreCookie: string | undefined = document.cookie
-        .split(";")
-        .find((row) => row.startsWith(SCORE_COOKIE_NAME));
-
-      if (scoreCookie) {
-        score = Number(scoreCookie.split("=")[1]);
-      }
-    }
-    return !isNaN(score) ? score : 0;
-  };
 
   const [testInProgress, setTestInProgress] = useState<boolean>(false);
   const [testConcluded, setTestConcluded] = useState<boolean>(false);
@@ -63,7 +78,10 @@ export const TypeTestContextProvider = ({
   const [wpm, setWpm] = useState<number>(0);
   const [incorrectWordsCount, setIncorrectWordsCount] = useState<number>(0);
   const [incorrectWords, setIncorrectWords] = useState<string>("");
-  const [highScore, setHighScore] = useState<number>(checkHighScoreCookie());
+  const [highScore, setHighScore] = useState<HighScoreCookieValues>({
+    score: checkHighScoreCookie(SCORE_COOKIE_NAME),
+    datestamp: checkDatestampCookie(DATESTAMP_COOKIE_NAME),
+  });
   const [hiddenWordsCount, setHiddenWordsCount] = useState<number>(0);
   const [newWordsCount, setNewWordsCount] = useState<number>(0);
 
@@ -170,15 +188,15 @@ export const TypeTestContextProvider = ({
   }, [testConcluded]);
 
   useEffect(() => {
-    if (wpm > highScore) {
-      setHighScore(wpm);
+    if (wpm > highScore.score) {
+      setHighScore({ score: wpm, datestamp: formatDate(Date.now()) });
     }
-  }, [wpm]);
+  }, [wpm, highScore.score]);
 
   useEffect(() => {
-    if (highScore > 0) {
-      document.cookie = `${SCORE_COOKIE_NAME}=${highScore};max-age=${COOKIE_MAX_AGE}`;
-      document.cookie = `${TIMESTAMP_COOKIE_NAME}=${Date.now()};max-age=${COOKIE_MAX_AGE}`;
+    if (highScore.score > 0) {
+      document.cookie = `${SCORE_COOKIE_NAME}=${highScore.score};max-age=${COOKIE_MAX_AGE};`;
+      document.cookie = `${DATESTAMP_COOKIE_NAME}=${highScore.datestamp};max-age=${COOKIE_MAX_AGE}`;
     }
   }, [highScore]);
 
