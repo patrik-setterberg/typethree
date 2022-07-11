@@ -1,4 +1,5 @@
 /**
+ * DATE FORMATTER
  * Formats a date number, e.g. Date.now(), returns a string like "Month dd, yyyy".
  */
 export const formatDate = (date: number): string => {

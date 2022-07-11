@@ -9,46 +9,15 @@ import {
 import useSettingsContext from "../../hooks/useSettingsContext";
 
 import { formatDate } from "../../util/formatDate";
+import {
+  checkHighScoreCookie,
+  checkDatestampCookie,
+} from "../../util/checkCookies";
 
 // Cookie things.
 const SCORE_COOKIE_NAME: string = "HIGHSCORE";
 const DATESTAMP_COOKIE_NAME: string = "DATESTAMP";
 const COOKIE_MAX_AGE: number = 2592000; // 60*60*24*30 = 30 days.
-
-const checkCookie = (cookieName: string): boolean => {
-  return document.cookie
-    .split(";")
-    .some((item) => item.trim().startsWith(cookieName));
-};
-
-const checkHighScoreCookie = (cookieName: string): number => {
-  let score: number = 0;
-  if (checkCookie(cookieName)) {
-    const scoreCookie: string | undefined = document.cookie
-      .split(";")
-      .find((row) => row.trim().startsWith(cookieName));
-
-    if (scoreCookie && !isNaN(Number(scoreCookie.split("=")[1]))) {
-      score = Number(scoreCookie.split("=")[1]);
-    }
-  }
-
-  return score;
-};
-
-const checkDatestampCookie = (cookieName: string): string => {
-  let datestamp: string = "";
-  if (checkCookie(cookieName)) {
-    const datestampCookie: string | undefined = document.cookie
-      .split(";")
-      .find((row) => row.trim().startsWith(cookieName));
-
-    if (datestampCookie) {
-      datestamp = datestampCookie.split("=")[1];
-    }
-  }
-  return datestamp;
-};
 
 const TypeTestContext = React.createContext<TypeTestContextValues | undefined>(
   undefined
