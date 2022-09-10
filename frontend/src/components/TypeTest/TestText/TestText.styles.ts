@@ -52,7 +52,7 @@ export const Word = styled.span<{
     props.incorrect &&
     css`
       &::after {
-        border-bottom-color: darkred;
+        border-bottom-color: ${props => props.theme.error};
       }
     `}
 `;
@@ -87,20 +87,20 @@ export const Letter = styled.span<{
     ${(props) =>
     props.missed &&
     css`
-      color: ${(props) => props.theme.primary06};
+      color: ${(props) => props.theme.missed};
     `}
 
   ${(props) =>
     props.incorrect &&
     css`
-      color: firebrick;
+      color: ${props => props.theme.error};
     `}
 
   ${(props) =>
     !props.focused &&
     props.incorrect &&
     css`
-      text-shadow: 0 0 0.625rem firebrick;
+      text-shadow: 0 0 0.625rem ${props => props.theme.error};
     `}
 `;
 
@@ -148,7 +148,7 @@ export const Caret = styled.span.attrs<{
   visibility: ${(props) => (props.focused ? "visible" : "hidden")};
   position: absolute;
   transition: opacity 0.2s ease
-    ${(props) => (props.transitionTransform ? ", transform 0.08s linear" : "")};
+    ${(props) => (props.transitionTransform ? ", transform 0.1s linear" : "")};
   ${(props) =>
     props.animate &&
     props.focused &&

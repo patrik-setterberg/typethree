@@ -1,6 +1,6 @@
-import React from "react";
 import styled, { css } from "styled-components";
 import media from "../../../globals/media-breakpoints";
+import { rgba } from "../../../util/rgba";
 
 export const Keyboard = styled.div`
   opacity: 0;
@@ -37,19 +37,19 @@ export const Key = styled.span<{
   ${(props) =>
     props.pressed &&
     css`
-      color: ${(props) => props.theme.primary};
-      border-color: ${(props) => props.theme.primary};
-      box-shadow: inset 0px 0px 0.75rem ${(props) => props.theme.primary05};
-      background-color: ${(props) => props.theme.primary04};
+      color: ${(props) => props.theme.highlight};
+      border-color: ${(props) => props.theme.highlight};
+      //box-shadow: inset 0px 0px 1rem ${(props) => props.theme.primary05};
+      background-color: rgba(246, 245, 190, 0.2);
     `};
 
   ${(props) =>
     props.pressed &&
     props.incorrect &&
     css`
-      color: firebrick;
-      border-color: firebrick;
-      box-shadow: inset 0px 0px 0.75rem rgba(255, 0, 0, 0.1);
+      color: ${(props) => props.theme.error};
+      border-color: ${(props) => props.theme.error};
+      // box-shadow: inset 0px 0px 1rem rgba(255, 0, 0, 0.1);
       background-color: rgba(255, 0, 0, 0.1);
     `};
 `;
@@ -92,10 +92,10 @@ export const Row = styled.div<{
       ${(props) =>
         props.LShiftPressed &&
         css`
-          color: ${(props) => props.theme.primary};
-          border-color: ${(props) => props.theme.primary};
-          box-shadow: inset 0px 0px 0.75rem ${(props) => props.theme.primary05};
-          background-color: ${(props) => props.theme.primary04};
+          color: ${(props) => props.theme.highlight};
+          border-color: ${(props) => props.theme.highlight};
+          //box-shadow: inset 0px 0px 0.75rem ${(props) => props.theme.primary05};
+          background-color: ${(props) => props.theme.primary02};
         `};
     }
 
@@ -105,10 +105,10 @@ export const Row = styled.div<{
       ${(props) =>
         props.RShiftPressed &&
         css`
-          color: ${(props) => props.theme.primary};
-          border-color: ${(props) => props.theme.primary};
-          box-shadow: inset 0px 0px 0.75rem ${(props) => props.theme.primary05};
-          background-color: ${(props) => props.theme.primary04};
+          color: ${(props) => props.theme.highlight};
+          border-color: ${(props) => props.theme.highlight};
+          //box-shadow: inset 0px 0px 0.75rem ${(props) => props.theme.primary05};
+          background-color: ${(props) => props.theme.primary02};
         `};
     }
   }
