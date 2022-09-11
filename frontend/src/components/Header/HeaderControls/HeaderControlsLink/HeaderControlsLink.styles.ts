@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled, { Theme } from "styled-components";
 import { NavLink } from "react-router-dom";
 
-export const HeaderControlsLink = styled(NavLink)`
+export const HeaderControlsLink = styled(NavLink)``;
 
-`;
-
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{
+  theme: Theme;
+}>`
   position: relative;
 
   & + & {
@@ -21,14 +21,14 @@ export const Wrapper = styled.div`
     & path,
     & circle {
       transition: fill 0.5s ease;
-      fill: ${(props) => props.theme.highlight};
+      fill: ${({ theme }) => theme.highlight};
     }
   }
 
   &:hover svg {
     & path,
     & circle {
-      fill: ${(props) => props.theme.primary};
+      fill: ${({ theme }) => theme.primary};
     }
   }
 `;
@@ -41,32 +41,34 @@ export const HoverHelper = styled.span`
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height:0.5rem;
+  height: 0.5rem;
   top: 2rem;
 
   ${Wrapper}:hover & {
     display: inline-block;
   }
-`
+`;
 
-export const HeaderControlsLinkTitle = styled.span`
+export const HeaderControlsLinkTitle = styled.span<{
+  theme: Theme;
+}>`
   display: none;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
   padding: 0.375rem 0.4375rem;
-  background-color: ${(props) => props.theme.highlight};
+  background-color: ${({ theme }) => theme.highlight};
   background: linear-gradient(
     170deg,
-    ${(props) => props.theme.primary} 0%,
-    ${(props) => props.theme.primary} 33%,
-    ${(props) => props.theme.highlight} 66%
+    ${({ theme }) => theme.primary} 0%,
+    ${({ theme }) => theme.primary} 33%,
+    ${({ theme }) => theme.highlight} 66%
   );
   background-size: 100% 300%;
   background-position: 100% 100%;
-  color: ${(props) => props.theme.backgroundPrimary};
-  border: 2px solid ${(props) => props.theme.backgroundSecondary};
+  color: ${({ theme }) => theme.backgroundPrimary};
+  border: 2px solid ${({ theme }) => theme.backgroundSecondary};
   border-radius: 0.375rem;
   font-size: 0.8125rem;
   line-height: 1;
@@ -83,19 +85,19 @@ export const HeaderControlsLinkTitle = styled.span`
     display: block;
     margin-top: 0.375rem;
     padding: 0.375rem 0.5rem;
-    border: 1px solid ${(props) => props.theme.backgroundPrimary};
+    border: 1px solid ${({ theme }) => theme.backgroundPrimary};
     border-radius: 0.375rem;
-    background-color: ${(props) => props.theme.backgroundFourthenary};
-    color: ${(props) => props.theme.highlight};
+    background-color: ${({ theme }) => theme.backgroundFourthenary};
+    color: ${({ theme }) => theme.highlight};
     text-decoration: none;
     transition: background-color 0.2s ease-in-out;
 
     &:hover {
-      background-color: ${(props) => props.theme.backgroundSecondary};
+      background-color: ${({ theme }) => theme.backgroundSecondary};
     }
 
     &:active {
-      color: ${(props) => props.theme.primary};
+      color: ${({ theme }) => theme.primary};
     }
   }
 

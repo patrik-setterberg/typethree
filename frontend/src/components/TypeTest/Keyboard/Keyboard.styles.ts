@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, Theme } from "styled-components";
 import media from "../../../globals/media-breakpoints";
 import { rgba } from "../../../util/rgba";
 
@@ -17,6 +17,7 @@ export const Keyboard = styled.div`
 export const Key = styled.span<{
   pressed: boolean;
   incorrect: boolean;
+  theme: Theme;
 }>`
   display: inline-flex;
   border: 1px solid #777;
@@ -26,7 +27,7 @@ export const Key = styled.span<{
   align-items: center;
   position: relative;
   pointer-events: none;
-  color: ${(props) => props.theme.primary07};
+  color: ${({ theme }) => rgba(theme.primary, 0.7)};
   box-shadow: none;
   transition: all 0.03s ease-out;
 
@@ -34,23 +35,21 @@ export const Key = styled.span<{
     margin-left: 0.25ch;
   }
 
-  ${(props) =>
-    props.pressed &&
+  ${({ pressed }) =>
+    pressed &&
     css`
-      color: ${(props) => props.theme.highlight};
-      border-color: ${(props) => props.theme.highlight};
-      //box-shadow: inset 0px 0px 1rem ${(props) => props.theme.primary05};
-      background-color: rgba(246, 245, 190, 0.2);
+      color: ${({ theme }) => theme.highlight};
+      border-color: ${({ theme }) => theme.highlight};
+      background-color: ${({ theme }) => rgba(theme.primary, 0.15)};
     `};
 
-  ${(props) =>
-    props.pressed &&
-    props.incorrect &&
+  ${({ pressed, incorrect }) =>
+    pressed &&
+    incorrect &&
     css`
-      color: ${(props) => props.theme.error};
-      border-color: ${(props) => props.theme.error};
-      // box-shadow: inset 0px 0px 1rem rgba(255, 0, 0, 0.1);
-      background-color: rgba(255, 0, 0, 0.1);
+      color: ${({ theme }) => theme.error};
+      border-color: ${({ theme }) => theme.error};
+      background-color: ${({ theme }) => rgba(theme.error, 0.1)};
     `};
 `;
 
@@ -58,6 +57,7 @@ export const Row = styled.div<{
   iso?: boolean;
   LShiftPressed?: boolean;
   RShiftPressed?: boolean;
+  theme: Theme;
 }>`
   display: flex;
   flex-wrap: nowrap;
@@ -78,7 +78,7 @@ export const Row = styled.div<{
       display: block;
       position: absolute;
       width: 1ch;
-      border-bottom: 2px solid ${(props) => props.theme.highlight};
+      border-bottom: 2px solid ${({ theme }) => theme.highlight};
       bottom: 0.5ch;
       opacity: 0.5;
     }
@@ -88,27 +88,27 @@ export const Row = styled.div<{
   &:nth-child(3) {
     // LEFT SHIFT
     & > span:first-child {
-      padding-right: ${(props) => (props.iso ? "2.5ch" : "7.25ch")};
-      ${(props) =>
-        props.LShiftPressed &&
+      padding-right: ${({ iso }) => (iso ? "2.5ch" : "7.25ch")};
+
+      ${({ LShiftPressed }) =>
+        LShiftPressed &&
         css`
-          color: ${(props) => props.theme.highlight};
-          border-color: ${(props) => props.theme.highlight};
-          //box-shadow: inset 0px 0px 0.75rem ${(props) => props.theme.primary05};
-          background-color: ${(props) => props.theme.primary02};
+          color: ${({ theme }) => theme.highlight};
+          border-color: ${({ theme }) => theme.highlight};
+          background-color: ${({ theme }) => rgba(theme.primary, 0.15)};
         `};
     }
 
     // RIGHT SHIFT
     & > ${Key}:last-child {
       padding-left: 9.5ch;
-      ${(props) =>
-        props.RShiftPressed &&
+
+      ${({ RShiftPressed }) =>
+        RShiftPressed &&
         css`
-          color: ${(props) => props.theme.highlight};
-          border-color: ${(props) => props.theme.highlight};
-          //box-shadow: inset 0px 0px 0.75rem ${(props) => props.theme.primary05};
-          background-color: ${(props) => props.theme.primary02};
+          color: ${({ theme }) => theme.highlight};
+          border-color: ${({ theme }) => theme.highlight};
+          background-color: ${({ theme }) => rgba(theme.primary, 0.15)};
         `};
     }
   }

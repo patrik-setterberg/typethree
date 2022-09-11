@@ -1,15 +1,17 @@
-import styled from "styled-components";
+import styled, { Theme } from "styled-components";
 
 import media from "../../globals/media-breakpoints";
 import { Container } from "../UI/Container.styles";
 import { Branding } from "./Branding/Branding.styles";
 import { HeaderControls } from "./HeaderControls/HeaderControls.styles";
 
-export const Header = styled.header`
+export const Header = styled.header<{
+  theme: Theme;
+}>`
   display: flex;
   justify-content: center;
-  background-color: ${(props) => props.theme.backgroundSecondary};
-  border-bottom: 1px solid ${(props) => props.theme.backgroundFourthenary};
+  background-color: ${({ theme }) => theme.backgroundSecondary};
+  border-bottom: 1px solid ${({ theme }) => theme.backgroundFourthenary};
 
   // Center middle element (Header message).
   & ${Container} {
@@ -34,5 +36,5 @@ export const Header = styled.header`
     & ${Container} > *:last-child {
       margin-right: var(--default-spacing);
     }
-  };
+  }
 `;

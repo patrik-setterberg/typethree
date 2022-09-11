@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, Theme } from "styled-components";
 import {
   Wrapper,
   HeaderControlsLink,
@@ -6,6 +6,7 @@ import {
 
 export const UserIcon = styled.span<{
   isLoggedIn: boolean;
+  theme: Theme;
 }>`
   display: flex;
   align-items: center;
@@ -17,10 +18,10 @@ export const UserIcon = styled.span<{
     & .user-icon__head,
     & .user-icon__body {
       fill: none;
-      ${(props) =>
-        props.isLoggedIn &&
+      ${({ isLoggedIn }) =>
+        isLoggedIn &&
         css`
-          fill: ${(props) => props.theme.highlight};
+          fill: ${({ theme }) => theme.highlight};
         `}
     }
   }
@@ -31,8 +32,8 @@ export const UserIcon = styled.span<{
 
     & .user-icon__head,
     & .user-icon__body {
-      fill: ${(props) =>
-        props.isLoggedIn ? (props) => props.theme.primary : "none"};
+      fill: ${({ isLoggedIn }) =>
+        isLoggedIn ? ({ theme }) => theme.primary : "none"};
     }
   }
 
@@ -40,16 +41,16 @@ export const UserIcon = styled.span<{
   ${HeaderControlsLink}.active & svg {
     // Not logged in.
     & > *:not(.user-icon__head):not(.user-icon__body) {
-      fill: ${(props) => props.theme.primary};
+      fill: ${({ theme }) => theme.primary};
     }
 
     // Logged in.
-    ${(props) =>
-      props.isLoggedIn &&
+    ${({ isLoggedIn }) =>
+      isLoggedIn &&
       css`
         & .user-icon__head,
         & .user-icon__body {
-          fill: ${(props) => props.theme.primary};
+          fill: ${({ theme }) => theme.primary};
         }
       `}
   }

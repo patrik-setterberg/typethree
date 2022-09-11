@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { Theme } from "styled-components";
 import media from "../../../globals/media-breakpoints";
 
 export const Backdrop = styled.div`
@@ -10,11 +10,13 @@ export const Backdrop = styled.div`
   z-index: 100;
 `;
 
-export const Modal = styled.div`
+export const Modal = styled.div<{
+  theme: Theme;
+}>`
   --modal-width: calc(100% - (var(--default-spacing) * 2));
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => props.theme.primary};
+  background-color: ${({ theme }) => theme.primary};
   position: fixed;
   width: var(--modal-width);
   margin: 4.25rem var(--default-spacing) var(--default-spacing);
@@ -39,12 +41,16 @@ export const Modal = styled.div`
   }
 `;
 
-export const ModalInner = styled.div`
-  color: ${(props) => props.theme.backgroundPrimary};
+export const ModalInner = styled.div<{
+  theme: Theme;
+}>`
+  color: ${({ theme }) => theme.backgroundPrimary};
   margin: 0 var(--default-spacing) var(--default-spacing);
 `;
 
-export const ModalTitle = styled.h2`
+export const ModalTitle = styled.h2<{
+  theme: Theme;
+}>`
   text-align: center;
-  color: ${(props) => props.theme.backgroundTertiary};
+  color: ${({ theme }) => theme.backgroundTertiary};
 `;

@@ -1,8 +1,10 @@
-import styled from "styled-components"
+import styled, { Theme } from "styled-components";
 
-export const Main = styled.main`
-	display: flex;
-	justify-content: center;
-	flex: 1;
-	background-color: ${props => props.theme.backgroundPrimary};
-`
+export const Main = styled.main<{
+  theme: Theme;
+}>`
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  background-color: ${({ theme }) => theme.backgroundPrimary};
+`;

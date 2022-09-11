@@ -1,8 +1,10 @@
-import styled from "styled-components";
+import styled, { Theme } from "styled-components";
 import media from "../../globals/media-breakpoints";
 
-const PageTitle = styled.h1`
-  color: ${(props) => props.theme.primary};
+const PageTitle = styled.h1<{
+  theme: Theme;
+}>`
+  color: ${({ theme }) => theme.primary};
   font-size: 1.25rem;
   text-align: center;
   padding-bottom: calc(var(--default-spacing) / 2);

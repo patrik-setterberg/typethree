@@ -1,22 +1,25 @@
-import styled from "styled-components";
+import styled, { Theme } from "styled-components";
+import { rgba } from "../../../util/rgba";
 
-export const SettingsItem = styled.li`
+export const SettingsItem = styled.li<{
+  theme: Theme;
+}>`
   display: flex;
   justify-content: space-between;
   position: relative;
   padding: calc(var(--default-spacing) * 1.5) var(--default-spacing);
   border-bottom: 1px solid transparent;
   border-top: 1px solid transparent;
-  border-right: 1px solid ${(props) => props.theme.primary005};
+  border-right: 1px solid ${({ theme }) => rgba(theme.primary, 0.03)};
   z-index: 0;
 
   &:hover {
-    border-top: 1px solid ${(props) => props.theme.primary01};
+    border-top: 1px solid ${({ theme }) => rgba(theme.primary, 0.1)};
   }
 
   /* TEMP */
   & span {
-    color: ${(props) => props.theme.primary};
+    color: ${({ theme }) => theme.primary};
     font-size: 0.875rem;
     display: inline-block;
   }
@@ -31,10 +34,10 @@ export const SettingsItem = styled.li`
     z-index: -1;
     background: linear-gradient(
       120deg,
-      ${(props) => props.theme.primary04},
+      ${({ theme }) => rgba(theme.primary, 0.4)},
       transparent
     );
-    border-bottom: 1px solid ${(props) => props.theme.primary005};
+    border-bottom: 1px solid ${({ theme }) => rgba(theme.primary, 0.03)};
     opacity: 0;
     transition: opacity 0.3s ease-out;
   }

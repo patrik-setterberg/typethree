@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { Theme } from "styled-components";
 
 import media from "../../../globals/media-breakpoints";
 
@@ -20,6 +20,7 @@ export const CountdownCircle = styled.span<{
   circumference: number;
   dashOffset: number;
   focused: boolean;
+  theme: Theme;
 }>`
   display: inline-block;
   width: 100%;
@@ -45,24 +46,26 @@ export const CountdownCircle = styled.span<{
     }
 
     & .circle--background {
-      stroke: ${(props) => props.theme.backgroundFourthenary};
+      stroke: ${({ theme }) => theme.backgroundFourthenary};
     }
 
     & .circle--countdown {
-      stroke: ${(props) =>
-        props.focused ? props.theme.highlight : props.theme.primary};
-      stroke-dasharray: ${(props) => props.circumference}px;
-      stroke-dashoffset: ${(props) => props.dashOffset}px;
+      stroke: ${({ focused, theme }) =>
+        focused ? theme.highlight : theme.primary};
+      stroke-dasharray: ${({ circumference }) => circumference}px;
+      stroke-dashoffset: ${({ dashOffset }) => dashOffset}px;
     }
   }
 `;
 
-export const Counter = styled.span`
+export const Counter = styled.span<{
+  theme: Theme;
+}>`
   padding-bottom: 0.25rem;
   font-size: 2rem;
   font-weight: 600;
   line-height: 1;
-  color: ${(props) => props.theme.primary};
+  color: ${({ theme }) => theme.primary};
   position: absolute;
 
   @media ${media.atleastMedium} {

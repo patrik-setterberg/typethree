@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider, Theme } from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AuthContext from "./context/auth-context";
@@ -23,7 +23,7 @@ const LogOut = (): JSX.Element => {
 const App = (): JSX.Element => {
   const authCtx = useContext(AuthContext);
 
-  const [currentTheme, setCurrentTheme] = useState(themes[defaultTheme]);
+  const [currentTheme, setCurrentTheme] = useState<Theme>(themes[defaultTheme]);
   // IF LOGGED IN, USE USER'S PREFERED THEME SETTING.
 
   return (

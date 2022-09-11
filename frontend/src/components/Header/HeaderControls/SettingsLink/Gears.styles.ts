@@ -1,18 +1,20 @@
-import styled from "styled-components";
+import styled, { Theme } from "styled-components";
 
 import {
   Wrapper,
   HeaderControlsLink,
 } from "../HeaderControlsLink/HeaderControlsLink.styles";
 
-export const Gears = styled.span`
+export const Gears = styled.span<{
+  theme: Theme;
+}>`
   & .icon-gears {
     fill: none;
   }
 
   // Highlight gears when settings route is active.
   ${HeaderControlsLink}.active & .gear {
-    fill: ${(props) => props.theme.primary};
+    fill: ${({ theme }) => theme.primary};
   }
 
   & .gear-1 {

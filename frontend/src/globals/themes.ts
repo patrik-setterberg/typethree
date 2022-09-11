@@ -1,14 +1,9 @@
-const themes = {
+import { Themes } from "styled-components";
+
+const themes: Themes = {
   // https://coolors.co/191d23-121519-fdfb8d-f6f5be-eeeeee-a3a3a3 maybe
   dark: {
     primary: "#EEE",
-    primary07: "rgba(238, 238, 238, 0.7)",
-    primary06: "rgba(238, 238, 238, 0.6)",
-    primary05: "rgba(238, 238, 238, 0.5)",
-    primary04: "rgba(238, 238, 238, 0.4)",
-    primary02: "rgba(238, 238, 238, 0.2)",
-    primary01: "rgba(238, 238, 238, 0.1)",
-    primary005: "rgba(238, 238, 238, 0.03)",
     /* highlight: '#FFD369', // current */
     // highlight: '#E6F14A', // maximum green yellow
     // highlight: '#DCF763', // liknande
@@ -42,4 +37,4 @@ const themes = {
 
 export default themes;
 
-export const defaultTheme = "dark";
+export const defaultTheme: string = "dark";

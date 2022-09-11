@@ -1,23 +1,24 @@
-import styled from "styled-components";
-
+import styled, { Theme } from "styled-components";
 import media from "../../../globals/media-breakpoints";
 
-export const CloseButton = styled.button`
+export const CloseButton = styled.button<{
+  theme: Theme;
+}>`
   background: transparent;
-	border: none;
+  border: none;
   display: flex;
-	cursor: pointer;
+  cursor: pointer;
   align-self: flex-end;
   padding: 0.25rem;
   margin: 0.75rem 0.75rem 0 0;
   opacity: 0.75;
   transition: all 0.1s ease;
   transform-origin: center;
-  
+
   svg {
-		width: 1rem;
-		height: 1rem;
-    fill: ${props => props.theme.backgroundTertiary};
+    width: 1rem;
+    height: 1rem;
+    fill: ${({ theme }) => theme.backgroundTertiary};
   }
 
   &:hover {
@@ -31,7 +32,7 @@ export const CloseButton = styled.button`
   @media ${media.atleastMedium} {
     svg {
       width: 1.375rem;
-		  height: 1.375rem;
+      height: 1.375rem;
     }
   }
-`
+`;

@@ -1,6 +1,6 @@
-import styled, { css, keyframes } from "styled-components";
-
+import styled, { css, keyframes, Theme } from "styled-components";
 import media from "../../../globals/media-breakpoints";
+import { rgba } from "../../../util/rgba";
 
 export const Wrapper = styled.div`
   --font-size: 1rem;
@@ -26,9 +26,10 @@ export const Wrapper = styled.div`
 export const Word = styled.span<{
   focused: boolean;
   incorrect: boolean;
+  theme: Theme;
 }>`
   position: relative;
-  color: ${(props) => props.theme.primary};
+  color: ${({ theme }) => theme.primary};
   font-size: var(--font-size);
   line-height: var(--line-height);
 
@@ -47,12 +48,12 @@ export const Word = styled.span<{
     transition: border-bottom-color 0.1s linear;
   }
 
-  ${(props) =>
-    props.focused &&
-    props.incorrect &&
+  ${({ focused, incorrect }) =>
+    focused &&
+    incorrect &&
     css`
       &::after {
-        border-bottom-color: ${props => props.theme.error};
+        border-bottom-color: ${({ theme }) => theme.error};
       }
     `}
 `;
@@ -62,45 +63,46 @@ export const Letter = styled.span<{
   entered: boolean;
   missed: boolean;
   incorrect: boolean;
+  theme: Theme;
 }>`
   transition: color 0.1s linear, text-shadow 0.1s linear;
-  ${(props) =>
-    !props.focused &&
+  ${({ focused }) =>
+    !focused &&
     css`
       color: transparent !important;
-      text-shadow: 0 0 0.625rem ${(props) => props.theme.primary04};
+      text-shadow: 0 0 0.625rem ${({ theme }) => rgba(theme.primary, 0.4)};
     `}
 
-  ${(props) =>
-    props.entered &&
+  ${({ entered }) =>
+    entered &&
     css`
-      color: ${(props) => props.theme.highlight};
+      color: ${({ theme }) => theme.highlight};
     `}
 
-  ${(props) =>
-    !props.focused &&
-    props.entered &&
+  ${({ focused, entered }) =>
+    !focused &&
+    entered &&
     css`
-      text-shadow: 0 0 0.625rem ${(props) => props.theme.highlight};
+      text-shadow: 0 0 0.625rem ${({ theme }) => theme.highlight};
     `}
 
-    ${(props) =>
-    props.missed &&
+    ${({ missed }) =>
+    missed &&
     css`
-      color: ${(props) => props.theme.missed};
+      color: ${({ theme }) => theme.missed};
     `}
 
-  ${(props) =>
-    props.incorrect &&
+  ${({ incorrect }) =>
+    incorrect &&
     css`
-      color: ${props => props.theme.error};
+      color: ${({ theme }) => theme.error};
     `}
 
-  ${(props) =>
-    !props.focused &&
-    props.incorrect &&
+  ${({ focused, incorrect }) =>
+    !focused &&
+    incorrect &&
     css`
-      text-shadow: 0 0 0.625rem ${props => props.theme.error};
+      text-shadow: 0 0 0.625rem ${({ theme }) => theme.error};
     `}
 `;
 
@@ -137,21 +139,23 @@ export const Caret = styled.span.attrs<{
   currentWordPos: { x: number; y: number };
   transitionTransform: boolean;
   offsetX: number;
+  theme: Theme;
 }>`
   display: inline-block;
   height: calc(calc(var(--font-size) / 1.5) * var(--line-height));
   font-size: var(--font-size);
   margin-top: 0.25rem;
   width: 0.125rem; // Option for hefty boye variant? Something like 1ch.
-  background-color: ${(props) => props.theme.highlight};
+  background-color: ${({ theme }) => theme.highlight};
   opacity: 0.9;
-  visibility: ${(props) => (props.focused ? "visible" : "hidden")};
+  visibility: ${({ focused }) => (focused ? "visible" : "hidden")};
   position: absolute;
   transition: opacity 0.2s ease
-    ${(props) => (props.transitionTransform ? ", transform 0.1s linear" : "")};
-  ${(props) =>
-    props.animate &&
-    props.focused &&
+    ${({ transitionTransform }) =>
+      transitionTransform ? ", transform 0.1s linear" : ""};
+  ${({ animate, focused }) =>
+    animate &&
+    focused &&
     css`
       animation: 1s cubic-bezier(0.78, 0.2, 0.05, 1) 0s infinite forwards
         ${CaretBlink};
@@ -162,7 +166,10 @@ export const Caret = styled.span.attrs<{
   }
 `;
 
-export const FocusLostMessage = styled.span<{ focused: boolean }>`
+export const FocusLostMessage = styled.span<{
+  focused: boolean;
+  theme: Theme;
+}>`
   display: inline-block;
   position: absolute;
   left: 50%;
@@ -171,12 +178,12 @@ export const FocusLostMessage = styled.span<{ focused: boolean }>`
   margin-top: calc(var(--default-spacing) * 3);
   padding: 0 var(--default-spacing);
   text-align: center;
-  color: ${(props) => props.theme.primary};
-  text-shadow: 0 0 0.625rem ${(props) => props.theme.backgroundPrimary};
+  color: ${({ theme }) => theme.primary};
+  text-shadow: 0 0 0.625rem ${({ theme }) => theme.backgroundPrimary};
   font-size: 1rem;
   pointer-events: none;
   transition: opacity 0.15s ease;
-  opacity: ${(props) => (props.focused ? "0" : "1")};
+  opacity: ${({ focused }) => (focused ? "0" : "1")};
 
   @media ${media.atleastMedium} {
     margin-top: calc(var(--default-spacing) * 2);

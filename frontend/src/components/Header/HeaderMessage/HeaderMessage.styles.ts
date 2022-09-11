@@ -1,14 +1,16 @@
-import styled from "styled-components";
+import styled, { Theme } from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
-export const HeaderMessage = styled.span`
+export const HeaderMessage = styled.span<{
+  theme: Theme;
+}>`
   padding: 0 var(--default-spacing);
-  color: ${props => props.theme.primary};
+  color: ${({ theme }) => theme.primary};
   text-align: center;
   opacity: 0; // TEMP.
-`
+`;

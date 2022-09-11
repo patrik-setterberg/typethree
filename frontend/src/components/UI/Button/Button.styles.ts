@@ -1,6 +1,9 @@
-import styled, { css } from "styled-components";
+import styled, { css, Theme } from "styled-components";
 
-export const Button = styled.button<{ isActive: boolean }>`
+export const Button = styled.button<{
+  isActive: boolean;
+  theme: Theme;
+}>`
   width: 100px;
   height: fit-content;
   padding: 0.375rem;
@@ -13,15 +16,15 @@ export const Button = styled.button<{ isActive: boolean }>`
   text-transform: uppercase;
   background: linear-gradient(
     170deg,
-    ${(props) => props.theme.primary} 0%,
-    ${(props) => props.theme.primary} 33%,
-    ${(props) => props.theme.highlight} 66%
+    ${({ theme }) => theme.primary} 0%,
+    ${({ theme }) => theme.primary} 33%,
+    ${({ theme }) => theme.highlight} 66%
   );
 
-  ${(props) =>
-    props.isActive &&
+  ${({ isActive }) =>
+    isActive &&
     css`
-      background: ${props.theme.primary};
+      background: ${({ theme }) => theme.primary};
     `};
 
   background-size: 100% 300%;
@@ -35,7 +38,7 @@ export const Button = styled.button<{ isActive: boolean }>`
   }
 
   &:active {
-    background: ${props => props.theme.highlight};
+    background: ${({ theme }) => theme.highlight};
   }
 
   & + & {

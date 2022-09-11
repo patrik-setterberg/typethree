@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { Theme } from "styled-components";
 
 export const Fieldset = styled.fieldset`
   border: none;
@@ -9,14 +9,16 @@ export const Legend = styled.legend`
   visibility: hidden;
 `;
 
-export const Label = styled.label<{ checked: boolean }>`
+export const Label = styled.label<{
+  checked: boolean;
+  theme: Theme;
+}>`
   display: flex;
   justify-content: flex-end;
   align-items: center;
   position: relative;
   padding: 0 0 0.5rem 0.5rem;
-  color: ${(props) =>
-    props.checked ? props.theme.primary : props.theme.highlight};
+  color: ${({ checked, theme }) => (checked ? theme.primary : theme.highlight)};
   font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -27,17 +29,16 @@ export const Label = styled.label<{ checked: boolean }>`
     content: "";
     width: 1.125rem;
     height: 1.125rem;
-    background-color: ${(props) =>
-      props.checked ? props.theme.backgroundTertiary : props.theme.highlight};
+    background-color: ${({ checked, theme }) =>
+      checked ? theme.backgroundTertiary : theme.highlight};
     border: 2px solid;
-    border-color: ${(props) =>
-      props.checked ? props.theme.primary : props.theme.highlight};
+    border-color: ${({ checked, theme }) =>
+      checked ? theme.primary : theme.highlight};
     display: inline-block;
     margin-left: 0.5rem;
     border-radius: 50%;
     transition: all 0.15s ease-out;
   }
-
 
   &:hover {
     letter-spacing: 0.6px;

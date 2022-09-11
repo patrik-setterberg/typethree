@@ -1,10 +1,12 @@
-import styled from "styled-components";
+import styled, { Theme } from "styled-components";
 
 // temp branding :(
-export const Branding = styled.span`
+export const Branding = styled.span<{
+  theme: Theme;
+}>`
   display: flex;
   align-items: center;
-  color: ${(props) => props.theme.primary};
+  color: ${({ theme }) => theme.primary};
 
   &:hover {
     & span:nth-child(2) {
@@ -23,7 +25,7 @@ export const Branding = styled.span`
   & span:nth-child(2) {
     display: inline-block;
     padding-bottom: 0.125rem;
-    color: ${(props) => props.theme.highlight};
+    color: ${({ theme }) => theme.highlight};
     font-weight: 700;
     font-size: 1.1em;
     transition: all 0.2s ease-out;
@@ -36,7 +38,7 @@ export const Branding = styled.span`
 
   & a,
   & a:visited {
-    color: ${(props) => props.theme.primary};
+    color: ${({ theme }) => theme.primary};
     text-decoration: none;
   }
 `;

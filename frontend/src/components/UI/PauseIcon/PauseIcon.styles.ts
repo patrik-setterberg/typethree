@@ -1,6 +1,8 @@
-import styled from "styled-components";
+import styled, { Theme } from "styled-components";
 
-export const PauseIcon = styled.svg`
+export const PauseIcon = styled.svg<{
+  theme: Theme;
+}>`
   width: 1ch;
-  fill: ${(props) => props.theme.primary};
+  fill: ${({ theme }) => theme.primary};
 `;
