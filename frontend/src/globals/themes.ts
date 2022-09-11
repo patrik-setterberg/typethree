@@ -4,17 +4,17 @@ const themes: Themes = {
   // https://coolors.co/191d23-121519-fdfb8d-f6f5be-eeeeee-a3a3a3 maybe
   dark: {
     primary: "#EEE",
-    /* highlight: '#FFD369', // current */
+    // highlight: '#FFD369', // Original...!
     // highlight: '#E6F14A', // maximum green yellow
     // highlight: '#DCF763', // liknande
     // highlight: '#EEF36A', // icterine
     // highlight: '#E9FF70', // mindaro
-    highlight: "#FDE74C", // minion yellow, ganska najs!
+    // highlight: "#FDE74C", // minion yellow, ganska najs!
     // highlight: '#DEB841', // gold metallic also nice
     // highlight: '#FAFF7F', // laser lemon very nice
     // highlight: '#CCFF66', // inchworm
     // highlight: '#FFEF9F', // green yellow crayola
-    // highlight: '#FFFD82', // canary SERIOUS CANDIDATE
+    highlight: '#FFFD82', // canary SERIOUS CANDIDATE
     // highlight: '#FDFB8D', // en till canary
     error: "#DF5E33",
     missed: "#A3A3A3",
